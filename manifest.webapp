@@ -1,0 +1,18 @@
+{
+  "version": "0.0.1",
+  "name": "DHIS 2 Pivot",
+  "description": "DHIS2 Pivot tables app",
+  "icons": {},
+  "developer": {
+    "url": "http://www.dhis2.org",
+    "name": "Jan Henrik Øverland"
+  },
+  "launch_path": "index.html",
+  "default_locale": "en",
+  "activities": {
+    "dhis": {
+      "href": "http://localhost:8080",
+      "auth": "admin:district"
+    }
+  }
+}
