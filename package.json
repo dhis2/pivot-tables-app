@@ -26,7 +26,7 @@
   "homepage": "https://github.com/dhis2/dhis2-pivot#readme",
   "dependencies": {
     "d2-utilizr": "0.0.10",
-    "d2-analysis": "0.0.11"
+    "d2-analysis": "0.0.12"
   },
   "devDependencies": {
     "babel-core": "^6.3.13",
