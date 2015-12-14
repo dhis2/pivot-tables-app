@@ -1,65 +1,33 @@
-import {isString} from 'd2-utilizr';
-import {api, pivot, manager, config} from 'd2-analysis';
-
-import {i18nInit} from './init/i18nInit.js';
-import {authViewUnapprovedDataInit} from './init/authViewUnapprovedDataInit.js';
-import {rootNodesInit} from './init/rootNodesInit.js';
-import {organisationUnitLevelsInit} from './init/organisationUnitLevelsInit.js';
-import {legendSetsInit} from './init/legendSetsInit.js';
-import {dimensionsInit} from './init/dimensionsInit.js';
-import {dataApprovalLevelsInit} from './init/dataApprovalLevelsInit.js';
+import {isString, arrayTo} from 'd2-utilizr';
+import {api, pivot, manager, config, init} from 'd2-analysis';
 
 // initialize
-function init() {
+function initialize() {
 
-    //TMP
-    manager.SessionStorageManager = function() {
-        var t = this;
-
-        // constants
-        t.db = 'dhis2';
-        t.supported = ('sessionStorage' in window && window['sessionStorage'] !== null);
-
-        // fn
-        t.supportHandler = function() {
-            if (!this.supported) {
-                alert("Your browser is outdated and does not support local storage. Please upgrade your browser.");
-                return;
-            }
-
-            return true;
-        };
-    };
-
-    manager.SessionStorageManager.prototype.has = function(session) {
-        if (!this.supportHandler()) {
-            return;
-        }
-
-        return (JSON.parse(sessionStorage.getItem(this.db)) && JSON.parse(sessionStorage.getItem(this.db))[session]);
-    };
-
-    manager.SessionStorageManager.prototype.set = function(layout, session, url) {
-        if (!this.supportHandler()) {
-            return;
-        }
-
-        var dhis2 = JSON.parse(sessionStorage.getItem(this.db)) || {};
-        dhis2[session] = layout;
-        sessionStorage.setItem(this.db, JSON.stringify(dhis2));
-
-        if (url) {
-            window.location.href = url;
-        }
-    };
-    //TMP
-
+    // instances
     var appManager = new manager.AppManager();
     var calendarManager = new manager.CalendarManager();
     var requestManager = new manager.RequestManager();
     var i18nManager = new manager.I18nManager();
     var sessionStorageManager = new manager.SessionStorageManager();
 
+    var dimensionConfig = new config.DimensionConfig();
+    var optionConfig = new config.OptionConfig();
+    var periodConfig = new config.PeriodConfig();
+
+    // i18n
+    dimensionConfig.setI18nManager(i18nManager);
+    optionConfig.setI18nManager(i18nManager);
+    periodConfig.setI18nManager(i18nManager);
+
+    // class fns
+    appManager.applyTo([].concat(arrayTo(api), arrayTo(init)));
+    requestManager.applyTo(arrayTo(init));
+    i18nManager.applyTo([init.i18nInit]);
+    dimensionConfig.applyTo(arrayTo(pivot));
+    optionConfig.applyTo(arrayTo(pivot));
+
+    // requests
     var manifestReq = $.getJSON('manifest.webapp');
     var systemInfoUrl = '/api/system/info.json';
     var systemSettingsUrl = '/api/systemSettings.json?key=keyCalendar&key=keyDateFormat&key=keyAnalysisRelativePeriod&key=keyHideUnapprovedDataInAnalytics';
@@ -68,18 +36,6 @@ function init() {
     var systemInfoReq;
     var systemSettingsReq;
     var userAccountReq;
-
-    //TMP
-    appManager.setAuth = function(env) {
-        if (!(env === 'production' && !(this.manifest && isString(this.manifest.activities.dhis.auth)))) {
-            $.ajaxSetup({
-                headers: {
-                    Authorization: 'Basic ' + btoa(this.manifest.activities.dhis.auth)
-                }
-            });
-        }
-    };
-    //TMP
 
     manifestReq.done(function(manifest) {
         appManager.manifest = manifest;
@@ -101,26 +57,27 @@ function init() {
         calendarManager.setDateFormat(appManager.getDateFormat());
         calendarManager.generate(appManager.systemSettings.keyCalendar);
 
+
     // i18n
-    requestManager.add(new api.Request(i18nInit(requestManager, appManager, i18nManager)));
+    requestManager.add(new api.Request(init.i18nInit()));
 
     // authorization
-    requestManager.add(new api.Request(authViewUnapprovedDataInit(requestManager, appManager)));
+    requestManager.add(new api.Request(init.authViewUnapprovedDataInit()));
 
     // root nodes
-    requestManager.add(new api.Request(rootNodesInit(requestManager, appManager)));
+    requestManager.add(new api.Request(init.rootNodesInit()));
 
     // organisation unit levels
-    requestManager.add(new api.Request(organisationUnitLevelsInit(requestManager, appManager)));
+    requestManager.add(new api.Request(init.organisationUnitLevelsInit()));
 
     // legend sets
-    requestManager.add(new api.Request(legendSetsInit(requestManager, appManager)));
+    requestManager.add(new api.Request(init.legendSetsInit()));
 
     // dimensions
-    requestManager.add(new api.Request(dimensionsInit(requestManager, appManager)));
+    requestManager.add(new api.Request(init.dimensionsInit()));
 
     // approval levels
-    requestManager.add(new api.Request(dataApprovalLevelsInit(requestManager, appManager)));
+    requestManager.add(new api.Request(init.dataApprovalLevelsInit()));
 
     requestManager.set(getTable);
     requestManager.run();
@@ -149,8 +106,12 @@ function getTable() {
             rowAxis = new pivot.TableAxis(layout, response, 'row');
             table = new pivot.Table(layout, response, colAxis, rowAxis);
             document.body.innerHTML = table.html;
+console.log(response);
+console.log(colAxis);
+console.log(rowAxis);
+console.log(table);
         });
     });
 }
 
-init();
+initialize();
