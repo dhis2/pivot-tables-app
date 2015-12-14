@@ -45,8 +45,5 @@
     "susy": "2.2.5",
     "webpack": "1.12.9",
     "webpack-dev-server": "1.14.0"
-  },
-  "pre-commit": [
-    "validate"
-  ]
+  }
 }
