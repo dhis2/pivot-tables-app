@@ -1,6 +1,8 @@
 import {isString, arrayTo} from 'd2-utilizr';
 import {api, pivot, manager, config, init} from 'd2-analysis';
 
+require('./css/style.css');
+
 // initialize
 function initialize() {
 
