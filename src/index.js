@@ -83,7 +83,7 @@ function initialize() {
     // approval levels
     requestManager.add(new api.Request(init.dataApprovalLevelsInit()));
 
-    requestManager.set(getTable);
+    requestManager.set(createViewport);
     requestManager.run();
 
     });
@@ -120,3 +120,9 @@ console.log(table);
 }
 
 initialize();
+
+function createViewport() {
+    var viewport = new ui.Viewport();
+console.log("create viewport");
+
+}
