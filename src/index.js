@@ -16,6 +16,7 @@ function initialize() {
     var dimensionConfig = new config.DimensionConfig();
     var optionConfig = new config.OptionConfig();
     var periodConfig = new config.PeriodConfig();
+    var uiConfig = new config.UiConfig();
 
     // i18n
     dimensionConfig.setI18nManager(i18nManager);
@@ -30,6 +31,7 @@ function initialize() {
 
     dimensionConfig.applyTo(arrayTo(pivot));
     optionConfig.applyTo(arrayTo(pivot));
+    uiConfig.applyTo(arrayTo(ui));
 
     // requests
     var manifestReq = $.getJSON('manifest.webapp');
@@ -122,7 +124,6 @@ console.log(table);
 initialize();
 
 function createViewport() {
-    var viewport = new ui.Viewport();
-console.log("create viewport");
-
+    var accordion = new ui.Accordion();
+    var westRegion = new ui.WestRegion({accordion: accordion});
 }
