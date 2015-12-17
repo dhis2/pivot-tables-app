@@ -1,5 +1,6 @@
+import '../extjs/resources/css/ext-all-gray.css';
 import './css/style.css';
-import {isString, arrayTo} from 'd2-utilizr';
+import {isString, arrayFrom, arrayTo} from 'd2-utilizr';
 import {api, pivot, manager, config, ui, init} from 'd2-analysis';
 
 // initialize
@@ -24,12 +25,12 @@ function initialize() {
     periodConfig.setI18nManager(i18nManager);
 
     // class fns
-    appManager.applyTo([].concat(arrayTo(api), arrayTo(init)));
+    appManager.applyTo([].concat(arrayTo(api), arrayTo(ui), arrayTo(init)));
     requestManager.applyTo(arrayTo(init));
-    i18nManager.applyTo([init.i18nInit]);
+    i18nManager.applyTo([].concat(arrayTo(init), arrayTo(ui)));
     uiManager.applyTo(arrayTo(ui));
 
-    dimensionConfig.applyTo(arrayTo(pivot));
+    dimensionConfig.applyTo([].concat(arrayTo(pivot), arrayTo(ui)));
     optionConfig.applyTo(arrayTo(pivot));
     uiConfig.applyTo(arrayTo(ui));
 
@@ -124,6 +125,15 @@ console.log(table);
 initialize();
 
 function createViewport() {
-    var accordion = new ui.Accordion();
-    var westRegion = new ui.WestRegion({accordion: accordion});
+    var menuAccordion = new ui.MenuAccordion({
+        items: [
+            new ui.DataTab()
+        ]
+    });
+    var westRegion = new ui.WestRegion({menuAccordion: menuAccordion});
+    var centerRegion = new ui.CenterRegion();
+    var viewport = new ui.Viewport({
+        westRegion: westRegion,
+        centerRegion: centerRegion
+    });
 }
