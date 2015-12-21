@@ -3,97 +3,99 @@ import './css/style.css';
 import {isString, arrayFrom, arrayTo} from 'd2-utilizr';
 import {api, pivot, manager, config, ui, init} from 'd2-analysis';
 
-// initialize
-function initialize() {
+// instances
+var appManager = new manager.AppManager();
+var calendarManager = new manager.CalendarManager();
+var requestManager = new manager.RequestManager();
+var i18nManager = new manager.I18nManager();
+var sessionStorageManager = new manager.SessionStorageManager();
+var uiManager = new manager.UiManager();
+var instanceManager = new manager.InstanceManager({
+    api: api,
+    uiManager: uiManager
+});
 
-    // instances
-    var appManager = new manager.AppManager();
-    var calendarManager = new manager.CalendarManager();
-    var requestManager = new manager.RequestManager();
-    var i18nManager = new manager.I18nManager();
-    var sessionStorageManager = new manager.SessionStorageManager();
-    var uiManager = new manager.UiManager();
+var dimensionConfig = new config.DimensionConfig();
+var optionConfig = new config.OptionConfig();
+var periodConfig = new config.PeriodConfig();
+var uiConfig = new config.UiConfig();
 
-    var dimensionConfig = new config.DimensionConfig();
-    var optionConfig = new config.OptionConfig();
-    var periodConfig = new config.PeriodConfig();
-    var uiConfig = new config.UiConfig();
+// i18n
+dimensionConfig.setI18nManager(i18nManager);
+optionConfig.setI18nManager(i18nManager);
+periodConfig.setI18nManager(i18nManager);
 
-    // i18n
-    dimensionConfig.setI18nManager(i18nManager);
-    optionConfig.setI18nManager(i18nManager);
-    periodConfig.setI18nManager(i18nManager);
+// class fns
+appManager.applyTo([].concat(arrayTo(api), arrayTo(ui), arrayTo(init)));
+calendarManager.applyTo([].concat(arrayTo(ui)));
+requestManager.applyTo(arrayTo(init));
+i18nManager.applyTo([].concat(arrayTo(init), arrayTo(ui)));
+uiManager.applyTo(arrayTo(ui));
 
-    // class fns
-    appManager.applyTo([].concat(arrayTo(api), arrayTo(ui), arrayTo(init)));
-    requestManager.applyTo(arrayTo(init));
-    i18nManager.applyTo([].concat(arrayTo(init), arrayTo(ui)));
-    uiManager.applyTo(arrayTo(ui));
+dimensionConfig.applyTo([].concat(arrayTo(pivot), arrayTo(ui)));
+optionConfig.applyTo(arrayTo(pivot));
+periodConfig.applyTo(arrayTo(ui));
+uiConfig.applyTo(arrayTo(ui));
 
-    dimensionConfig.applyTo([].concat(arrayTo(pivot), arrayTo(ui)));
-    optionConfig.applyTo(arrayTo(pivot));
-    uiConfig.applyTo(arrayTo(ui));
+// requests
+var manifestReq = $.getJSON('manifest.webapp');
+var systemInfoUrl = '/api/system/info.json';
+var systemSettingsUrl = '/api/systemSettings.json?key=keyCalendar&key=keyDateFormat&key=keyAnalysisRelativePeriod&key=keyHideUnapprovedDataInAnalytics';
+var userAccountUrl = '/api/me/user-account.json';
 
-    // requests
-    var manifestReq = $.getJSON('manifest.webapp');
-    var systemInfoUrl = '/api/system/info.json';
-    var systemSettingsUrl = '/api/systemSettings.json?key=keyCalendar&key=keyDateFormat&key=keyAnalysisRelativePeriod&key=keyHideUnapprovedDataInAnalytics';
-    var userAccountUrl = '/api/me/user-account.json';
+var systemInfoReq;
+var systemSettingsReq;
+var userAccountReq;
 
-    var systemInfoReq;
-    var systemSettingsReq;
-    var userAccountReq;
+manifestReq.done(function(manifest) {
+    appManager.manifest = manifest;
+    appManager.setAuth(process.env.NODE_ENV);
+    systemInfoReq = $.getJSON(manifest.activities.dhis.href + systemInfoUrl);
 
-    manifestReq.done(function(manifest) {
-        appManager.manifest = manifest;
-        appManager.setAuth(process.env.NODE_ENV);
-        systemInfoReq = $.getJSON(manifest.activities.dhis.href + systemInfoUrl);
+systemInfoReq.done(function(systemInfo) {
+    appManager.systemInfo = systemInfo;
+    appManager.path = systemInfo.contextPath;
+    systemSettingsReq = $.getJSON(appManager.path + systemSettingsUrl);
 
-    systemInfoReq.done(function(systemInfo) {
-        appManager.systemInfo = systemInfo;
-        appManager.path = systemInfo.contextPath;
-        systemSettingsReq = $.getJSON(appManager.path + systemSettingsUrl);
+systemSettingsReq.done(function(systemSettings) {
+    appManager.systemSettings = systemSettings;
+    userAccountReq = $.getJSON(appManager.path + userAccountUrl);
 
-    systemSettingsReq.done(function(systemSettings) {
-        appManager.systemSettings = systemSettings;
-        userAccountReq = $.getJSON(appManager.path + userAccountUrl);
-
-    userAccountReq.done(function(userAccount) {
-        appManager.userAccount = userAccount;
-        calendarManager.setBaseUrl(appManager.getPath());
-        calendarManager.setDateFormat(appManager.getDateFormat());
-        calendarManager.generate(appManager.systemSettings.keyCalendar);
+userAccountReq.done(function(userAccount) {
+    appManager.userAccount = userAccount;
+    calendarManager.setBaseUrl(appManager.getPath());
+    calendarManager.setDateFormat(appManager.getDateFormat());
+    calendarManager.generate(appManager.systemSettings.keyCalendar);
 
 
-    // i18n
-    requestManager.add(new api.Request(init.i18nInit()));
+// i18n
+requestManager.add(new api.Request(init.i18nInit()));
 
-    // authorization
-    requestManager.add(new api.Request(init.authViewUnapprovedDataInit()));
+// authorization
+requestManager.add(new api.Request(init.authViewUnapprovedDataInit()));
 
-    // root nodes
-    requestManager.add(new api.Request(init.rootNodesInit()));
+// root nodes
+requestManager.add(new api.Request(init.rootNodesInit()));
 
-    // organisation unit levels
-    requestManager.add(new api.Request(init.organisationUnitLevelsInit()));
+// organisation unit levels
+requestManager.add(new api.Request(init.organisationUnitLevelsInit()));
 
-    // legend sets
-    requestManager.add(new api.Request(init.legendSetsInit()));
+// legend sets
+requestManager.add(new api.Request(init.legendSetsInit()));
 
-    // dimensions
-    requestManager.add(new api.Request(init.dimensionsInit()));
+// dimensions
+requestManager.add(new api.Request(init.dimensionsInit()));
 
-    // approval levels
-    requestManager.add(new api.Request(init.dataApprovalLevelsInit()));
+// approval levels
+requestManager.add(new api.Request(init.dataApprovalLevelsInit()));
 
-    requestManager.set(createViewport);
-    requestManager.run();
+requestManager.set(createViewport);
+requestManager.run();
 
-    });
-    });
-    });
-    });
-}
+});
+});
+});
+});
 
 function getTable() {
     var response,colAxis,rowAxis,table;
@@ -122,18 +124,13 @@ console.log(table);
     });
 }
 
-initialize();
-
 function createViewport() {
-    var menuAccordion = new ui.MenuAccordion({
-        items: [
-            new ui.DataTab()
-        ]
-    });
-    var westRegion = new ui.WestRegion({menuAccordion: menuAccordion});
-    var centerRegion = new ui.CenterRegion();
-    var viewport = new ui.Viewport({
-        westRegion: westRegion,
-        centerRegion: centerRegion
-    });
+    instanceManager.setFn = function(layout, response) {
+        colAxis = new pivot.TableAxis(layout, response, 'col');
+        rowAxis = new pivot.TableAxis(layout, response, 'row');
+        table = new pivot.Table(layout, response, colAxis, rowAxis);
+        document.body.innerHTML = table.html;
+    };
+
+    var viewport = new ui.Viewport();
 }
