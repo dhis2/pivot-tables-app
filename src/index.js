@@ -132,5 +132,12 @@ function createViewport() {
         document.body.innerHTML = table.html;
     };
 
-    var viewport = new ui.Viewport();
+    var viewport = new ui.Viewport({
+        appManager: appManager,
+        uiManager: uiManager,
+        i18nManager: i18nManager,
+        dimensionConfig: dimensionConfig,
+        periodConfig: periodConfig,
+        uiConfig: uiConfig,
+    });
 }
