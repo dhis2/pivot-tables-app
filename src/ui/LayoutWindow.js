@@ -1,12 +1,17 @@
+import {isString, arrayContains, clone} from 'd2-utilizr';
+
 export var LayoutWindow;
 
-LayoutWindow = function(config) {
+LayoutWindow = function(c) {
     var t = this,
 
-        instanceManager = config.instanceManager,
-        i18nManager = config.i18nManager,
+        i18n = c.i18nManager.get(),
+        confData = c.dimensionConfig.get('data'),
+        confPeriod = c.dimensionConfig.get('period'),
+        confOrganisationUnit = c.dimensionConfig.get('organisationUnit'),
+        confCategory = c.dimensionConfig.get('category'),
 
-        i18n = i18nManager.get(),
+        layoutButton = c.uiManager.get('layoutButton'),
 
         dimensionStoreMap = {},
         margin = 1,
@@ -31,11 +36,11 @@ LayoutWindow = function(config) {
                 dimensionNames.push(r.data.id);
             });
 
-            return Ext.clone(dimensionNames);
+            return clone(dimensionNames);
         };
 
         config.hasDimension = function(id) {
-            return Ext.isString(id) && this.findExact('id', id) != -1 ? true : false;
+            return isString(id) && this.findExact('id', id) != -1 ? true : false;
         };
 
         config.removeDimension = function(id) {
@@ -92,7 +97,7 @@ LayoutWindow = function(config) {
         listeners: {
             afterrender: function(ms) {
                 ms.store.on('add', function() {
-                    Ext.defer( function() {
+                    setTimeout(function() {
                         ms.boundList.getSelectionModel().deselectAll();
                     }, 10);
                 });
@@ -126,7 +131,7 @@ LayoutWindow = function(config) {
                 });
 
                 ms.store.on('add', function() {
-                    Ext.defer( function() {
+                    setTimeout( function() {
                         ms.boundList.getSelectionModel().deselectAll();
                     }, 10);
                 });
@@ -160,7 +165,7 @@ LayoutWindow = function(config) {
                 });
 
                 ms.store.on('add', function() {
-                    Ext.defer( function() {
+                    setTimeout( function() {
                         ms.boundList.getSelectionModel().deselectAll();
                     }, 10);
                 });
@@ -194,7 +199,7 @@ LayoutWindow = function(config) {
                 });
 
                 ms.store.on('add', function() {
-                    Ext.defer( function() {
+                    setTimeout(function() {
                         ms.boundList.getSelectionModel().deselectAll();
                     }, 10);
                 });
@@ -279,7 +284,7 @@ LayoutWindow = function(config) {
             keys = ['dx', 'ou', 'pe', 'dates'];
 
         for (var key in map) {
-            if (map.hasOwnProperty(key) && !Ext.Array.contains(keys, key)) {
+            if (map.hasOwnProperty(key) && !arrayContains(keys, key)) {
                 removeDimension(key);
             }
         }
@@ -292,10 +297,10 @@ LayoutWindow = function(config) {
         dimensionStore.removeAll();
 
         if (!isAll) {
-            colStore.add({id: dimConf.data.dimensionName, name: dimConf.data.name});
-            rowStore.add({id: dimConf.period.dimensionName, name: dimConf.period.name});
-            filterStore.add({id: dimConf.organisationUnit.dimensionName, name: dimConf.organisationUnit.name});
-            dimensionStore.add({id: dimConf.category.dimensionName, name: dimConf.category.name});
+            colStore.add({id: confData.dimensionName, name: confData.name});
+            rowStore.add({id: confPeriod.dimensionName, name: confPeriod.name});
+            filterStore.add({id: confOrganisationUnit.dimensionName, name: confOrganisationUnit.name});
+            dimensionStore.add({id: confCategory.dimensionName, name: confCategory.name});
         }
     };
 
@@ -358,11 +363,11 @@ LayoutWindow = function(config) {
         ],
         listeners: {
             show: function(w) {
-                if (ns.app.layoutButton.rendered) {
-                    ns.core.web.window.setAnchorPosition(w, ns.app.layoutButton);
+                if (layoutButton.rendered) {
+                    c.uiManager.setAnchorPosition(w, layoutButton);
 
                     if (!w.hasHideOnBlurHandler) {
-                        ns.core.web.window.addHideOnBlurHandler(w);
+                        c.uiManager.addHideOnBlurHandler(w);
                     }
                 }
             },

@@ -2,40 +2,48 @@ import '../extjs/resources/css/ext-all-gray.css';
 import './css/style.css';
 import {isString, arrayFrom, arrayTo} from 'd2-utilizr';
 import {api, pivot, manager, config, ui, init} from 'd2-analysis';
+import {LayoutWindow} from './ui/LayoutWindow.js';
 
-// instances
+// manager instances
 var appManager = new manager.AppManager();
 var calendarManager = new manager.CalendarManager();
 var requestManager = new manager.RequestManager();
+var responseManager = new manager.ResponseManager();
 var i18nManager = new manager.I18nManager();
 var sessionStorageManager = new manager.SessionStorageManager();
 var uiManager = new manager.UiManager();
-var instanceManager = new manager.InstanceManager({
-    api: api,
-    uiManager: uiManager
-});
 
+// config instances
 var dimensionConfig = new config.DimensionConfig();
 var optionConfig = new config.OptionConfig();
 var periodConfig = new config.PeriodConfig();
 var uiConfig = new config.UiConfig();
 
-// i18n
 dimensionConfig.setI18nManager(i18nManager);
 optionConfig.setI18nManager(i18nManager);
 periodConfig.setI18nManager(i18nManager);
 
-// class fns
-appManager.applyTo([].concat(arrayTo(api), arrayTo(ui), arrayTo(init)));
-calendarManager.applyTo([].concat(arrayTo(ui)));
-requestManager.applyTo(arrayTo(init));
-i18nManager.applyTo([].concat(arrayTo(init), arrayTo(ui)));
-uiManager.applyTo(arrayTo(ui));
+// references
+var ref = {
+    appManager: appManager,
+    calendarManager: calendarManager,
+    requestManager: requestManager,
+    responseManager: responseManager,
+    i18nManager: i18nManager,
+    sessionStorageManager: sessionStorageManager,
+    uiManager: uiManager,
+    dimensionConfig: dimensionConfig,
+    optionConfig: optionConfig,
+    periodConfig: periodConfig,
+    uiConfig: uiConfig,
+    api: api,
+    pivot: pivot
+};
 
-dimensionConfig.applyTo([].concat(arrayTo(pivot), arrayTo(ui)));
-optionConfig.applyTo(arrayTo(pivot));
-periodConfig.applyTo(arrayTo(ui));
-uiConfig.applyTo(arrayTo(ui));
+// instance manager
+var instanceManager = new manager.InstanceManager(ref);
+
+instanceManager.setApiResource('reportTables');
 
 // requests
 var manifestReq = $.getJSON('manifest.webapp');
@@ -67,29 +75,15 @@ userAccountReq.done(function(userAccount) {
     calendarManager.setDateFormat(appManager.getDateFormat());
     calendarManager.generate(appManager.systemSettings.keyCalendar);
 
+requestManager.add(new api.Request(init.i18nInit(ref)));
+requestManager.add(new api.Request(init.authViewUnapprovedDataInit(ref)));
+requestManager.add(new api.Request(init.rootNodesInit(ref)));
+requestManager.add(new api.Request(init.organisationUnitLevelsInit(ref)));
+requestManager.add(new api.Request(init.legendSetsInit(ref)));
+requestManager.add(new api.Request(init.dimensionsInit(ref)));
+requestManager.add(new api.Request(init.dataApprovalLevelsInit(ref)));
 
-// i18n
-requestManager.add(new api.Request(init.i18nInit()));
-
-// authorization
-requestManager.add(new api.Request(init.authViewUnapprovedDataInit()));
-
-// root nodes
-requestManager.add(new api.Request(init.rootNodesInit()));
-
-// organisation unit levels
-requestManager.add(new api.Request(init.organisationUnitLevelsInit()));
-
-// legend sets
-requestManager.add(new api.Request(init.legendSetsInit()));
-
-// dimensions
-requestManager.add(new api.Request(init.dimensionsInit()));
-
-// approval levels
-requestManager.add(new api.Request(init.dataApprovalLevelsInit()));
-
-requestManager.set(createViewport);
+requestManager.set(createUi);
 requestManager.run();
 
 });
@@ -124,7 +118,8 @@ console.log(table);
     });
 }
 
-function createViewport() {
+function createUi() {
+
     instanceManager.setFn = function(layout, response) {
         colAxis = new pivot.TableAxis(layout, response, 'col');
         rowAxis = new pivot.TableAxis(layout, response, 'row');
@@ -132,12 +127,8 @@ function createViewport() {
         document.body.innerHTML = table.html;
     };
 
-    var viewport = new ui.Viewport({
-        appManager: appManager,
-        uiManager: uiManager,
-        i18nManager: i18nManager,
-        dimensionConfig: dimensionConfig,
-        periodConfig: periodConfig,
-        uiConfig: uiConfig,
-    });
+    var layoutWindow = new LayoutWindow(ref);
+    console.log(layoutWindow);
+
+    var viewport = new ui.Viewport(ref);
 }
