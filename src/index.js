@@ -3,6 +3,7 @@ import './css/style.css';
 import {isString, arrayFrom, arrayTo} from 'd2-utilizr';
 import {api, pivot, manager, config, ui, init} from 'd2-analysis';
 import {LayoutWindow} from './ui/LayoutWindow.js';
+import {OptionsWindow} from './ui/OptionsWindow.js';
 
 // manager instances
 var appManager = new manager.AppManager();
@@ -23,6 +24,10 @@ dimensionConfig.setI18nManager(i18nManager);
 optionConfig.setI18nManager(i18nManager);
 periodConfig.setI18nManager(i18nManager);
 
+appManager.applyTo(arrayTo(api));
+dimensionConfig.applyTo(arrayTo(pivot));
+optionConfig.applyTo(arrayTo(pivot));
+
 // references
 var ref = {
     appManager: appManager,
@@ -42,8 +47,9 @@ var ref = {
 
 // instance manager
 var instanceManager = new manager.InstanceManager(ref);
-
 instanceManager.setApiResource('reportTables');
+ref.instanceManager = instanceManager;
+
 
 // requests
 var manifestReq = $.getJSON('manifest.webapp');
@@ -119,16 +125,19 @@ console.log(table);
 }
 
 function createUi() {
-
-    instanceManager.setFn = function(layout, response) {
-        colAxis = new pivot.TableAxis(layout, response, 'col');
-        rowAxis = new pivot.TableAxis(layout, response, 'row');
-        table = new pivot.Table(layout, response, colAxis, rowAxis);
+console.log(1);
+    instanceManager.setFn(function(layout, response) {
+        var colAxis = new pivot.TableAxis(layout, response, 'col');
+        var rowAxis = new pivot.TableAxis(layout, response, 'row');
+        var table = new pivot.Table(layout, response, colAxis, rowAxis);
         document.body.innerHTML = table.html;
-    };
+    });
 
     var layoutWindow = new LayoutWindow(ref);
-    console.log(layoutWindow);
+    uiManager.register(layoutWindow, 'layoutWindow');
+
+    var optionsWindow = new OptionsWindow(ref);
+    uiManager.register(optionsWindow, 'optionsWindow');
 
     var viewport = new ui.Viewport(ref);
 }

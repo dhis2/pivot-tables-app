@@ -343,7 +343,7 @@ LayoutWindow = function(c) {
                 listeners: {
                     added: function(b) {
                         b.on('click', function() {
-                            window.hide();
+                            t.hide();
                         });
                     }
                 }
@@ -370,12 +370,15 @@ LayoutWindow = function(c) {
                         c.uiManager.addHideOnBlurHandler(w);
                     }
                 }
+
+                if (!this.shown) {
+                    this.shown = true;
+                    this.hide();
+                }
             },
             render: function() {
                 reset();
             }
         }
     }));
-
-    return window;
 };
