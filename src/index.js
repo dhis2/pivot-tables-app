@@ -125,14 +125,6 @@ console.log(table);
 }
 
 function createUi() {
-console.log(1);
-    instanceManager.setFn(function(layout, response) {
-        var colAxis = new pivot.TableAxis(layout, response, 'col');
-        var rowAxis = new pivot.TableAxis(layout, response, 'row');
-        var table = new pivot.Table(layout, response, colAxis, rowAxis);
-        document.body.innerHTML = table.html;
-    });
-
     var layoutWindow = new LayoutWindow(ref);
     uiManager.register(layoutWindow, 'layoutWindow');
 
@@ -140,4 +132,14 @@ console.log(1);
     uiManager.register(optionsWindow, 'optionsWindow');
 
     var viewport = new ui.Viewport(ref);
+
+    instanceManager.setFn(function(layout, response) {
+        var colAxis = new pivot.TableAxis(layout, response, 'col');
+        var rowAxis = new pivot.TableAxis(layout, response, 'row');
+        var table = new pivot.Table(layout, response, colAxis, rowAxis);
+
+        uiManager.get('centerRegion').update(table.html);
+
+        uiManager.unmask();
+    });
 }
