@@ -50,7 +50,6 @@ var instanceManager = new manager.InstanceManager(ref);
 instanceManager.setApiResource('reportTables');
 ref.instanceManager = instanceManager;
 
-
 // requests
 var manifestReq = $.getJSON('manifest.webapp');
 var systemInfoUrl = '/api/system/info.json';
@@ -125,11 +124,13 @@ console.log(table);
 }
 
 function createUi() {
-    var layoutWindow = new LayoutWindow(ref);
+    var layoutWindow = LayoutWindow(ref);
     uiManager.register(layoutWindow, 'layoutWindow');
+    layoutWindow.hide();
 
     var optionsWindow = new OptionsWindow(ref);
     uiManager.register(optionsWindow, 'optionsWindow');
+    optionsWindow.hide();
 
     var viewport = new ui.Viewport(ref);
 

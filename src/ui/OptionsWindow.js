@@ -10,8 +10,6 @@ OptionsWindow = function(c) {
         i18n = c.i18nManager.get(),
         optionConfig = c.optionConfig,
 
-        layoutButton = uiManager.get('layoutButton'),
-
         showColTotals,
         showRowTotals,
         showColSubTotals,
@@ -40,6 +38,7 @@ OptionsWindow = function(c) {
         events,
         style,
         parameters,
+        window,
 
         comboboxWidth = 262,
         comboBottomMargin = 1,
@@ -331,7 +330,7 @@ OptionsWindow = function(c) {
         hidden: true
     });
 
-    $.extend(this, Ext.create('Ext.window.Window', {
+    window = Ext.create('Ext.window.Window', {
         title: i18n.table_options,
         bodyStyle: 'background-color:#fff; padding:2px',
         closeAction: 'hide',
@@ -473,6 +472,8 @@ OptionsWindow = function(c) {
         ],
         listeners: {
             show: function(w) {
+                var layoutButton = uiManager.get('layoutButton');
+
                 if (layoutButton.rendered) {
                     uiManager.setAnchorPosition(w, layoutButton);
 
@@ -515,5 +516,7 @@ OptionsWindow = function(c) {
                 w.topLimit = topLimit;
             }
         }
-    }));
+    });
+
+    return window;
 };

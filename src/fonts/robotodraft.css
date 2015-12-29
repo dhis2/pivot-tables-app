@@ -1,0 +1,87 @@
+/*  Thin */
+@font-face {
+  font-family: RobotoDraft;
+  src: url("./fonts/Thin/RobotoDraft-Thin.woff2?v=1.0.0") format("woff2"), url("./fonts/Thin/RobotoDraft-Thin.woff?v=1.0.0") format("woff"), url("./fonts/Thin/RobotoDraft-Thin.ttf?v=1.0.0") format("truetype");
+  font-weight: 100;
+  font-style: normal;
+}
+  
+/*  Light */
+@font-face {
+  font-family: RobotoDraft;
+  src: url("./fonts/Light/RobotoDraft-Light.woff2?v=1.0.0") format("woff2"), url("./fonts/Light/RobotoDraft-Light.woff?v=1.0.0") format("woff"), url("./fonts/Light/RobotoDraft-Light.ttf?v=1.0.0") format("truetype");
+  font-weight: 300;
+  font-style: normal;
+}
+  
+/*  Regular */
+@font-face {
+  font-family: RobotoDraft;
+  src: url("./fonts/Regular/RobotoDraft-Regular.woff2?v=1.0.0") format("woff2"), url("./fonts/Regular/RobotoDraft-Regular.woff?v=1.0.0") format("woff"), url("./fonts/Regular/RobotoDraft-Regular.ttf?v=1.0.0") format("truetype");
+  font-weight: 400;
+  font-style: normal;
+}
+@font-face {
+  font-family: RobotoDraft;
+  src: url("./fonts/Regular/RobotoDraft-Regular.woff2?v=1.0.0") format("woff2"), url("./fonts/Regular/RobotoDraft-Regular.woff?v=1.0.0") format("woff"), url("./fonts/Regular/RobotoDraft-Regular.ttf?v=1.0.0") format("truetype");
+  font-weight: normal;
+  font-style: normal;
+}
+  
+/*  Italic */
+@font-face {
+  font-family: RobotoDraft;
+  src: url("./fonts/Italic/RobotoDraft-Italic.woff2?v=1.0.0") format("woff2"), url("./fonts/Italic/RobotoDraft-Italic.woff?v=1.0.0") format("woff"), url("./fonts/Italic/RobotoDraft-Italic.ttf?v=1.0.0") format("truetype");
+  font-weight: 400;
+  font-style: italic;
+}
+@font-face {
+  font-family: RobotoDraft;
+  src: url("./fonts/Italic/RobotoDraft-Italic.woff2?v=1.0.0") format("woff2"), url("./fonts/Italic/RobotoDraft-Italic.woff?v=1.0.0") format("woff"), url("./fonts/Italic/RobotoDraft-Italic.ttf?v=1.0.0") format("truetype");
+  font-weight: normal;
+  font-style: italic;
+}
+  
+/*  Medium */
+@font-face {
+  font-family: RobotoDraft;
+  src: url("./fonts/Medium/RobotoDraft-Medium.woff2?v=1.0.0") format("woff2"), url("./fonts/Medium/RobotoDraft-Medium.woff?v=1.0.0") format("woff"), url("./fonts/Medium/RobotoDraft-Medium.ttf?v=1.0.0") format("truetype");
+  font-weight: 500;
+  font-style: normal;
+}
+  
+/*  Bold */
+@font-face {
+  font-family: RobotoDraft;
+  src: url("./fonts/Bold/RobotoDraft-Bold.woff2?v=1.0.0") format("woff2"), url("./fonts/Bold/RobotoDraft-Bold.woff?v=1.0.0") format("woff"), url("./fonts/Bold/RobotoDraft-Bold.ttf?v=1.0.0") format("truetype");
+  font-weight: 700;
+  font-style: normal;
+}
+@font-face {
+  font-family: RobotoDraft;
+  src: url("./fonts/Bold/RobotoDraft-Bold.woff2?v=1.0.0") format("woff2"), url("./fonts/Bold/RobotoDraft-Bold.woff?v=1.0.0") format("woff"), url("./fonts/Bold/RobotoDraft-Bold.ttf?v=1.0.0") format("truetype");
+  font-weight: bold;
+  font-style: normal;
+}
+  
+/*  Bold Italic */
+@font-face {
+  font-family: RobotoDraft;
+  src: url("./fonts/BoldItalic/RobotoDraft-BoldItalic.woff2?v=1.0.0") format("woff2"), url("./fonts/BoldItalic/RobotoDraft-BoldItalic.woff?v=1.0.0") format("woff"), url("./fonts/BoldItalic/RobotoDraft-BoldItalic.ttf?v=1.0.0") format("truetype");
+  font-weight: 700;
+  font-style: italic;
+}
+@font-face {
+  font-family: RobotoDraft;
+  src: url("./fonts/BoldItalic/RobotoDraft-BoldItalic.woff2?v=1.0.0") format("woff2"), url("./fonts/BoldItalic/RobotoDraft-BoldItalic.woff?v=1.0.0") format("woff"), url("./fonts/BoldItalic/RobotoDraft-BoldItalic.ttf?v=1.0.0") format("truetype");
+  font-weight: bold;
+  font-style: italic;
+}
+  
+/*  Black */
+@font-face {
+  font-family: RobotoDraft;
+  src: url("./fonts/Black/RobotoDraft-Black.woff2?v=1.0.0") format("woff2"), url("./fonts/Black/RobotoDraft-Black.woff?v=1.0.0") format("woff"), url("./fonts/Black/RobotoDraft-Black.ttf?v=1.0.0") format("truetype");
+  font-weight: 900;
+  font-style: normal;
+}

@@ -5,13 +5,13 @@ export var LayoutWindow;
 LayoutWindow = function(c) {
     var t = this,
 
+        uiManager = c.uiManager,
+        instanceManager = c.instanceManager,
         i18n = c.i18nManager.get(),
         confData = c.dimensionConfig.get('data'),
         confPeriod = c.dimensionConfig.get('period'),
         confOrganisationUnit = c.dimensionConfig.get('organisationUnit'),
         confCategory = c.dimensionConfig.get('category'),
-
-        layoutButton = c.uiManager.get('layoutButton'),
 
         dimensionStoreMap = {},
         margin = 1,
@@ -312,7 +312,8 @@ LayoutWindow = function(c) {
         };
     };
 
-    $.extend(this, Ext.create('Ext.window.Window', {
+    //$.extend(this, Ext.create('Ext.window.Window', {
+    var window = Ext.create('Ext.window.Window', {
         title: i18n.table_layout,
         bodyStyle: 'background-color:#fff; padding:' + margin + 'px',
         closeAction: 'hide',
@@ -363,6 +364,8 @@ LayoutWindow = function(c) {
         ],
         listeners: {
             show: function(w) {
+                var layoutButton = uiManager.get('layoutButton');
+
                 if (layoutButton.rendered) {
                     c.uiManager.setAnchorPosition(w, layoutButton);
 
@@ -370,15 +373,12 @@ LayoutWindow = function(c) {
                         c.uiManager.addHideOnBlurHandler(w);
                     }
                 }
-
-                if (!this.shown) {
-                    this.shown = true;
-                    this.hide();
-                }
             },
             render: function() {
                 reset();
             }
         }
-    }));
+    });
+
+    return window;
 };
