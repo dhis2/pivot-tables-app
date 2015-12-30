@@ -128,9 +128,13 @@ function createUi() {
     uiManager.register(layoutWindow, 'layoutWindow');
     layoutWindow.hide();
 
-    var optionsWindow = new OptionsWindow(ref);
+    var optionsWindow = OptionsWindow(ref);
     uiManager.register(optionsWindow, 'optionsWindow');
     optionsWindow.hide();
+
+    var favoriteWindow = ui.FavoriteWindow(ref);
+    uiManager.register(favoriteWindow, 'favoriteWindow');
+    favoriteWindow.hide();
 
     var viewport = new ui.Viewport(ref);
 
