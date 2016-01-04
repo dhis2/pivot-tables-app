@@ -344,7 +344,7 @@ LayoutWindow = function(c) {
                 listeners: {
                     added: function(b) {
                         b.on('click', function() {
-                            t.hide();
+                            window.hide();
                         });
                     }
                 }
@@ -356,7 +356,7 @@ LayoutWindow = function(c) {
                         b.on('click', function() {
                             instanceManager.getReport();
 
-                            t.hide();
+                            window.hide();
                         });
                     }
                 }

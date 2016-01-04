@@ -7,6 +7,7 @@ OptionsWindow = function(c) {
 
         appManager = c.appManager,
         uiManager = c.uiManager,
+        instanceManager = c.instanceManager,
         i18n = c.i18nManager.get(),
         optionConfig = c.optionConfig,
 
@@ -458,7 +459,7 @@ OptionsWindow = function(c) {
             {
                 text: i18n.hide,
                 handler: function() {
-                    t.hide();
+                    window.hide();
                 }
             },
             {
@@ -466,7 +467,7 @@ OptionsWindow = function(c) {
                 handler: function() {
                     instanceManager.getReport();
 
-                    t.hide();
+                    window.hide();
                 }
             }
         ],
