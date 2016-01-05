@@ -124,16 +124,13 @@ console.log(table);
 }
 
 function createUi() {
-    var layoutWindow = LayoutWindow(ref);
-    uiManager.register(layoutWindow, 'layoutWindow');
+    var layoutWindow = uiManager.register(LayoutWindow(ref), 'layoutWindow');
     layoutWindow.hide();
 
-    var optionsWindow = OptionsWindow(ref);
-    uiManager.register(optionsWindow, 'optionsWindow');
+    var optionsWindow = uiManager.register(OptionsWindow(ref), 'optionsWindow');
     optionsWindow.hide();
 
-    var favoriteWindow = ui.FavoriteWindow(ref);
-    uiManager.register(favoriteWindow, 'favoriteWindow');
+    var favoriteWindow = uiManager.register(ui.FavoriteWindow(ref), 'favoriteWindow');
     favoriteWindow.hide();
 
     var viewport = new ui.Viewport(ref);

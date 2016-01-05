@@ -364,7 +364,7 @@ LayoutWindow = function(c) {
         ],
         listeners: {
             show: function(w) {
-                var layoutButton = uiManager.get('layoutButton');
+                var layoutButton = uiManager.get('layoutButton') || {};
 
                 if (layoutButton.rendered) {
                     c.uiManager.setAnchorPosition(w, layoutButton);

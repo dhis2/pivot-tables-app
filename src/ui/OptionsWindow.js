@@ -473,19 +473,14 @@ OptionsWindow = function(c) {
         ],
         listeners: {
             show: function(w) {
-                var layoutButton = uiManager.get('layoutButton');
+                var optionsButton = uiManager.get('optionsButton') || {};
 
-                if (layoutButton.rendered) {
-                    uiManager.setAnchorPosition(w, layoutButton);
+                if (optionsButton.rendered) {
+                    uiManager.setAnchorPosition(w, optionsButton);
 
                     if (!w.hasHideOnBlurHandler) {
                         uiManager.addHideOnBlurHandler(w);
                     }
-                }
-
-                if (!this.shown) {
-                    this.shown = true;
-                    this.hide();
                 }
 
                 if (!legendSet.store.isLoaded) {
