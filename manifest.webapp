@@ -11,7 +11,7 @@
   "default_locale": "en",
   "activities": {
     "dhis": {
-      "href": "http://localhost:8080",
+      "href": "https://play.dhis2.org/dev",
       "auth": "admin:district"
     }
   }

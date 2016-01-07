@@ -142,6 +142,8 @@ function createUi() {
 
         uiManager.get('centerRegion').update(table.html);
 
+        uiManager.setState(null, layout);
+
         uiManager.unmask();
     });
 }
