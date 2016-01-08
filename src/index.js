@@ -135,7 +135,9 @@ function createUi() {
 
     var viewport = new ui.Viewport(ref);
 
-    instanceManager.setFn(function(layout, response) {
+    instanceManager.setFn(function(layout) {
+        var response = layout.getResponse();
+
         var colAxis = new pivot.TableAxis(layout, response, 'col');
         var rowAxis = new pivot.TableAxis(layout, response, 'row');
         var table = new pivot.Table(layout, response, colAxis, rowAxis);
