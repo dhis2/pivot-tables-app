@@ -92,10 +92,7 @@ requestManager.add(new api.Request(init.dataApprovalLevelsInit(ref)));
 requestManager.set(createUi);
 requestManager.run();
 
-});
-});
-});
-});
+});});});});
 
 function getTable() {
     var response,colAxis,rowAxis,table;
@@ -135,18 +132,8 @@ function createUi() {
     favoriteWindow.hide();
 
     var northRegion = uiManager.register(ui.NorthRegion(ref, {
-        cls: 'meringue',
-        config: {
-            //appName: 'PIVOT TABLES (' + ns.core.init.systemInfo.version + ')',
-            appName: 'PIVOT TABLES',
-            aboutFn: function() {
-                uiManager.register(ui.AboutWindow(ref), 'aboutWindow').show();
-            }
-        }
+        appName: 'PIVOT TABLES',
     }), 'northRegion');
-
-
-console.log(northRegion);
 
     var viewport = ui.Viewport(ref, {
         northRegion: northRegion
