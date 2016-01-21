@@ -60,7 +60,7 @@
 	/* Title item */
 	.meringue.toolbar-north .x-toolbar-text.title {
 		border-left: 1px solid #e1e1e1;
-		padding-left: 7px;
+		padding-left: 10px;
 	}
 		.meringue.toolbar-north .x-toolbar-text.title.unsaved {
 			color: red !important;
@@ -69,6 +69,7 @@
 
 	/* About/home items */
 	.meringue.toolbar-north .x-toolbar-text.about {
+        text-transform: capitalize;
 		padding: 0 7px;
 		border-bottom: 1px solid transparent;
 	}

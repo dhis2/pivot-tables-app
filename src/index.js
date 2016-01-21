@@ -27,7 +27,7 @@ periodConfig.setI18nManager(i18nManager);
 
 appManager.applyTo(arrayTo(api));
 dimensionConfig.applyTo(arrayTo(pivot));
-optionConfig.applyTo(arrayTo(pivot));
+optionConfig.applyTo([].concat(arrayTo(api), arrayTo(pivot)));
 
 // references
 var ref = {
@@ -132,7 +132,7 @@ function createUi() {
     favoriteWindow.hide();
 
     var northRegion = uiManager.register(ui.NorthRegion(ref, {
-        appName: 'PIVOT TABLES',
+        appName: 'Pivot Tables',
     }), 'northRegion');
 
     var viewport = ui.Viewport(ref, {
@@ -146,10 +146,7 @@ function createUi() {
         var colAxis = new pivot.TableAxis(layout, response, 'col');
         var rowAxis = new pivot.TableAxis(layout, response, 'row');
         var table = new pivot.Table(layout, response, colAxis, rowAxis);
-        uiManager.getUpdateComponent().update(table.html);
-
-        // state
-        instanceManager.setState(null, layout);
+        uiManager.update(table.html);
 
         // mask
         uiManager.unmask();
