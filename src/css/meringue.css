@@ -43,13 +43,13 @@
 		height: 36px;
 		font-size: 13px;
 		font-weight: 400;
-		color: #555 !important;
+		color: #444 !important;
 		line-height: 37px;
 	}
 
 	/* Logo item */
 	.meringue.toolbar-north .x-toolbar-text.logo {
-		color: #444 !important;
+		color: #333 !important;
 		padding-left: 6px;
 	}
 		.meringue.toolbar-north .x-toolbar-text.logo .brand {
@@ -63,12 +63,20 @@
 		padding-left: 10px;
 	}
 		.meringue.toolbar-north .x-toolbar-text.title.unsaved {
-			color: red !important;
+			color: #888 !important;
 			border-left-color: #ddd;
+/*
+			color: #D52222 !important;
+*/
+		}
+
+		.meringue.toolbar-north .x-toolbar-text.title.unsaved::before {
+			content: "* ";
 		}
 
 	/* About/home items */
 	.meringue.toolbar-north .x-toolbar-text.about {
+		color: #444;
         text-transform: capitalize;
 		padding: 0 7px;
 		border-bottom: 1px solid transparent;

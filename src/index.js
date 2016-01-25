@@ -122,14 +122,15 @@ console.log(table);
 }
 
 function createUi() {
+
     var layoutWindow = uiManager.register(LayoutWindow(ref), 'layoutWindow');
     layoutWindow.hide();
 
     var optionsWindow = uiManager.register(OptionsWindow(ref), 'optionsWindow');
     optionsWindow.hide();
 
-    var favoriteWindow = uiManager.register(ui.FavoriteWindow(ref), 'favoriteWindow');
-    favoriteWindow.hide();
+    //var favoriteWindow = uiManager.register(ui.FavoriteWindow(ref), 'favoriteWindow');
+    //favoriteWindow.hide();
 
     var northRegion = uiManager.register(ui.NorthRegion(ref, {
         appName: 'Pivot Tables',
