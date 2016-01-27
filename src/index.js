@@ -122,7 +122,6 @@ console.log(table);
 }
 
 function createUi() {
-
     uiManager.disableRightClick();
 
     var layoutWindow = uiManager.register(LayoutWindow(ref), 'layoutWindow');
