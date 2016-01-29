@@ -51,6 +51,10 @@ var instanceManager = new manager.InstanceManager(ref);
 instanceManager.setApiResource('reportTables');
 ref.instanceManager = instanceManager;
 
+// table manager
+var tableManager = new manager.TableManager(ref);
+ref.tableManager = tableManager;
+
 // requests
 var manifestReq = $.getJSON('manifest.webapp');
 var systemInfoUrl = '/api/system/info.json';
@@ -144,11 +148,18 @@ function createUi() {
     instanceManager.setFn(function(layout) {
 
         // table
+        if (layout.sorting) {
+            layout.sort();
+        }
+
         var response = layout.getResponse();
         var colAxis = new pivot.TableAxis(layout, response, 'col');
         var rowAxis = new pivot.TableAxis(layout, response, 'row');
         var table = new pivot.Table(layout, response, colAxis, rowAxis);
         uiManager.update(table.html);
+
+        // events
+        tableManager.setColumnHeaderMouseHandlers(layout, table.sortableIdObjects);
 
         // mask
         uiManager.unmask();
