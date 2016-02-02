@@ -146,20 +146,35 @@ function createUi() {
     });
 
     instanceManager.setFn(function(layout) {
+        var sortingId = layout.sorting ? layout.sorting.id : null,
+            table;
 
-        // table
-        if (layout.sorting) {
+        // get table
+        var getTable = function() {
+            var response = layout.getResponse();
+            var colAxis = new pivot.TableAxis(layout, response, 'col');
+            var rowAxis = new pivot.TableAxis(layout, response, 'row');
+            return new pivot.Table(layout, response, colAxis, rowAxis);
+        };
+
+        // sort by id
+        if (sortingId && sortingId !== 'total') {
             layout.sort();
         }
 
-        var response = layout.getResponse();
-        var colAxis = new pivot.TableAxis(layout, response, 'col');
-        var rowAxis = new pivot.TableAxis(layout, response, 'row');
-        var table = new pivot.Table(layout, response, colAxis, rowAxis);
+        // table
+       table = getTable();
+
+        // sort by total
+        if (sortingId && sortingId === 'total') {
+            layout.sort(table);
+            table = getTable();
+        }
+
         uiManager.update(table.html);
 
         // events
-        tableManager.setColumnHeaderMouseHandlers(layout, table.sortableIdObjects);
+        tableManager.setColumnHeaderMouseHandlers(layout, table);
 
         // mask
         uiManager.unmask();
