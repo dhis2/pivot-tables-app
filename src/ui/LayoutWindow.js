@@ -8,10 +8,12 @@ LayoutWindow = function(c) {
         uiManager = c.uiManager,
         instanceManager = c.instanceManager,
         i18n = c.i18nManager.get(),
-        confData = c.dimensionConfig.get('data'),
-        confPeriod = c.dimensionConfig.get('period'),
-        confOrganisationUnit = c.dimensionConfig.get('organisationUnit'),
-        confCategory = c.dimensionConfig.get('category'),
+        dimConf = c.dimensionConfig,
+
+        confData = dimConf.get('data'),
+        confPeriod = dimConf.get('period'),
+        confOrganisationUnit = dimConf.get('organisationUnit'),
+        confCategory = dimConf.get('category'),
 
         dimensionStoreMap = {},
         margin = 1,
@@ -304,6 +306,33 @@ LayoutWindow = function(c) {
         }
     };
 
+    var setDimensions = function(layout) {
+
+        // columns
+        layout.columns.forEach(function(dimension) {
+            addDimension({
+                id: dimension.dimension,
+                name: dimConf.get(dimension.dimension).name
+            }, colStore);
+        });
+
+        // rows
+        layout.rows.forEach(function(dimension) {
+            addDimension({
+                id: dimension.dimension,
+                name: dimConf.get(dimension.dimension).name
+            }, rowStore);
+        });
+
+        // filters
+        layout.filters.forEach(function(dimension) {
+            addDimension({
+                id: dimension.dimension,
+                name: dimConf.get(dimension.dimension).name
+            }, filterStore);
+        });
+    };
+
     var getSetup = function() {
         return {
             col: getStoreKeys(colStore),
@@ -328,6 +357,9 @@ LayoutWindow = function(c) {
         addDimension: addDimension,
         removeDimension: removeDimension,
         hasDimension: hasDimension,
+        setDimensions: setDimensions,
+        reset: reset,
+        resetData: resetData,
         hideOnBlur: true,
         items: {
             layout: 'column',

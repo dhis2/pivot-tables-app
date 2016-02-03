@@ -14,6 +14,8 @@ var responseManager = new manager.ResponseManager();
 var i18nManager = new manager.I18nManager();
 var sessionStorageManager = new manager.SessionStorageManager();
 var uiManager = new manager.UiManager();
+var instanceManager;
+var tableManager;
 
 // config instances
 var dimensionConfig = new config.DimensionConfig();
@@ -21,13 +23,10 @@ var optionConfig = new config.OptionConfig();
 var periodConfig = new config.PeriodConfig();
 var uiConfig = new config.UiConfig();
 
+// set i18n
 dimensionConfig.setI18nManager(i18nManager);
 optionConfig.setI18nManager(i18nManager);
 periodConfig.setI18nManager(i18nManager);
-
-appManager.applyTo(arrayTo(api));
-dimensionConfig.applyTo(arrayTo(pivot));
-optionConfig.applyTo([].concat(arrayTo(api), arrayTo(pivot)));
 
 // references
 var ref = {
@@ -47,13 +46,20 @@ var ref = {
 };
 
 // instance manager
-var instanceManager = new manager.InstanceManager(ref);
+instanceManager = new manager.InstanceManager(ref);
 instanceManager.setApiResource('reportTables');
 ref.instanceManager = instanceManager;
 
 // table manager
-var tableManager = new manager.TableManager(ref);
+tableManager = new manager.TableManager(ref);
 ref.tableManager = tableManager;
+
+// apply to
+appManager.applyTo(arrayTo(api));
+instanceManager.applyTo(arrayTo(api));
+uiManager.applyTo(arrayTo(api));
+dimensionConfig.applyTo(arrayTo(pivot));
+optionConfig.applyTo([].concat(arrayTo(api), arrayTo(pivot)));
 
 // requests
 var manifestReq = $.getJSON('manifest.webapp');
