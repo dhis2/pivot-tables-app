@@ -157,15 +157,15 @@ function createUi() {
             return new pivot.Table(layout, response, colAxis, rowAxis);
         };
 
-        // sort by id
+        // pre-sort if id
         if (sortingId && sortingId !== 'total') {
             layout.sort();
         }
 
         // table
-       table = getTable();
+        table = getTable();
 
-        // sort by total
+        // sort if total
         if (sortingId && sortingId === 'total') {
             layout.sort(table);
             table = getTable();
