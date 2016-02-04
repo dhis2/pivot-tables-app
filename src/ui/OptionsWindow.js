@@ -373,13 +373,13 @@ OptionsWindow = function(c) {
             showDimensionLabels.setValue(isBoolean(layout.showDimensionLabels) ? layout.showDimensionLabels : true);
             hideEmptyRows.setValue(isBoolean(layout.hideEmptyRows) ? layout.hideEmptyRows : false);
             skipRounding.setValue(isBoolean(layout.skipRounding) ? layout.skipRounding : false);
-            aggregationType.setValue(isString(layout.aggregationType) ? layout.aggregationType : finalsStyleConf.default_);
-            dataApprovalLevel.setValue(isObject(layout.dataApprovalLevel) && isString(layout.dataApprovalLevel.id) ? layout.dataApprovalLevel.id : finalsStyleConf.default_);
+            aggregationType.setValue(isString(layout.aggregationType) ? layout.aggregationType : optionConfig.getAggregationType('def').id);
+            dataApprovalLevel.setValue(isObject(layout.dataApprovalLevel) && isString(layout.dataApprovalLevel.id) ? layout.dataApprovalLevel.id : optionConfig.getDataApprovalLevel('def').id);
             showHierarchy.setValue(isBoolean(layout.showHierarchy) ? layout.showHierarchy : false);
             completedOnly.setValue(isBoolean(layout.completedOnly) ? layout.completedOnly : false);
-            displayDensity.setValue(isString(layout.displayDensity) ? layout.displayDensity : finalsStyleConf.normal);
-            fontSize.setValue(isString(layout.fontSize) ? layout.fontSize : finalsStyleConf.normal);
-            digitGroupSeparator.setValue(isString(layout.digitGroupSeparator) ? layout.digitGroupSeparator : finalsStyleConf.space);
+            displayDensity.setValue(isString(layout.displayDensity) ? layout.displayDensity : optionConfig.getDisplayDensity('normal').id);
+            fontSize.setValue(isString(layout.fontSize) ? layout.fontSize : optionConfig.getFontSize('normal').id);
+            digitGroupSeparator.setValue(isString(layout.digitGroupSeparator) ? layout.digitGroupSeparator : optionConfig.getDigitGroupSeparator('space').id);
             legendSet.setValue(isObject(layout.legendSet) && isString(layout.legendSet.id) ? layout.legendSet.id : 0);
             reportingPeriod.setValue(isBoolean(layout.reportingPeriod) ? layout.reportingPeriod : false);
             organisationUnit.setValue(isBoolean(layout.organisationUnit) ? layout.organisationUnit : false);

@@ -8,12 +8,12 @@ LayoutWindow = function(c) {
         uiManager = c.uiManager,
         instanceManager = c.instanceManager,
         i18n = c.i18nManager.get(),
-        dimConf = c.dimensionConfig,
+        dimensionConfig = c.dimensionConfig,
 
-        confData = dimConf.get('data'),
-        confPeriod = dimConf.get('period'),
-        confOrganisationUnit = dimConf.get('organisationUnit'),
-        confCategory = dimConf.get('category'),
+        confData = dimensionConfig.get('data'),
+        confPeriod = dimensionConfig.get('period'),
+        confOrganisationUnit = dimensionConfig.get('organisationUnit'),
+        confCategory = dimensionConfig.get('category'),
 
         dimensionStoreMap = {},
         margin = 1,
@@ -312,7 +312,7 @@ LayoutWindow = function(c) {
         layout.columns.forEach(function(dimension) {
             addDimension({
                 id: dimension.dimension,
-                name: dimConf.get(dimension.dimension).name
+                name: dimensionConfig.get(dimension.dimension).name
             }, colStore);
         });
 
@@ -320,7 +320,7 @@ LayoutWindow = function(c) {
         layout.rows.forEach(function(dimension) {
             addDimension({
                 id: dimension.dimension,
-                name: dimConf.get(dimension.dimension).name
+                name: dimensionConfig.get(dimension.dimension).name
             }, rowStore);
         });
 
@@ -328,7 +328,7 @@ LayoutWindow = function(c) {
         layout.filters.forEach(function(dimension) {
             addDimension({
                 id: dimension.dimension,
-                name: dimConf.get(dimension.dimension).name
+                name: dimensionConfig.get(dimension.dimension).name
             }, filterStore);
         });
     };
@@ -341,7 +341,6 @@ LayoutWindow = function(c) {
         };
     };
 
-    //$.extend(this, Ext.create('Ext.window.Window', {
     var window = Ext.create('Ext.window.Window', {
         title: i18n.table_layout,
         bodyStyle: 'background-color:#fff; padding:' + margin + 'px',
