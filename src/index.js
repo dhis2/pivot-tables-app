@@ -104,33 +104,6 @@ requestManager.run();
 
 });});});});
 
-function getTable() {
-    var response,colAxis,rowAxis,table;
-
-    var layout = new api.Layout({"id":"C0rhAq1oklh","name":"ANC: Coverages Quarterly","hideEmptyRows":false,"parentGraphMap":{"ImspTQPwCqd":""},"rowSubTotals":false,"displayDensity":"NORMAL","completedOnly":false,"colTotals":true,"showDimensionLabels":false,"sortOrder":0,"fontSize":"NORMAL","topLimit":0,"aggregationType":"DEFAULT","displayName":"ANC: Coverages Quarterly","colSubTotals":false,"showHierarchy":false,"rowTotals":true,"cumulative":false,"digitGroupSeparator":"SPACE","regression":false,"skipRounding":false,"reportParams":{"paramGrandParentOrganisationUnit":false,"paramReportingPeriod":false,"paramParentOrganisationUnit":false,"paramOrganisationUnit":true},"attributeDimensions":[],"programIndicatorDimensions":[],"attributeValues":[],"dataDimensionItems":[{"dataDimensionItemType":"INDICATOR","indicator":{"id":"Uvn6LCg7dVU","name":"ANC 1 Coverage","code":"IN_52486","created":"2012-11-13T12:51:32.215+0000","lastUpdated":"2015-04-10T14:01:56.760+0000"}},{"dataDimensionItemType":"INDICATOR","indicator":{"id":"OdiHJayrsKo","name":"ANC 2 Coverage","code":"IN_52491","created":"2012-11-13T12:51:38.949+0000","lastUpdated":"2015-04-10T14:02:17.622+0000"}},{"dataDimensionItemType":"INDICATOR","indicator":{"id":"sB79w2hiLp8","name":"ANC 3 Coverage","created":"2012-11-13T12:51:45.321+0000","lastUpdated":"2015-04-10T14:32:25.625+0000"}}],"columns":[{"dimension":"ou","items":[{"id":"ImspTQPwCqd","name":"Sierra Leone"}]},{"dimension":"dx","items":[{"id":"Uvn6LCg7dVU","name":"ANC 1 Coverage"},{"id":"OdiHJayrsKo","name":"ANC 2 Coverage"},{"id":"sB79w2hiLp8","name":"ANC 3 Coverage"}]}],"dataElementDimensions":[],"categoryDimensions":[],"filters":[],"rows":[{"dimension":"pe","items":[{"id":"LAST_4_QUARTERS","name":"LAST_4_QUARTERS"}]}],"categoryOptionGroups":[]});
-console.log("layout", layout);
-    var reqMap = layout.data();
-
-    reqMap.metaData.done(function(md) {
-console.log("md", md);
-
-        reqMap.data.done(function(json) {
-            json.metaData = md.metaData;
-console.log("json", json);
-
-            response = new api.Response(json);
-            colAxis = new pivot.TableAxis(layout, response, 'col');
-            rowAxis = new pivot.TableAxis(layout, response, 'row');
-            table = new pivot.Table(layout, response, colAxis, rowAxis);
-            document.body.innerHTML = table.html;
-console.log(response);
-console.log(colAxis);
-console.log(rowAxis);
-console.log(table);
-        });
-    });
-}
-
 function createUi() {
     uiManager.disableRightClick();
 

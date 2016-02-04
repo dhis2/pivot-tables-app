@@ -1,4 +1,4 @@
-import {isString, arrayContains, clone} from 'd2-utilizr';
+import {isString, isArray, arrayContains, clone} from 'd2-utilizr';
 
 export var LayoutWindow;
 
@@ -309,28 +309,34 @@ LayoutWindow = function(c) {
     var setDimensions = function(layout) {
 
         // columns
-        layout.columns.forEach(function(dimension) {
-            addDimension({
-                id: dimension.dimension,
-                name: dimensionConfig.get(dimension.dimension).name
-            }, colStore);
-        });
+        if (isArray(layout.columns)) {
+            layout.columns.forEach(function(dimension) {
+                addDimension({
+                    id: dimension.dimension,
+                    name: dimensionConfig.get(dimension.dimension).name
+                }, colStore);
+            });
+        }
 
         // rows
-        layout.rows.forEach(function(dimension) {
-            addDimension({
-                id: dimension.dimension,
-                name: dimensionConfig.get(dimension.dimension).name
-            }, rowStore);
-        });
+        if (isArray(layout.rows)) {
+            layout.rows.forEach(function(dimension) {
+                addDimension({
+                    id: dimension.dimension,
+                    name: dimensionConfig.get(dimension.dimension).name
+                }, rowStore);
+            });
+        }
 
         // filters
-        layout.filters.forEach(function(dimension) {
-            addDimension({
-                id: dimension.dimension,
-                name: dimensionConfig.get(dimension.dimension).name
-            }, filterStore);
-        });
+        if (isArray(layout.filters)) {
+            layout.filters.forEach(function(dimension) {
+                addDimension({
+                    id: dimension.dimension,
+                    name: dimensionConfig.get(dimension.dimension).name
+                }, filterStore);
+            });
+        }
     };
 
     var getSetup = function() {
