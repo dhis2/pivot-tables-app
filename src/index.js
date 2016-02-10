@@ -105,25 +105,27 @@ requestManager.run();
 });});});});
 
 function createUi() {
+
+    // app manager
+    appManager.appName = 'Pivot Tables';
+
+    // ui manager
     uiManager.disableRightClick();
 
-    var layoutWindow = uiManager.register(LayoutWindow(ref), 'layoutWindow');
-    layoutWindow.hide();
+    uiManager.setIntroHtml(function() {
+        return '<div class="ns-viewport-text" style="padding:20px">' +
+            '<h3>' + i18nManager.get('example1') + '</h3>' +
+            '<div>- ' + i18nManager.get('example2') + '</div>' +
+            '<div>- ' + i18nManager.get('example3') + '</div>' +
+            '<div>- ' + i18nManager.get('example4') + '</div>' +
+            '<h3 style="padding-top:20px">' + i18nManager.get('example5') + '</h3>' +
+            '<div>- ' + i18nManager.get('example6') + '</div>' +
+            '<div>- ' + i18nManager.get('example7') + '</div>' +
+            '<div>- ' + i18nManager.get('example8') + '</div>' +
+            '</div>';
+    }());
 
-    var optionsWindow = uiManager.register(OptionsWindow(ref), 'optionsWindow');
-    optionsWindow.hide();
-
-    var favoriteWindow = uiManager.register(ui.FavoriteWindow(ref), 'favoriteWindow');
-    favoriteWindow.hide();
-
-    var northRegion = uiManager.register(ui.NorthRegion(ref, {
-        appName: 'Pivot Tables',
-    }), 'northRegion');
-
-    var viewport = ui.Viewport(ref, {
-        northRegion: northRegion
-    });
-
+    // instance manager
     instanceManager.setFn(function(layout) {
         var sortingId = layout.sorting ? layout.sorting.id : null,
             table;
@@ -153,9 +155,27 @@ function createUi() {
         uiManager.update(table.html);
 
         // events
-        tableManager.setColumnHeaderMouseHandlers(layout, table);
+        //tableManager.setColumnHeaderMouseHandlers(layout, table);
+        tableManager.setColumnHeaderMouseHandlers(instanceManager.getStateCurrent(), table);
 
         // mask
         uiManager.unmask();
+    });
+
+    // windows
+    var layoutWindow = uiManager.register(LayoutWindow(ref), 'layoutWindow');
+    layoutWindow.hide();
+
+    var optionsWindow = uiManager.register(OptionsWindow(ref), 'optionsWindow');
+    optionsWindow.hide();
+
+    var favoriteWindow = uiManager.register(ui.FavoriteWindow(ref), 'favoriteWindow');
+    favoriteWindow.hide();
+
+    // viewport
+    var northRegion = uiManager.register(ui.NorthRegion(ref), 'northRegion');
+
+    var viewport = ui.Viewport(ref, {
+        northRegion: northRegion
     });
 }
