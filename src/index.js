@@ -155,8 +155,7 @@ function createUi() {
         uiManager.update(table.html);
 
         // events
-        //tableManager.setColumnHeaderMouseHandlers(layout, table);
-        tableManager.setColumnHeaderMouseHandlers(instanceManager.getStateCurrent(), table);
+        tableManager.setColumnHeaderMouseHandlers(layout, table);
 
         // mask
         uiManager.unmask();
@@ -179,3 +178,7 @@ function createUi() {
         northRegion: northRegion
     });
 }
+
+global.appManager = appManager;
+global.instanceManager = instanceManager;
+global.uiManager = uiManager;
