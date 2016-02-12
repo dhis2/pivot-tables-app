@@ -339,6 +339,9 @@ OptionsWindow = function(c) {
         modal: true,
         resizable: false,
         hideOnBlur: true,
+        reset: function() {
+            this.setOptions();
+        },
         getOptions: function() {
             return {
                 showRowTotals: showRowTotals.getValue(),
@@ -366,6 +369,8 @@ OptionsWindow = function(c) {
             };
         },
         setOptions: function(layout) {
+            layout = layout || {};
+
             showRowTotals.setValue(isBoolean(layout.showRowTotals) ? layout.showRowTotals : true);
             showColTotals.setValue(isBoolean(layout.showColTotals) ? layout.showColTotals : true);
             showColSubTotals.setValue(isBoolean(layout.showColSubTotals) ? layout.showColSubTotals : true);
