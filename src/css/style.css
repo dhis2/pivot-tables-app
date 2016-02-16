@@ -604,7 +604,7 @@ table.pivot.fontsize-SMALL td {
 
 	/* Background */
 .x-toolbar-default {
-    border-color: #D0D0D0;
+    border-color: #d6d6d6;
     background-image: none;
     background-color: #f3f3f3;
     background-image: -webkit-gradient(linear, 50% 0%, 50% 100%, color-stop(0%, #f1f1f1), color-stop(100%, #f5f5f5));
@@ -615,7 +615,7 @@ table.pivot.fontsize-SMALL td {
     background-image: linear-gradient(top, #f1f1f1,#f5f5f5);
 }
 .ns-toolbar-main {
-    border-color: #D0D0D0;
+    border-color: #d6d6d6;
     background-image: none;
     background-color: #f1f1f1;
     background-image: -webkit-gradient(linear, 50% 0%, 50% 100%, color-stop(0%, #e3e3e3), color-stop(100%, #eaeaea));
@@ -876,7 +876,7 @@ table.pivot.fontsize-SMALL td {
 
 .ns-grid .x-grid-cell-inner,
 .ns-grid .x-grid-cell-inner * {
-	font-size: 10px !important;
+	font-size: 11px !important;
 }
 .ns-grid .x-grid-cell-inner {
 	padding-top: 3px;
@@ -888,10 +888,10 @@ table.pivot.fontsize-SMALL td {
 }
 .ns-grid .x-grid-header-ct {
 	border-bottom-width: 1px !important;
-	border-bottom-color: #d0d0d0;
+	border-bottom-color: #d6d6d6;
 }
 .ns-grid .x-grid-body {
-	border: 1px solid #d0d0d0;
+	border: 1px solid #d6d6d6;
 	border-top: 0 none !important;
 }
 
@@ -909,7 +909,7 @@ table.pivot.fontsize-SMALL td {
 .ns-grid .link * {
 	cursor: pointer;
 	cursor: hand;
-	color: blue;
+	color: #001EFF;
 	text-decoration: underline;
 }
 

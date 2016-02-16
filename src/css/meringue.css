@@ -74,6 +74,11 @@
 			content: "* ";
 		}
 
+		.meringue.toolbar-north .x-toolbar-text.title.untitled {
+            color: #777 !important;
+            font-style: italic;
+        }
+
 	/* About/home items */
 	.meringue.toolbar-north .x-toolbar-text.about {
 		color: #444;
