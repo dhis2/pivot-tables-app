@@ -1,0 +1,19 @@
+.d2analysis-gridheaders {
+    border-color: #fff !important;
+    background: #fff !important;
+}
+
+    .d2analysis-gridheaders .x-btn-inner {
+        font-size: 10px !important;
+        text-transform: uppercase !important;
+        color: #555 !important;
+    }
+
+        .d2analysis-gridheaders .x-btn-default-toolbar-small-over .x-btn-inner {
+            color: #333 !important;
+        }
+
+    .d2analysis-gridheaders .x-btn-default-toolbar-small-over {
+        border-color: #fff !important;
+        background: #fff !important;
+    }

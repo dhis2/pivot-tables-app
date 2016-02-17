@@ -1,6 +1,7 @@
 import '../extjs/resources/css/ext-all-gray.css';
 import './css/style.css';
 import './css/meringue.css';
+import './css/GridHeaders.css';
 import {isString, arrayFrom, arrayTo} from 'd2-utilizr';
 import {api, pivot, manager, config, ui, init} from 'd2-analysis';
 import {LayoutWindow} from './ui/LayoutWindow.js';
