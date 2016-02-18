@@ -376,10 +376,12 @@ table.pivot.fontsize-SMALL td {
 
 .x-panel-body {
     font-size: 11px;
+    border-color: #dadada;
 }
 .x-panel .x-grid-body {
     border-style: none;
 }
+
 
 
 /*----------------------------------------------------------------------------
@@ -604,26 +606,9 @@ table.pivot.fontsize-SMALL td {
 
 	/* Background */
 .x-toolbar-default {
-    border-color: #d6d6d6;
+    border-color: #dadada;
     background-image: none;
-    background-color: #f3f3f3;
-    background-image: -webkit-gradient(linear, 50% 0%, 50% 100%, color-stop(0%, #f1f1f1), color-stop(100%, #f5f5f5));
-    background-image: -webkit-linear-gradient(top, #f1f1f1,#f5f5f5);
-    background-image: -moz-linear-gradient(top, #f1f1f1,#f5f5f5);
-    background-image: -o-linear-gradient(top, #f1f1f1,#f5f5f5);
-    background-image: -ms-linear-gradient(top, #f1f1f1,#f5f5f5);
-    background-image: linear-gradient(top, #f1f1f1,#f5f5f5);
-}
-.ns-toolbar-main {
-    border-color: #d6d6d6;
-    background-image: none;
-    background-color: #f1f1f1;
-    background-image: -webkit-gradient(linear, 50% 0%, 50% 100%, color-stop(0%, #e3e3e3), color-stop(100%, #eaeaea));
-    background-image: -webkit-linear-gradient(top, #e3e3e3,#eaeaea);
-    background-image: -moz-linear-gradient(top, #e3e3e3,#eaeaea);
-    background-image: -o-linear-gradient(top, #e3e3e3,#eaeaea);
-    background-image: -ms-linear-gradient(top, #e3e3e3,#eaeaea);
-    background-image: linear-gradient(top, #e3e3e3,#eaeaea);
+    background-color: #f6f6f6;
 }
 
 
