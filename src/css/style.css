@@ -900,6 +900,19 @@ table.pivot.fontsize-SMALL td {
 
 
 /*----------------------------------------------------------------------------
+ * Window
+ *--------------------------------------------------------------------------*/
+
+.x-window-header-text-default {
+    font-size: 10px !important;
+    text-transform: uppercase !important;
+    text-align: center !important;
+    color: #444 !important;
+    padding-left: 8px !important;
+}
+
+
+/*----------------------------------------------------------------------------
  * PT Window
  *--------------------------------------------------------------------------*/
 

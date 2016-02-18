@@ -3,7 +3,11 @@
     background: #fff !important;
     font-size: 10px !important;
     text-transform: uppercase !important;
-    color: #777 !important;
-    font-weight: 600 !important;
+    color: #666 !important;
+    font-weight: 400 !important;
     padding-left: 1px !important;
+}
+
+.d2analysis-gridheaders .x-btn-over * {
+    color: #222 !important;
 }
