@@ -50,7 +50,7 @@
 	/* Logo item */
 	.meringue.toolbar-north .x-toolbar-text.logo {
 		color: #333 !important;
-		padding-left: 6px;
+		padding-left: 8px;
 	}
 		.meringue.toolbar-north .x-toolbar-text.logo .brand {
 			color: #444;

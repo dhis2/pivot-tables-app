@@ -1,4 +1,7 @@
-import {isString, isArray, arrayContains, clone} from 'd2-utilizr';
+import isString from 'd2-utilizr/lib/isString';
+import isArray from 'd2-utilizr/lib/isArray';
+import arrayContains from 'd2-utilizr/lib/arrayContains';
+import clone from 'd2-utilizr/lib/clone';
 
 export var LayoutWindow;
 

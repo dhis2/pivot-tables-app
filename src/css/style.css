@@ -53,8 +53,7 @@ body,
 .x-form-item,
 .x-panel-header-text-default,
 .x-grid-cell-inner,
-.x-form-item-label,
-.x-window-header-text-default {
+.x-form-item-label {
     font-size: 11px;
 	font-family: 'Arial','Sans-serif','Roboto','Helvetica','Consolas';
 }
@@ -697,6 +696,20 @@ table.pivot.fontsize-SMALL td {
     background-image:url('../images/check-un.png');
 }
 
+/* Favorite */
+
+.ns-menu-item-favorite-new {
+    background-image:url('../images/fav-new.png');
+}
+
+.ns-menu-item-favorite-open {
+    background-image:url('../images/fav-open.png');
+}
+
+.ns-menu-item-favorite-save {
+    background-image:url('../images/fav-save.png');
+}
+
 
 	/* Menu align */
 .ns-btn-menu {
@@ -903,7 +916,7 @@ table.pivot.fontsize-SMALL td {
  * Window
  *--------------------------------------------------------------------------*/
 
-.x-window-header-text-default {
+.x-window .x-window-header-text-default {
     font-size: 10px !important;
     text-transform: uppercase !important;
     text-align: center !important;
