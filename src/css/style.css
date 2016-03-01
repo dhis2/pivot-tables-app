@@ -916,12 +916,13 @@ table.pivot.fontsize-SMALL td {
  * Window
  *--------------------------------------------------------------------------*/
 
-.x-window .x-window-header-text-default {
-    font-size: 10px !important;
-    text-transform: uppercase !important;
-    text-align: center !important;
-    color: #444 !important;
-    padding-left: 8px !important;
+.x-window .x-window-header-text-default {
+    font-size: 10px;
+    text-transform: uppercase;
+    text-align: center;
+    color: #444;
+    padding-left: 8px;
+    padding-top: 1px;
 }
 
 
