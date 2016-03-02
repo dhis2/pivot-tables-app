@@ -833,6 +833,15 @@ table.pivot.fontsize-SMALL td {
 	opacity: 0.65;
 }
 
+/*----------------------------------------------------------------------------
+ * Grid
+ *--------------------------------------------------------------------------*/
+
+.x-grid-row-selected .x-grid-cell {
+    background-color: #eaeaea !important;
+    border-style: solid;
+    border-color: transparent;
+}
 
 /*----------------------------------------------------------------------------
  * PT Grid
