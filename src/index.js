@@ -34,6 +34,7 @@ var uiConfig = new config.UiConfig();
 dimensionConfig.setI18nManager(i18nManager);
 optionConfig.setI18nManager(i18nManager);
 periodConfig.setI18nManager(i18nManager);
+uiManager.setI18nManager(i18nManager);
 
 // references
 var ref = {
@@ -169,17 +170,17 @@ function createUi() {
     });
 
     // windows
-    var layoutWindow = uiManager.register(LayoutWindow(ref), 'layoutWindow');
+    var layoutWindow = uiManager.reg(LayoutWindow(ref), 'layoutWindow');
     layoutWindow.hide();
 
-    var optionsWindow = uiManager.register(OptionsWindow(ref), 'optionsWindow');
+    var optionsWindow = uiManager.reg(OptionsWindow(ref), 'optionsWindow');
     optionsWindow.hide();
 
-    var favoriteWindow = uiManager.register(ui.FavoriteWindow(ref), 'favoriteWindow');
+    var favoriteWindow = uiManager.reg(ui.FavoriteWindow(ref), 'favoriteWindow');
     favoriteWindow.hide();
 
     // viewport
-    var northRegion = uiManager.register(ui.NorthRegion(ref), 'northRegion');
+    var northRegion = uiManager.reg(ui.NorthRegion(ref), 'northRegion');
 
     var viewport = ui.Viewport(ref, {
         northRegion: northRegion
