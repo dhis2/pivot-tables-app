@@ -20,7 +20,7 @@ var requestManager = new manager.RequestManager();
 var responseManager = new manager.ResponseManager();
 var i18nManager = new manager.I18nManager();
 var sessionStorageManager = new manager.SessionStorageManager();
-var uiManager = new manager.UiManager();
+var uiManager;
 var instanceManager;
 var tableManager;
 
@@ -30,12 +30,6 @@ var optionConfig = new config.OptionConfig();
 var periodConfig = new config.PeriodConfig();
 var uiConfig = new config.UiConfig();
 
-// set i18n
-dimensionConfig.setI18nManager(i18nManager);
-optionConfig.setI18nManager(i18nManager);
-periodConfig.setI18nManager(i18nManager);
-uiManager.setI18nManager(i18nManager);
-
 // references
 var ref = {
     appManager: appManager,
@@ -44,7 +38,6 @@ var ref = {
     responseManager: responseManager,
     i18nManager: i18nManager,
     sessionStorageManager: sessionStorageManager,
-    uiManager: uiManager,
     dimensionConfig: dimensionConfig,
     optionConfig: optionConfig,
     periodConfig: periodConfig,
@@ -53,14 +46,24 @@ var ref = {
     pivot: pivot
 };
 
-// instance manager
+// managers
+uiManager = new manager.UiManager(ref);
+ref.uiManager = uiManager;
+
 instanceManager = new manager.InstanceManager(ref);
 instanceManager.setApiResource('reportTables');
 ref.instanceManager = instanceManager;
 
-// table manager
 tableManager = new manager.TableManager(ref);
 ref.tableManager = tableManager;
+
+uiManager.setInstanceManager(instanceManager);
+
+// set i18n
+dimensionConfig.setI18nManager(i18nManager);
+optionConfig.setI18nManager(i18nManager);
+periodConfig.setI18nManager(i18nManager);
+uiManager.setI18nManager(i18nManager);
 
 // apply to
 appManager.applyTo(arrayTo(api));
@@ -120,6 +123,8 @@ function createUi() {
 
     // ui manager
     uiManager.disableRightClick();
+
+    uiManager.enableConfirmUnload();
 
     uiManager.setIntroHtml(function() {
         return '<div class="ns-viewport-text" style="padding:20px">' +

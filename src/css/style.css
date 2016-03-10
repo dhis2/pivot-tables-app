@@ -710,6 +710,10 @@ table.pivot.fontsize-SMALL td {
     background-image:url('../images/fav-save.png');
 }
 
+.ns-menu-item-favorite-restore {
+    background-image:url('../images/fav-restore.png');
+}
+
 .ns-menu-item-favorite-interpretation {
     background-image:url('../images/fav-interpretation.png');
 }
