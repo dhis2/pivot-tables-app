@@ -81,17 +81,18 @@ var userAccountReq;
 
 manifestReq.done(function(manifest) {
     appManager.manifest = manifest;
-    appManager.setAuth(process.env.NODE_ENV);
-    systemInfoReq = $.getJSON(manifest.activities.dhis.href + systemInfoUrl);
+    appManager.env = process.env.NODE_ENV;
+    appManager.setAuth();
+    systemInfoReq = $.getJSON(appManager.getPath() + systemInfoUrl);
 
 systemInfoReq.done(function(systemInfo) {
     appManager.systemInfo = systemInfo;
     appManager.path = systemInfo.contextPath;
-    systemSettingsReq = $.getJSON(appManager.path + systemSettingsUrl);
+    systemSettingsReq = $.getJSON(appManager.getPath() + systemSettingsUrl);
 
 systemSettingsReq.done(function(systemSettings) {
     appManager.systemSettings = systemSettings;
-    userAccountReq = $.getJSON(appManager.path + userAccountUrl);
+    userAccountReq = $.getJSON(appManager.getPath() + userAccountUrl);
 
 userAccountReq.done(function(userAccount) {
     appManager.userAccount = userAccount;
