@@ -710,6 +710,18 @@ table.pivot.fontsize-SMALL td {
     background-image:url('../images/fav-save.png');
 }
 
+.ns-menu-item-favorite-interpretation {
+    background-image:url('../images/fav-interpretation.png');
+}
+
+.ns-menu-item-favorite-link {
+    background-image:url('../images/fav-link.png');
+}
+
+.ns-menu-item-favorite-delete {
+    background-image:url('../images/fav-delete.png');
+}
+
 
 	/* Menu align */
 .ns-btn-menu {
