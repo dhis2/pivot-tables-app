@@ -188,7 +188,7 @@ function createUi() {
     // viewport
     var northRegion = uiManager.reg(ui.NorthRegion(ref), 'northRegion');
 
-    var viewport = ui.Viewport(ref, {
+    ui.Viewport(ref, {
         northRegion: northRegion
     });
 }
