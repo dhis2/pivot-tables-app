@@ -714,6 +714,10 @@ table.pivot.fontsize-SMALL td {
     background-image:url('../images/fav-restore.png');
 }
 
+.ns-menu-item-favorite-rename {
+    background-image:url('../images/fav-rename.png');
+}
+
 .ns-menu-item-favorite-interpretation {
     background-image:url('../images/fav-interpretation.png');
 }
