@@ -718,6 +718,10 @@ table.pivot.fontsize-SMALL td {
     background-image:url('../images/fav-rename.png');
 }
 
+.ns-menu-item-favorite-share {
+    background-image:url('../images/fav-share.png');
+}
+
 .ns-menu-item-favorite-interpretation {
     background-image:url('../images/fav-interpretation.png');
 }
@@ -905,7 +909,7 @@ table.pivot.fontsize-SMALL td {
 	margin-left: 4px;
 }
 .ns-grid-row-icon-sharing {
-	background: url('../images/grid-sharing_16.png') no-repeat;
+	background: url('../images/grid-sharing-2_16.png') no-repeat;
 	margin-left: 4px;
 }
 .ns-grid-row-icon-dashboard {
