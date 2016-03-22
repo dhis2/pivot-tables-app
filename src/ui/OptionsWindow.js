@@ -196,9 +196,21 @@ OptionsWindow = function(c) {
         labelStyle: 'color:#333',
         valueField: 'id',
         displayField: 'name',
+        queryMode: 'local',
         editable: false,
         value: 0,
-        store: appManager.legendSets
+        store: {
+			fields: ['id', 'name', 'index'],
+			data: appManager.legendSets.concat([{
+				id: 0,
+				name: i18n.none,
+				index: -1
+			}]),
+			sorters: [
+				{property: 'index', direction: 'ASC'},
+				{property: 'name', direction: 'ASC'}
+			]
+		}
     });
 
     reportingPeriod = Ext.create('Ext.form.field.Checkbox', {
