@@ -17,7 +17,6 @@ import {OptionsWindow} from './ui/OptionsWindow.js';
 var appManager = new manager.AppManager();
 var calendarManager = new manager.CalendarManager();
 var requestManager = new manager.RequestManager();
-var responseManager = new manager.ResponseManager();
 var i18nManager = new manager.I18nManager();
 var sessionStorageManager = new manager.SessionStorageManager();
 var uiManager;
@@ -35,7 +34,6 @@ var ref = {
     appManager: appManager,
     calendarManager: calendarManager,
     requestManager: requestManager,
-    responseManager: responseManager,
     i18nManager: i18nManager,
     sessionStorageManager: sessionStorageManager,
     dimensionConfig: dimensionConfig,
@@ -196,4 +194,3 @@ function createUi() {
 global.appManager = appManager;
 global.instanceManager = instanceManager;
 global.uiManager = uiManager;
-//global.responseManager = responseManager;
