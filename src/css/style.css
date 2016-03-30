@@ -809,11 +809,19 @@ table.pivot.fontsize-SMALL td {
 .ns-button-icon-arrowleftdouble {
 	background: url('../images/arrowleftdouble.png') no-repeat;
 }
+.ns-button-icon-arrowlefttriple {
+	background: url('../images/arrowlefttriple.png') no-repeat;
+    width: 26px !important;
+}
 .ns-button-icon-arrowright {
 	background: url('../images/arrowright.png') no-repeat;
 }
 .ns-button-icon-arrowrightdouble {
 	background: url('../images/arrowrightdouble.png') no-repeat;
+}
+.ns-button-icon-arrowrighttriple {
+	background: url('../images/arrowrighttriple.png') no-repeat;
+    width: 26px !important;
 }
 
 .ns-button-icon-search {
