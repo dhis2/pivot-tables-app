@@ -1,7 +1,6 @@
 import '../extjs/resources/css/ext-all-gray.css';
 import './css/style.css';
 import './css/meringue.css';
-
 import 'd2-analysis/css/ui/GridHeaders.css';
 
 import isString from 'd2-utilizr/lib/isString';
@@ -13,57 +12,72 @@ import {api, pivot, manager, config, ui, init} from 'd2-analysis';
 import {LayoutWindow} from './ui/LayoutWindow.js';
 import {OptionsWindow} from './ui/OptionsWindow.js';
 
-// manager instances
-var appManager = new manager.AppManager();
-var calendarManager = new manager.CalendarManager();
-var requestManager = new manager.RequestManager();
-var i18nManager = new manager.I18nManager();
-var sessionStorageManager = new manager.SessionStorageManager();
-var uiManager;
-var instanceManager;
-var tableManager;
-
-// config instances
-var dimensionConfig = new config.DimensionConfig();
-var optionConfig = new config.OptionConfig();
-var periodConfig = new config.PeriodConfig();
-var uiConfig = new config.UiConfig();
-
 // references
 var ref = {
-    appManager: appManager,
-    calendarManager: calendarManager,
-    requestManager: requestManager,
-    i18nManager: i18nManager,
-    sessionStorageManager: sessionStorageManager,
-    dimensionConfig: dimensionConfig,
-    optionConfig: optionConfig,
-    periodConfig: periodConfig,
-    uiConfig: uiConfig,
     api: api,
     pivot: pivot
 };
 
-// managers
-uiManager = new manager.UiManager(ref);
+    // dimension config
+var dimensionConfig = new config.DimensionConfig();
+ref.dimensionConfig = dimensionConfig;
+
+    // option config
+var optionConfig = new config.OptionConfig();
+ref.optionConfig = optionConfig;
+
+    // period config
+var periodConfig = new config.PeriodConfig();
+ref.periodConfig = periodConfig;
+
+    // ui config
+var uiConfig = new config.UiConfig();
+ref.uiConfig = uiConfig;
+
+    // app manager
+var appManager = new manager.AppManager();
+ref.appManager = appManager;
+
+    // calendar manager
+var calendarManager = new manager.CalendarManager(ref);
+ref.calendarManager = calendarManager;
+
+    // request manager
+var requestManager = new manager.RequestManager(ref);
+ref.requestManager = requestManager;
+
+    // i18n manager
+var i18nManager = new manager.I18nManager(ref);
+ref.i18nManager = i18nManager;
+
+    // sessionstorage manager
+var sessionStorageManager = new manager.SessionStorageManager(ref);
+ref.sessionStorageManager = sessionStorageManager;
+
+    // ui manager
+var uiManager = new manager.UiManager(ref);
 ref.uiManager = uiManager;
 
-instanceManager = new manager.InstanceManager(ref);
-instanceManager.setApiResource('reportTables');
+    // instance manager
+var instanceManager = new manager.InstanceManager(ref);
 ref.instanceManager = instanceManager;
 
-tableManager = new manager.TableManager(ref);
+    // table manager
+var tableManager = new manager.TableManager(ref);
 ref.tableManager = tableManager;
 
+// dependencies
+
+    // instance manager
 uiManager.setInstanceManager(instanceManager);
 
-// set i18n
+    // i18n manager
 dimensionConfig.setI18nManager(i18nManager);
 optionConfig.setI18nManager(i18nManager);
 periodConfig.setI18nManager(i18nManager);
 uiManager.setI18nManager(i18nManager);
 
-// apply to
+    // static
 appManager.applyTo(arrayTo(api));
 instanceManager.applyTo(arrayTo(api));
 uiManager.applyTo(arrayTo(api));
@@ -99,7 +113,7 @@ userAccountReq.done(function(userAccount) {
     appManager.userAccount = userAccount;
     calendarManager.setBaseUrl(appManager.getPath());
     calendarManager.setDateFormat(appManager.getDateFormat());
-    calendarManager.generate(appManager.systemSettings.keyCalendar);
+    calendarManager.init(appManager.systemSettings.keyCalendar);
 
 requestManager.add(new api.Request(init.i18nInit(ref)));
 requestManager.add(new api.Request(init.authViewUnapprovedDataInit(ref)));
@@ -109,15 +123,19 @@ requestManager.add(new api.Request(init.legendSetsInit(ref)));
 requestManager.add(new api.Request(init.dimensionsInit(ref)));
 requestManager.add(new api.Request(init.dataApprovalLevelsInit(ref)));
 
-requestManager.set(createUi);
+requestManager.set(initialize);
 requestManager.run();
 
 });});});});
 
-function createUi() {
+function initialize() {
 
     // app manager
     appManager.appName = 'Pivot Table';
+    appManager.sessionName = 'table';
+
+    // instance manager
+    instanceManager.apiResource = 'reportTables';
 
     // ui manager
     uiManager.disableRightClick();
@@ -168,20 +186,18 @@ function createUi() {
 
         // events
         tableManager.setColumnHeaderMouseHandlers(layout, table);
+        tableManager.setValueMouseHandlers(layout, table);
 
         // mask
         uiManager.unmask();
     });
 
     // windows
-    var layoutWindow = uiManager.reg(LayoutWindow(ref), 'layoutWindow');
-    layoutWindow.hide();
+    uiManager.reg(LayoutWindow(ref), 'layoutWindow').hide();
 
-    var optionsWindow = uiManager.reg(OptionsWindow(ref), 'optionsWindow');
-    optionsWindow.hide();
+    uiManager.reg(OptionsWindow(ref), 'optionsWindow').hide();
 
-    var favoriteWindow = uiManager.reg(ui.FavoriteWindow(ref), 'favoriteWindow');
-    favoriteWindow.hide();
+    uiManager.reg(ui.FavoriteWindow(ref), 'favoriteWindow').hide();
 
     // viewport
     var northRegion = uiManager.reg(ui.NorthRegion(ref), 'northRegion');
@@ -191,6 +207,4 @@ function createUi() {
     });
 }
 
-global.appManager = appManager;
-global.instanceManager = instanceManager;
-global.uiManager = uiManager;
+global.ref = ref;
