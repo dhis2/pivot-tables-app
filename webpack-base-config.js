@@ -3,11 +3,14 @@ var webpack = require('webpack');
 
 module.exports = {
     context: __dirname,
-    entry: './src/index.js',
+    entry: {
+        'app': './src/index.js',
+        'table': './src/table.js',
+    },
     devtool: 'source-map',
     output: {
         path: __dirname + '/build',
-        filename: 'app.js',
+        filename: '[name].js',
     },
     module: {
         loaders: [
