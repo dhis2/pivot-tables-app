@@ -77,7 +77,6 @@ function _load(layouts) {
     $.getJSON(appManager.path + '/api/me/user-account.json').done(function(userAccount) {
         appManager.userAccount = userAccount;
 
-        //requestManager.add(new api.Request(init.i18nInit(refs)));
         requestManager.add(new api.Request(init.legendSetsInit(refs)));
         requestManager.add(new api.Request(init.dimensionsInit(refs)));
 
@@ -89,6 +88,10 @@ function _load(layouts) {
         layouts.forEach(function(layout) {
 
             layout = new api.Layout(layout);
+
+            if (tablePlugin.spinner) {
+                $('#' + layout.el).append('<div class="spinner"></div>');
+            }
 
             var instanceRefs = {
                 dimensionConfig: dimensionConfig,
