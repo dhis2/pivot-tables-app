@@ -89,7 +89,7 @@ function _load(layouts) {
 
             layout = new api.Layout(layout);
 
-            if (tablePlugin.spinner) {
+            if (plugin.spinner) {
                 $('#' + layout.el).append('<div class="spinner"></div>');
             }
 
