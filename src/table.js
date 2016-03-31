@@ -3,10 +3,10 @@ import './css/style.css';
 import isArray from 'd2-utilizr/lib/isArray';
 import arrayTo from 'd2-utilizr/lib/arrayTo';
 
-import {api, pivot, config, manager, init} from 'd2-analysis';
+import {api, pivot, manager, config, init} from 'd2-analysis';
 
 // plugin
-var tablePlugin = {
+var plugin = {
     url: null,
     username: null,
     password: null,
@@ -21,7 +21,7 @@ var tablePlugin = {
     }
 };
 
-global.tablePlugin = tablePlugin;
+global.tablePlugin = plugin;
 
 var refs = {};
 
@@ -70,8 +70,8 @@ function _load(layouts) {
         return;
     }
 
-    appManager.path = tablePlugin.url;
-    appManager.setAuth(tablePlugin.username + ':' + tablePlugin.password);
+    appManager.path = plugin.url;
+    appManager.setAuth(plugin.username && plugin.password ? plugin.username + ':' + plugin.password : null);
 
     // user account
     $.getJSON(appManager.path + '/api/me/user-account.json').done(function(userAccount) {
@@ -99,7 +99,6 @@ function _load(layouts) {
                 appManager: appManager,
                 calendarManager: calendarManager,
                 requestManager: requestManager,
-                //i18nManager: i18nManager,
                 sessionStorageManager: sessionStorageManager
             };
 
