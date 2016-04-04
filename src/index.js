@@ -13,58 +13,58 @@ import {LayoutWindow} from './ui/LayoutWindow.js';
 import {OptionsWindow} from './ui/OptionsWindow.js';
 
 // references
-var ref = {
+var refs = {
     api: api,
     pivot: pivot
 };
 
     // dimension config
 var dimensionConfig = new config.DimensionConfig();
-ref.dimensionConfig = dimensionConfig;
+refs.dimensionConfig = dimensionConfig;
 
     // option config
 var optionConfig = new config.OptionConfig();
-ref.optionConfig = optionConfig;
+refs.optionConfig = optionConfig;
 
     // period config
 var periodConfig = new config.PeriodConfig();
-ref.periodConfig = periodConfig;
+refs.periodConfig = periodConfig;
 
     // ui config
 var uiConfig = new config.UiConfig();
-ref.uiConfig = uiConfig;
+refs.uiConfig = uiConfig;
 
     // app manager
 var appManager = new manager.AppManager();
-ref.appManager = appManager;
+refs.appManager = appManager;
 
     // calendar manager
-var calendarManager = new manager.CalendarManager(ref);
-ref.calendarManager = calendarManager;
+var calendarManager = new manager.CalendarManager(refs);
+refs.calendarManager = calendarManager;
 
     // request manager
-var requestManager = new manager.RequestManager(ref);
-ref.requestManager = requestManager;
+var requestManager = new manager.RequestManager(refs);
+refs.requestManager = requestManager;
 
     // i18n manager
-var i18nManager = new manager.I18nManager(ref);
-ref.i18nManager = i18nManager;
+var i18nManager = new manager.I18nManager(refs);
+refs.i18nManager = i18nManager;
 
     // sessionstorage manager
-var sessionStorageManager = new manager.SessionStorageManager(ref);
-ref.sessionStorageManager = sessionStorageManager;
+var sessionStorageManager = new manager.SessionStorageManager(refs);
+refs.sessionStorageManager = sessionStorageManager;
 
     // ui manager
-var uiManager = new manager.UiManager(ref);
-ref.uiManager = uiManager;
+var uiManager = new manager.UiManager(refs);
+refs.uiManager = uiManager;
 
     // instance manager
-var instanceManager = new manager.InstanceManager(ref);
-ref.instanceManager = instanceManager;
+var instanceManager = new manager.InstanceManager(refs);
+refs.instanceManager = instanceManager;
 
     // table manager
-var tableManager = new manager.TableManager(ref);
-ref.tableManager = tableManager;
+var tableManager = new manager.TableManager(refs);
+refs.tableManager = tableManager;
 
 // dependencies
 
@@ -115,13 +115,13 @@ userAccountReq.done(function(userAccount) {
     calendarManager.setDateFormat(appManager.getDateFormat());
     calendarManager.init(appManager.systemSettings.keyCalendar);
 
-requestManager.add(new api.Request(init.i18nInit(ref)));
-requestManager.add(new api.Request(init.authViewUnapprovedDataInit(ref)));
-requestManager.add(new api.Request(init.rootNodesInit(ref)));
-requestManager.add(new api.Request(init.organisationUnitLevelsInit(ref)));
-requestManager.add(new api.Request(init.legendSetsInit(ref)));
-requestManager.add(new api.Request(init.dimensionsInit(ref)));
-requestManager.add(new api.Request(init.dataApprovalLevelsInit(ref)));
+requestManager.add(new api.Request(init.i18nInit(refs)));
+requestManager.add(new api.Request(init.authViewUnapprovedDataInit(refs)));
+requestManager.add(new api.Request(init.rootNodesInit(refs)));
+requestManager.add(new api.Request(init.organisationUnitLevelsInit(refs)));
+requestManager.add(new api.Request(init.legendSetsInit(refs)));
+requestManager.add(new api.Request(init.dimensionsInit(refs)));
+requestManager.add(new api.Request(init.dataApprovalLevelsInit(refs)));
 
 requestManager.set(initialize);
 requestManager.run();
@@ -193,18 +193,18 @@ function initialize() {
     });
 
     // windows
-    uiManager.reg(LayoutWindow(ref), 'layoutWindow').hide();
+    uiManager.reg(LayoutWindow(refs), 'layoutWindow').hide();
 
-    uiManager.reg(OptionsWindow(ref), 'optionsWindow').hide();
+    uiManager.reg(OptionsWindow(refs), 'optionsWindow').hide();
 
-    uiManager.reg(ui.FavoriteWindow(ref), 'favoriteWindow').hide();
+    uiManager.reg(ui.FavoriteWindow(refs), 'favoriteWindow').hide();
 
     // viewport
-    var northRegion = uiManager.reg(ui.NorthRegion(ref), 'northRegion');
+    var northRegion = uiManager.reg(ui.NorthRegion(refs), 'northRegion');
 
-    ui.Viewport(ref, {
+    ui.Viewport(refs, {
         northRegion: northRegion
     });
 }
 
-global.ref = ref;
+global.refs = refs;
