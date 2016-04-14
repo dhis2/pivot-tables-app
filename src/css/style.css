@@ -58,6 +58,10 @@ body,
 	font-family: 'Arial','Helvetica Neue','sans-serif' !important;
 }
 
+table.pivot {
+	font-family: 'Arial','Helvetica Neue','sans-serif' !important;
+}
+
 #init {
     display: table;
     margin: 300px auto;

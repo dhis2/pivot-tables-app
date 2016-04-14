@@ -1,6 +1,7 @@
 import './css/style.css';
 
 import isArray from 'd2-utilizr/lib/isArray';
+import objectApplyIf from 'd2-utilizr/lib/objectApplyIf';
 import arrayTo from 'd2-utilizr/lib/arrayTo';
 
 import {api, pivot, manager, config, init} from 'd2-analysis';
@@ -86,9 +87,6 @@ function _load(layouts) {
 
     function _initialize(layouts) {
         layouts.forEach(function(layout) {
-
-            layout = new api.Layout(layout);
-
             if (plugin.spinner) {
                 $('#' + layout.el).append('<div class="spinner"></div>');
             }
@@ -119,6 +117,7 @@ function _load(layouts) {
 
             instanceManager.setFn(function(layout) {
                 var sortingId = layout.sorting ? layout.sorting.id : null,
+                    html = '',
                     table;
 
                 // get table
@@ -143,7 +142,10 @@ function _load(layouts) {
                     table = getTable();
                 }
 
-                uiManager.update(table.html, layout.el);
+                html += reportTablePlugin.showTitles ? uiManager.getTitleHtml(layout.name) : '';
+                html += table.html;
+
+                uiManager.update(html, layout.el);
 
                 // events
                 tableManager.setColumnHeaderMouseHandlers(layout, table);
@@ -154,7 +156,10 @@ function _load(layouts) {
 
             if (layout.id) {
                 instanceManager.getById(layout.id, function(_layout) {
-                    _layout.el = layout.el;
+console.log("_layout", _layout);
+console.log("layout", layout);
+                    _layout = new api.Layout(objectApplyIf(layout, _layout));
+console.log("final _layout", _layout);
                     instanceManager.getReport(_layout);
                 });
             }
