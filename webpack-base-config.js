@@ -5,7 +5,7 @@ module.exports = {
     context: __dirname,
     entry: {
         'app': './src/index.js',
-        'table': './src/table.js',
+        'reporttable': './src/plugin.js',
     },
     devtool: 'source-map',
     output: {

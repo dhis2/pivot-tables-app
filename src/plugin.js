@@ -21,7 +21,7 @@ var plugin = {
     }
 };
 
-global.tablePlugin = plugin;
+global.reportTablePlugin = plugin;
 
 var refs = {};
 
