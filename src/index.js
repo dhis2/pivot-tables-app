@@ -136,6 +136,7 @@ function initialize() {
 
     // instance manager
     instanceManager.apiResource = 'reportTables';
+    instanceManager.dataStatisticsEventType = 'REPORT_TABLE_VIEW';
 
     // ui manager
     uiManager.disableRightClick();
@@ -190,6 +191,9 @@ function initialize() {
 
         // mask
         uiManager.unmask();
+
+        // statistics
+        instanceManager.postDataStatistics();
     });
 
     // windows
