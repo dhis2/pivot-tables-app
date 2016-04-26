@@ -156,10 +156,7 @@ function _load(layouts) {
 
             if (layout.id) {
                 instanceManager.getById(layout.id, function(_layout) {
-console.log("_layout", _layout);
-console.log("layout", layout);
                     _layout = new api.Layout(objectApplyIf(layout, _layout));
-console.log("final _layout", _layout);
                     instanceManager.getReport(_layout);
                 });
             }
