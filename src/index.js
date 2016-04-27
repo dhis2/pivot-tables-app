@@ -85,7 +85,14 @@ dimensionConfig.applyTo(arrayTo(pivot));
 optionConfig.applyTo([].concat(arrayTo(api), arrayTo(pivot)));
 
 // requests
-var manifestReq = $.getJSON('manifest.webapp');
+var manifestReq = $.ajax({
+    url: 'manifest.webapp',
+    dataType: 'text',
+    headers: {
+        'Accept': 'text/plain; charset=utf-8'
+    }
+});
+
 var systemInfoUrl = '/api/system/info.json';
 var systemSettingsUrl = '/api/systemSettings.json?key=keyCalendar&key=keyDateFormat&key=keyAnalysisRelativePeriod&key=keyHideUnapprovedDataInAnalytics';
 var userAccountUrl = '/api/me/user-account.json';
@@ -94,8 +101,8 @@ var systemInfoReq;
 var systemSettingsReq;
 var userAccountReq;
 
-manifestReq.done(function(manifest) {
-    appManager.manifest = manifest;
+manifestReq.done(function(text) {
+    appManager.manifest = JSON.parse(text);
     appManager.env = process.env.NODE_ENV;
     appManager.setAuth();
     systemInfoReq = $.getJSON(appManager.getPath() + systemInfoUrl);
