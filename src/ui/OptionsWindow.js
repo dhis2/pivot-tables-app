@@ -180,7 +180,7 @@ OptionsWindow = function(c) {
         valueField: 'id',
         displayField: 'name',
         editable: false,
-        value: optionConfig.getDigitGroupSeparator('space').id,
+        value: appManager.systemSettings.keyAnalysisDigitGroupSeparator || optionConfig.getDigitGroupSeparator('space').id,
         store: Ext.create('Ext.data.Store', {
             fields: ['id', 'name', 'index'],
             data: optionConfig.getDigitGroupSeparatorRecords()
