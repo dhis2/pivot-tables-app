@@ -94,7 +94,7 @@ var manifestReq = $.ajax({
 });
 
 var systemInfoUrl = '/api/system/info.json';
-var systemSettingsUrl = '/api/systemSettings.json?key=keyCalendar&key=keyDateFormat&key=keyAnalysisRelativePeriod&key=keyHideUnapprovedDataInAnalytics';
+var systemSettingsUrl = '/api/systemSettings.json?key=keyCalendar&key=keyDateFormat&key=keyAnalysisRelativePeriod&key=keyHideUnapprovedDataInAnalytics&key=keyAnalysisDigitGroupSeparator';
 var userAccountUrl = '/api/me/user-account.json';
 
 var systemInfoReq;
