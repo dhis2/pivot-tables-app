@@ -6,24 +6,6 @@ import arrayTo from 'd2-utilizr/lib/arrayTo';
 
 import {api, pivot, manager, config, init} from 'd2-analysis';
 
-// plugin
-var plugin = {
-    url: null,
-    username: null,
-    password: null,
-    load: function(...layouts) {
-        if (!layouts.length) {
-            return;
-        }
-
-        layouts = isArray(layouts[0]) ? layouts[0] : layouts;
-
-        _load(layouts);
-    }
-};
-
-global.reportTablePlugin = plugin;
-
 var refs = {};
 
 // dimension config
@@ -66,28 +48,57 @@ appManager.applyTo(arrayTo(api));
 dimensionConfig.applyTo(arrayTo(pivot));
 optionConfig.applyTo([].concat(arrayTo(api), arrayTo(pivot)));
 
-function _load(layouts) {
-    if (!layouts.length) {
-        return;
-    }
+// plugin
+var Plugin = function() {
+    var t = this;
 
-    appManager.path = plugin.url;
-    appManager.setAuth(plugin.username && plugin.password ? plugin.username + ':' + plugin.password : null);
+    var _isLoaded = false;
 
-    // user account
-    $.getJSON(appManager.path + '/api/me/user-account.json').done(function(userAccount) {
-        appManager.userAccount = userAccount;
+    t.url = null;
+    t.username = null;
+    t.password = null;
+    t.spinner = false;
 
-        requestManager.add(new api.Request(init.legendSetsInit(refs)));
-        requestManager.add(new api.Request(init.dimensionsInit(refs)));
+    t.load = function(...layouts) {
+        if (!layouts.length) {
+            return;
+        }
 
-        requestManager.set(_initialize, layouts);
-        requestManager.run();
-    });
+        layouts = isArray(layouts[0]) ? layouts[0] : layouts;
 
-    function _initialize(layouts) {
+        _initialize(layouts);
+    };
+
+    var _initialize = function(layouts) {
+        if (!layouts.length) {
+            return;
+        }
+
+        if (_isLoaded) {
+            _load(layouts);
+            return;
+        }
+
+        appManager.path = t.url;
+        appManager.setAuth(t.username && t.password ? t.username + ':' + t.password : null);
+
+        // user account
+        $.getJSON(appManager.path + '/api/me/user-account.json').done(function(userAccount) {
+            appManager.userAccount = userAccount;
+
+            requestManager.add(new api.Request(init.legendSetsInit(refs)));
+            requestManager.add(new api.Request(init.dimensionsInit(refs)));
+
+            _isLoaded = true;
+
+            requestManager.set(_load, layouts);
+            requestManager.run();
+        });
+    };
+
+    var _load = function(layouts) {
         layouts.forEach(function(layout) {
-            if (plugin.spinner) {
+            if (t.spinner) {
                 $('#' + layout.el).append('<div class="spinner"></div>');
             }
 
@@ -164,7 +175,7 @@ function _load(layouts) {
                 instanceManager.getReport(layout);
             }
         });
-    }
-}
+    };
+};
 
-
+global.reportTablePlugin = new Plugin();
