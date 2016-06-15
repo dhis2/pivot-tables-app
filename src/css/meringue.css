@@ -32,7 +32,7 @@
 /* General toolbar */
 .meringue.toolbar-north {
 	border: 0 none;
-	background: #fff;
+	background: #fff !important;
 	height: 36px;
 	padding: 0;
 }
