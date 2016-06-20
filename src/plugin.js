@@ -127,6 +127,9 @@ var Plugin = function() {
             var tableManager = new manager.TableManager(instanceRefs);
             instanceRefs.tableManager = tableManager;
 
+                // instance manager
+            uiManager.setInstanceManager(instanceManager);
+
             instanceManager.setFn(function(layout) {
                 var sortingId = layout.sorting ? layout.sorting.id : null,
                     html = '',
