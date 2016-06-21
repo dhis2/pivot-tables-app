@@ -236,12 +236,11 @@ table.pivot {
 }
 
 table.pivot.displaydensity-COMFORTABLE td {
-	padding: 7px;
+	padding: 7px !important;
 }
 table.pivot.displaydensity-COMPACT td {
-	padding: 3px;
+	padding: 3px !important;
 }
-
 table.pivot.fontsize-LARGE td {
 	font-size: 13px;
 }
@@ -253,6 +252,20 @@ table.pivot.fontsize-SMALL td {
 	padding: 5px;
 	border: 1px solid #b2b2b2;
 }
+
+.pivot-filter {
+	background-color: #e7d9d9;
+	text-align: center;
+	padding: 7px !important;
+    color: #111;
+}
+table.pivot.displaydensity-COMFORTABLE td.pivot-filter {
+	padding: 9px !important;
+}
+table.pivot.displaydensity-COMPACT td.pivot-filter {
+	padding: 5px !important;
+}
+
 
 .pivot-dim {
 	background-color: #dae6f8;
@@ -274,7 +287,7 @@ table.pivot.fontsize-SMALL td {
 }
 
 .pivot-dim-label {
-	background-color: #cddaed;
+	background-color: #c7d5e9;
 	white-space: nowrap;
     text-align: center;
 }
