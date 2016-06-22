@@ -254,10 +254,11 @@ table.pivot.fontsize-SMALL td {
 }
 
 .pivot-filter {
-	background-color: #e7d9d9;
-	text-align: center;
-	padding: 7px !important;
-    color: #111;
+    background-color: #c7d5e9;
+    text-align: center;
+    padding: 7px!important;
+    color: #222;
+    font-weight: 600;
 }
 table.pivot.displaydensity-COMFORTABLE td.pivot-filter {
 	padding: 9px !important;
