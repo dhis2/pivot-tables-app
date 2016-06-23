@@ -44,7 +44,7 @@ dimensionConfig.setI18nManager(i18nManager);
 optionConfig.setI18nManager(i18nManager);
 periodConfig.setI18nManager(i18nManager);
 
-appManager.applyTo(arrayTo(api));
+appManager.applyTo([].concat(arrayTo(api), arrayTo(pivot)));
 dimensionConfig.applyTo(arrayTo(pivot));
 optionConfig.applyTo([].concat(arrayTo(api), arrayTo(pivot)));
 
