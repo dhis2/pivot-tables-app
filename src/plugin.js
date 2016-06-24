@@ -167,6 +167,9 @@ var Plugin = function() {
 
                 // mask
                 uiManager.unmask();
+
+                // statistics
+                instanceManager.postDataStatistics();
             });
 
             if (layout.id) {
