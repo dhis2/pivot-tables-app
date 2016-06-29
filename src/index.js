@@ -78,7 +78,7 @@ periodConfig.setI18nManager(i18nManager);
 uiManager.setI18nManager(i18nManager);
 
     // static
-appManager.applyTo(arrayTo(api));
+appManager.applyTo([].concat(arrayTo(api), arrayTo(pivot)));
 instanceManager.applyTo(arrayTo(api));
 uiManager.applyTo(arrayTo(api));
 dimensionConfig.applyTo(arrayTo(pivot));
