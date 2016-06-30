@@ -65,9 +65,6 @@
 		.meringue.toolbar-north .x-toolbar-text.title.unsaved {
 			color: #888 !important;
 			border-left-color: #ddd;
-/*
-			color: #D52222 !important;
-*/
 		}
 
 		.meringue.toolbar-north .x-toolbar-text.title.unsaved::before {
