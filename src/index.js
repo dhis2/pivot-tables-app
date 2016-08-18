@@ -9,8 +9,13 @@ import arrayTo from 'd2-utilizr/lib/arrayTo';
 
 import {api, pivot, manager, config, ui, init} from 'd2-analysis';
 
-import {LayoutWindow} from './ui/LayoutWindow.js';
-import {OptionsWindow} from './ui/OptionsWindow.js';
+import { Layout } from './api/Layout';
+
+import { LayoutWindow } from './ui/LayoutWindow';
+import { OptionsWindow } from './ui/OptionsWindow';
+
+// extend
+api.Layout = Layout;
 
 // references
 var refs = {
