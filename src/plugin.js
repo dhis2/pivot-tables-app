@@ -4,9 +4,18 @@ import isArray from 'd2-utilizr/lib/isArray';
 import objectApplyIf from 'd2-utilizr/lib/objectApplyIf';
 import arrayTo from 'd2-utilizr/lib/arrayTo';
 
-import {api, pivot, manager, config, init} from 'd2-analysis';
+import { api, pivot, manager, config, init } from 'd2-analysis';
 
-var refs = {};
+import { Layout } from './api/Layout';
+
+// extend
+api.Layout = Layout;
+
+// references
+var refs = {
+    api,
+    pivot
+};
 
 // dimension config
 var dimensionConfig = new config.DimensionConfig();
@@ -103,15 +112,15 @@ var Plugin = function() {
             }
 
             var instanceRefs = {
-                dimensionConfig: dimensionConfig,
-                optionConfig: optionConfig,
-                periodConfig: periodConfig,
-                api: api,
-                pivot: pivot,
-                appManager: appManager,
-                calendarManager: calendarManager,
-                requestManager: requestManager,
-                sessionStorageManager: sessionStorageManager
+                dimensionConfig,
+                optionConfig,
+                periodConfig,
+                api,
+                pivot,
+                appManager,
+                calendarManager,
+                requestManager,
+                sessionStorageManager
             };
 
             var uiManager = new manager.UiManager();
@@ -171,7 +180,7 @@ var Plugin = function() {
 
             if (layout.id) {
                 instanceManager.getById(layout.id, function(_layout) {
-                    _layout = new api.Layout(objectApplyIf(layout, _layout));
+                    _layout = new api.Layout(instanceRefs, objectApplyIf(layout, _layout));
                     instanceManager.getReport(_layout);
                 });
             }

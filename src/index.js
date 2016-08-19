@@ -19,8 +19,8 @@ api.Layout = Layout;
 
 // references
 var refs = {
-    api: api,
-    pivot: pivot
+    api,
+    pivot
 };
 
     // dimension config
@@ -195,6 +195,7 @@ function initialize() {
             table = getTable();
         }
 
+        // render
         uiManager.update(table.html);
 
         // events
