@@ -714,6 +714,12 @@ table.pivot.displaydensity-COMPACT td.pivot-filter {
     background-image:url('../images/check-un.png');
 }
 
+	/* Menu align */
+.ns-btn-menu {
+	margin-top: 2px;
+}
+
+
 /* Favorite */
 
 .ns-menu-item-favorite-new {
@@ -752,11 +758,6 @@ table.pivot.displaydensity-COMPACT td.pivot-filter {
     background-image:url('../images/fav-delete.png');
 }
 
-
-	/* Menu align */
-.ns-btn-menu {
-	margin-top: 2px;
-}
 
 /*----------------------------------------------------------------------------
  * Button

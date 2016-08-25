@@ -142,6 +142,8 @@ requestManager.run();
 
 function initialize() {
 
+    var i18n = i18nManager.get();
+
     // app manager
     appManager.appName = 'Pivot Table';
     appManager.sessionName = 'table';
@@ -218,6 +220,42 @@ function initialize() {
 
     // viewport
     var northRegion = uiManager.reg(ui.NorthRegion(refs), 'northRegion');
+
+    var defaultIntegrationButton = uiManager.reg(ui.IntegrationButton(refs, {
+        isDefaultButton: true,
+        btnText: i18n.table,
+        btnIconCls: 'ns-button-icon-table'
+    }), 'defaultIntegrationButton');
+
+    var chartIntegrationButton = ui.IntegrationButton(refs, {
+        objectName: 'chart',
+        moduleName: 'dhis-web-visualizer',
+        btnIconCls: 'ns-button-icon-chart',
+        btnText: i18n.chart,
+        menuItem1Text: i18n.go_to_charts,
+        menuItem2Text: i18n.open_this_table_as_chart,
+        menuItem3Text: i18n.open_last_chart
+    });
+
+    var mapIntegrationButton = ui.IntegrationButton(refs, {
+        objectName: 'map',
+        moduleName: 'dhis-web-mapping',
+        btnIconCls: 'ns-button-icon-map',
+        btnText: i18n.map,
+        menuItem1Text: i18n.go_to_maps,
+        menuItem2Text: i18n.open_this_chart_as_map,
+        menuItem3Text: i18n.open_last_map
+    });
+
+    // viewport
+    uiManager.reg(ui.Viewport(refs, {
+        northRegion: northRegion,
+        integrationButtons: [
+            defaultIntegrationButton,
+            chartIntegrationButton,
+            mapIntegrationButton
+        ]
+    }), 'viewport');
 
     ui.Viewport(refs, {
         northRegion: northRegion
