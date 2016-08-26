@@ -243,7 +243,7 @@ function initialize() {
         btnIconCls: 'ns-button-icon-map',
         btnText: i18n.map,
         menuItem1Text: i18n.go_to_maps,
-        menuItem2Text: i18n.open_this_chart_as_map,
+        menuItem2Text: i18n.open_this_table_as_map,
         menuItem3Text: i18n.open_last_map
     });
 
@@ -256,10 +256,6 @@ function initialize() {
             mapIntegrationButton
         ]
     }), 'viewport');
-
-    ui.Viewport(refs, {
-        northRegion: northRegion
-    });
 }
 
 global.refs = refs;
