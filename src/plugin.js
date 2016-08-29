@@ -130,8 +130,9 @@ var Plugin = function() {
             var instanceManager = new manager.InstanceManager(instanceRefs);
             instanceRefs.instanceManager = instanceManager;
             instanceManager.apiResource = 'reportTables';
-            instanceManager.isPlugin = true;
             instanceManager.applyTo(arrayTo(api));
+            instanceManager.plugin = true;
+            instanceManager.dashboard = reportTablePlugin.dashboard;
 
             var tableManager = new manager.TableManager(instanceRefs);
             instanceRefs.tableManager = tableManager;
