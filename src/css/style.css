@@ -408,7 +408,9 @@ table.pivot.displaydensity-COMPACT td.pivot-filter {
 .ns-panel-title-data,
 .ns-panel-title-period,
 .ns-panel-title-organisationunit,
-.ns-panel-title-dimension {
+.ns-panel-title-dimension,
+.ns-panel-title-interpretation,
+.ns-panel-title-details {
 	height: 17px;
 	background-repeat: no-repeat;
 	padding-left: 22px
@@ -425,6 +427,12 @@ table.pivot.displaydensity-COMPACT td.pivot-filter {
 }
 .ns-panel-title-dimension {
 	background-image: url(../images/dataelementgroupset.png);
+}
+.ns-panel-title-interpretation {
+	background-image: url(../images/interpretation.png);
+}
+.ns-panel-title-details {
+	background-image: url(../images/dl_datasource.png);
 }
 
 
