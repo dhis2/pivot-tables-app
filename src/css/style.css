@@ -1239,3 +1239,21 @@ table.pivot.displaydensity-COMPACT td.pivot-filter {
 	padding: 4px;
 	border: 0 none;
 }
+
+
+/*----------------------------------------------------------------------------
+ * East Panel
+ *--------------------------------------------------------------------------*/
+
+.x-tip {
+    width: auto !important;
+    background-color: grey !important;
+}
+.x-tip-body {
+    width: auto !important;
+    background-color: grey !important;
+}
+.x-tip-body span {
+    width: auto !important;
+    background-color: grey !important;
+}
