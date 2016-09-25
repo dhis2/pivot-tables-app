@@ -25,13 +25,17 @@ LayoutWindow = function(c) {
 
     // components
 
-    var getStore = function(data) {
+    var getStore = function(data, name) {
         var config = {};
 
         config.fields = ['id', 'name'];
 
         if (data) {
             config.data = data;
+        }
+
+        if (name) {
+            config.name = name;
         }
 
         config.getDimensionNames = function() {
@@ -74,11 +78,11 @@ LayoutWindow = function(c) {
 
     var dimensionStore = getStore();
 
-    var colStore = getStore();
+    var colStore = getStore(null, 'colStore');
 
-    var rowStore = getStore();
+    var rowStore = getStore(null, 'rowStore');
 
-    var filterStore = getStore();
+    var filterStore = getStore(null, 'filterStore');
 
     var dimension = Ext.create('Ext.ux.form.MultiSelect', {
         cls: 'ns-toolbar-multiselect-leftright',
@@ -310,6 +314,9 @@ LayoutWindow = function(c) {
     };
 
     var setDimensions = function(layout) {
+
+        // empty cache
+        dimensionStoreMap = {};
 
         // columns
         if (isArray(layout.columns)) {
