@@ -1248,12 +1248,15 @@ table.pivot.displaydensity-COMPACT td.pivot-filter {
 .x-tip {
     width: auto !important;
     background-color: grey !important;
+    border: 0px;
 }
 .x-tip-body {
     width: auto !important;
     background-color: grey !important;
+    border: 0px;
 }
 .x-tip-body span {
     width: auto !important;
     background-color: grey !important;
+    border: 0px;
 }
