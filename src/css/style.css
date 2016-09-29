@@ -1239,6 +1239,7 @@ table.pivot.displaydensity-COMPACT td.pivot-filter {
 
 .ns-textarea .x-form-field {
 	font-size: 11px;
+    line-height: 14px !important;
 }
 
 .ns-textarea.monospaced textarea {
