@@ -1267,3 +1267,16 @@ table.pivot.displaydensity-COMPACT td.pivot-filter {
     background-color: grey !important;
     border: 0px;
 }
+
+.clickable,
+.clickable div,
+.clickable label{
+	cursor: pointer !important;
+}
+
+.thumbs_up{
+	background-image: url('../images/thumbs_up.png');
+	padding-left: 22px;
+	padding-bottom: 5px;
+	background-repeat: no-repeat;
+}
