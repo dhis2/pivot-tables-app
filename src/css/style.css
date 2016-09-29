@@ -1269,15 +1269,59 @@ table.pivot.displaydensity-COMPACT td.pivot-filter {
     border: 0px;
 }
 
-.clickable,
-.clickable div,
-.clickable label{
+.eastPanel .clickable,
+.eastPanel .clickable div,
+.eastPanel .clickable label{
 	cursor: pointer !important;
 }
 
-.thumbs_up{
+.eastPanel .thumbs_up{
 	background-image: url('../images/thumbs_up.png');
-	padding-left: 22px;
-	padding-bottom: 5px;
+	background-position:5px 5px;
+	padding: 7px 25px;
 	background-repeat: no-repeat;
 }
+
+.eastPanel .greyBackground,
+.eastPanel .greyBackground div {
+	background-color: #efefef;
+}
+
+.eastPanel .comment {
+	padding: 5px;
+	margin-bottom: 2px;
+}
+
+.eastPanel .link{
+	cursor:pointer;
+	color:#3162C5;
+}
+
+.eastPanel .bold{
+	font-weight: bold;
+}
+.eastPanel .interpretationActions {
+    font-size: 11px;
+    font-weight: bold;
+    line-height: 18px;
+}
+
+.eastPanel .interpretationDetailsField {
+    white-space: nowrap;
+    font-weight:bold;
+    line-height:18px;
+}
+
+.eastPanel .avatar {
+	height: 30px;
+	width: 30px;
+	border-radius:50%;
+	display:inline-block;
+	background-color:#bdbdbd;
+	text-align:center;
+	line-height:30px;
+	font-size:14px;
+	color:black;
+	font-weight:bold;
+}
+
