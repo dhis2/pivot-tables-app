@@ -172,11 +172,19 @@ function initialize() {
     
     instanceManager.updateInterpretationFunction = function(interpretation){
     	//Generate reporttable for this interpretation
-    	var currentLayout = instanceManager.getLayout();
-    	var tablePayload = currentLayout.toPlugin($('.pivot').parent().prop("id"));
-    	tablePayload['url'] = appManager.getPath();
-    	tablePayload['relativePeriodDate'] = interpretation.created;
-    	DHIS.getTable(tablePayload);
+        var layout = instanceManager.getStateCurrent(); // just get layout from state instead of re-picking it from ui
+
+        layout.setResponse(null); // clear the current data cache so it goes to the server with the new relativePeriodDate
+        layout.relativePeriodDate = interpretation.created; // set this date on the layout object, not in extraOptions
+        layout.interpretationId = interpretation.id;
+        
+        var actualName = layout.name;
+        if (layout.name.indexOf('<span') != -1){
+            actualName = layout.name.substring(0, layout.name.indexOf(' <span'))
+        }
+        layout.name = actualName + ' <span id="relativePeriodDateTitle">[' + manager.DateManager.getYYYYMMDD(interpretation.created, true) + ']</span>'; // just append to the name here
+
+        instanceManager.getReport(layout, true);  // re-run
     };
 
     // instance manager
