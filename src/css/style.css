@@ -408,7 +408,9 @@ table.pivot.displaydensity-COMPACT td.pivot-filter {
 .ns-panel-title-data,
 .ns-panel-title-period,
 .ns-panel-title-organisationunit,
-.ns-panel-title-dimension {
+.ns-panel-title-dimension,
+.ns-panel-title-interpretation,
+.ns-panel-title-details {
 	height: 17px;
 	background-repeat: no-repeat;
 	padding-left: 22px
@@ -425,6 +427,12 @@ table.pivot.displaydensity-COMPACT td.pivot-filter {
 }
 .ns-panel-title-dimension {
 	background-image: url(../images/dataelementgroupset.png);
+}
+.ns-panel-title-interpretation {
+	background-image: url(../images/interpretation.png);
+}
+.ns-panel-title-details {
+	background-image: url(../images/dl_datasource.png);
 }
 
 
@@ -1231,4 +1239,85 @@ table.pivot.displaydensity-COMPACT td.pivot-filter {
 	font-family: monospace, consolas, courier new;
 	padding: 4px;
 	border: 0 none;
+}
+
+
+/*----------------------------------------------------------------------------
+ * East Panel
+ *--------------------------------------------------------------------------*/
+
+.x-tip {
+    width: auto !important;
+    background-color: grey !important;
+    border: 0px;
+}
+.x-tip-body {
+    width: auto !important;
+    background-color: grey !important;
+    border: 0px;
+}
+.x-tip-body span {
+    width: auto !important;
+    background-color: grey !important;
+    border: 0px;
+}
+
+.eastPanel .clickable,
+.eastPanel .clickable div,
+.eastPanel .clickable label{
+	cursor: pointer !important;
+}
+
+.eastPanel .thumbs_up{
+	background-image: url('../images/thumbs_up.png');
+	background-position:5px 5px;
+	padding: 7px 25px;
+	background-repeat: no-repeat;
+}
+
+.eastPanel .greyBackground,
+.eastPanel .greyBackground div {
+	background-color: #efefef;
+}
+
+.eastPanel .comment {
+	padding: 5px;
+	margin-bottom: 2px;
+}
+
+.eastPanel .link{
+	cursor:pointer;
+	color:#3162C5;
+}
+
+.eastPanel .bold{
+	font-weight: bold;
+}
+.eastPanel .interpretationActions {
+    font-size: 11px;
+    font-weight: bold;
+    line-height: 18px;
+}
+
+.eastPanel .interpretationDetailsField {
+    white-space: nowrap;
+    font-weight:bold;
+    line-height:18px;
+}
+
+.eastPanel .avatar {
+	height: 30px;
+	width: 30px;
+	border-radius:50%;
+	display:inline-block;
+	background-color:#bdbdbd;
+	text-align:center;
+	line-height:30px;
+	font-size:14px;
+	color:black;
+	font-weight:bold;
+}
+.eastPanel .commentArea textarea{
+    margin-bottom:5px;
+    font-size:12px;
 }
