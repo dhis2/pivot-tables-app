@@ -76,6 +76,13 @@
             font-style: italic;
         }
 
+		.meringue.toolbar-north .x-toolbar-text.title .appendix {
+            padding-left: 8px;
+            color: #111;
+            font-size: 12px;
+            font-weight: bold;
+        }
+
 	/* About/home items */
 	.meringue.toolbar-north .x-toolbar-text.about {
 		color: #444;
