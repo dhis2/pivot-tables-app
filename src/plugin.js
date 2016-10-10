@@ -167,7 +167,7 @@ var Plugin = function() {
                     table = getTable();
                 }
 
-                html += reportTablePlugin.showTitles ? uiManager.getTitleHtml(layout.name) : '';
+                html += reportTablePlugin.showTitles ? uiManager.getTitleHtml(layout.title || layout.name) : '';
                 html += table.html;
 
                 uiManager.update(html, layout.el);
