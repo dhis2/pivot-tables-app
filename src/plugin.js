@@ -150,7 +150,7 @@ var Plugin = function() {
                     var response = layout.getResponse();
                     var colAxis = new pivot.TableAxis(layout, response, 'col');
                     var rowAxis = new pivot.TableAxis(layout, response, 'row');
-                    return new pivot.Table(layout, response, colAxis, rowAxis);
+                    return new pivot.Table(layout, response, colAxis, rowAxis, {skipTitle: true});
                 };
 
                 // pre-sort if id
