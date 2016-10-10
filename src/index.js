@@ -3,7 +3,6 @@ import './css/style.css';
 import './css/meringue.css';
 import 'd2-analysis/css/ui/GridHeaders.css';
 
-import isString from 'd2-utilizr/lib/isString';
 import arrayFrom from 'd2-utilizr/lib/arrayFrom';
 import arrayTo from 'd2-utilizr/lib/arrayTo';
 
@@ -221,6 +220,8 @@ function initialize() {
     // viewport
     var northRegion = uiManager.reg(ui.NorthRegion(refs), 'northRegion');
 
+    var eastRegion = uiManager.reg(ui.EastRegion(refs), 'eastRegion');
+
     var defaultIntegrationButton = uiManager.reg(ui.IntegrationButton(refs, {
         isDefaultButton: true,
         btnText: i18n.table,
@@ -250,6 +251,7 @@ function initialize() {
     // viewport
     uiManager.reg(ui.Viewport(refs, {
         northRegion: northRegion,
+        eastRegion: eastRegion,
         integrationButtons: [
             defaultIntegrationButton,
             chartIntegrationButton,
