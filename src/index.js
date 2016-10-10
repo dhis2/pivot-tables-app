@@ -148,7 +148,8 @@ function initialize() {
     appManager.sessionName = 'table';
 
     // instance manager
-    instanceManager.apiResource = 'reportTables';
+    instanceManager.apiResource = 'reportTable';
+    instanceManager.apiEndpoint = 'reportTables';
     instanceManager.dataStatisticsEventType = 'REPORT_TABLE_VIEW';
 
     // ui manager
