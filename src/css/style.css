@@ -227,13 +227,6 @@ table.pivot {
 	border-collapse: collapse;
 	border-spacing: 0px;
 	border: 0 none;
-
-	-webkit-touch-callout: all;
-	-webkit-user-select: all;
-	-khtml-user-select: all;
-	-moz-user-select: all;
-	-ms-user-select: all;
-	user-select: all;
 }
 
 table.pivot.displaydensity-COMFORTABLE td {
@@ -1267,8 +1260,8 @@ table.pivot.displaydensity-COMPACT td.pivot-filter {
 
 .eastPanel .thumbs_up {
 	background-image: url('../images/thumbs_up.png');
-	background-position: 5px 6px;
-	padding: 8px 25px;
+	background-position: 5px 5px;
+	padding: 7px 25px;
 	background-repeat: no-repeat;
 }
 

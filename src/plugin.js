@@ -129,7 +129,8 @@ var Plugin = function() {
 
             var instanceManager = new manager.InstanceManager(instanceRefs);
             instanceRefs.instanceManager = instanceManager;
-            instanceManager.apiResource = 'reportTables';
+            instanceManager.apiResource = 'reportTable';
+            instanceManager.apiEndpoint = 'reportTables';
             instanceManager.applyTo(arrayTo(api));
             instanceManager.plugin = true;
             instanceManager.dashboard = reportTablePlugin.dashboard;
@@ -150,7 +151,7 @@ var Plugin = function() {
                     var response = layout.getResponse();
                     var colAxis = new pivot.TableAxis(layout, response, 'col');
                     var rowAxis = new pivot.TableAxis(layout, response, 'row');
-                    return new pivot.Table(layout, response, colAxis, rowAxis);
+                    return new pivot.Table(layout, response, colAxis, rowAxis, {skipTitle: true});
                 };
 
                 // pre-sort if id
@@ -167,7 +168,7 @@ var Plugin = function() {
                     table = getTable();
                 }
 
-                html += reportTablePlugin.showTitles ? uiManager.getTitleHtml(layout.name) : '';
+                html += reportTablePlugin.showTitles ? uiManager.getTitleHtml(layout.title || layout.name) : '';
                 html += table.html;
 
                 uiManager.update(html, layout.el);
