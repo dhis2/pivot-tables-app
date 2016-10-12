@@ -24,6 +24,7 @@ OptionsWindow = function(c) {
         completedOnly,
         digitGroupSeparator,
         legendSet,
+        title,
         displayDensity,
         fontSize,
         reportingPeriod,
@@ -38,13 +39,16 @@ OptionsWindow = function(c) {
         organisationUnits,
         events,
         style,
+        general,
         parameters,
         window,
 
         comboboxWidth = 262,
         comboBottomMargin = 1,
         checkboxBottomMargin = 2,
-        separatorTopMargin = 6;
+        separatorTopMargin = 6,
+        cmpWidth = 360,
+        labelWidth = 125;
 
     showColTotals = Ext.create('Ext.form.field.Checkbox', {
         boxLabel: i18n.show_col_totals,
@@ -89,8 +93,8 @@ OptionsWindow = function(c) {
     aggregationType = Ext.create('Ext.form.field.ComboBox', {
         cls: 'ns-combo',
         style: 'margin-top:' + (separatorTopMargin + 1) + 'px; margin-bottom:' + comboBottomMargin + 'px',
-        width: comboboxWidth,
-        labelWidth: 130,
+        width: cmpWidth,
+        labelWidth: labelWidth,
         fieldLabel: i18n.aggregation_type,
         labelStyle: 'color:#333',
         queryMode: 'local',
@@ -107,8 +111,8 @@ OptionsWindow = function(c) {
     dataApprovalLevel = Ext.create('Ext.form.field.ComboBox', {
         cls: 'ns-combo',
         style: 'margin-bottom:' + comboBottomMargin + 'px',
-        width: comboboxWidth,
-        labelWidth: 130,
+        width: cmpWidth,
+        labelWidth: labelWidth,
         fieldLabel: i18n.data_approved_at_level,
         labelStyle: 'color:#333',
         queryMode: 'local',
@@ -136,8 +140,8 @@ OptionsWindow = function(c) {
     displayDensity = Ext.create('Ext.form.field.ComboBox', {
         cls: 'ns-combo',
         style: 'margin-bottom:' + comboBottomMargin + 'px',
-        width: comboboxWidth,
-        labelWidth: 130,
+        width: cmpWidth,
+        labelWidth: labelWidth,
         fieldLabel: i18n.display_density,
         labelStyle: 'color:#333',
         queryMode: 'local',
@@ -154,8 +158,8 @@ OptionsWindow = function(c) {
     fontSize = Ext.create('Ext.form.field.ComboBox', {
         cls: 'ns-combo',
         style: 'margin-bottom:' + comboBottomMargin + 'px',
-        width: comboboxWidth,
-        labelWidth: 130,
+        width: cmpWidth,
+        labelWidth: labelWidth,
         fieldLabel: i18n.font_size,
         labelStyle: 'color:#333',
         queryMode: 'local',
@@ -173,8 +177,8 @@ OptionsWindow = function(c) {
         labelStyle: 'color:#333',
         cls: 'ns-combo',
         style: 'margin-bottom:' + comboBottomMargin + 'px',
-        width: comboboxWidth,
-        labelWidth: 130,
+        width: cmpWidth,
+        labelWidth: labelWidth,
         fieldLabel: i18n.digit_group_separator,
         queryMode: 'local',
         valueField: 'id',
@@ -190,8 +194,8 @@ OptionsWindow = function(c) {
     legendSet = Ext.create('Ext.form.field.ComboBox', {
         cls: 'ns-combo',
         style: 'margin-bottom:' + comboBottomMargin + 'px',
-        width: comboboxWidth,
-        labelWidth: 130,
+        width: cmpWidth,
+        labelWidth: labelWidth,
         fieldLabel: i18n.legend_set,
         labelStyle: 'color:#333',
         valueField: 'id',
@@ -211,6 +215,19 @@ OptionsWindow = function(c) {
 				{property: 'name', direction: 'ASC'}
 			]
 		}
+    });
+
+    title = Ext.create('Ext.form.field.Text', {
+        width: cmpWidth,
+        labelWidth: labelWidth,
+        fieldLabel: i18n.table_title,
+        labelStyle: 'color:#333',
+        maxLength: 250,
+        enforceMaxLength: true,
+        style: 'margin-bottom:0',
+        xable: function() {
+            this.setDisabled(hideTitle.getValue());
+        }
     });
 
     reportingPeriod = Ext.create('Ext.form.field.Checkbox', {
@@ -241,8 +258,8 @@ OptionsWindow = function(c) {
     sortOrder = Ext.create('Ext.form.field.ComboBox', {
         cls: 'ns-combo',
         style: 'margin-bottom:1px',
-        width: 254,
-        labelWidth: 130,
+        width: cmpWidth - 8,
+        labelWidth: labelWidth,
         fieldLabel: i18n.sort_order,
         labelStyle: 'color:#333',
         queryMode: 'local',
@@ -263,8 +280,8 @@ OptionsWindow = function(c) {
     topLimit = Ext.create('Ext.form.field.ComboBox', {
         cls: 'ns-combo',
         style: 'margin-bottom:3px',
-        width: 254,
-        labelWidth: 130,
+        width: cmpWidth - 8,
+        labelWidth: labelWidth,
         fieldLabel: i18n.top_limit,
         labelStyle: 'color:#333',
         queryMode: 'local',
@@ -328,6 +345,14 @@ OptionsWindow = function(c) {
         ]
     };
 
+    general = {
+        bodyStyle: 'border:0 none',
+        style: 'margin-left:14px',
+        items: [
+            title
+        ]
+    };
+
     parameters = Ext.create('Ext.panel.Panel', {
         bodyStyle: 'border:0 none; background:transparent',
         style: 'margin-left:14px',
@@ -371,6 +396,7 @@ OptionsWindow = function(c) {
                 fontSize: fontSize.getValue(),
                 digitGroupSeparator: digitGroupSeparator.getValue(),
                 legendSet: {id: legendSet.getValue()},
+                title: title.getValue(),
                 reportingPeriod: reportingPeriod.getValue(),
                 organisationUnit: organisationUnit.getValue(),
                 parentOrganisationUnit: parentOrganisationUnit.getValue(),
@@ -405,6 +431,14 @@ OptionsWindow = function(c) {
             cumulative.setValue(isBoolean(layout.cumulative) ? layout.cumulative : false);
             sortOrder.setValue(isNumber(layout.sortOrder) ? layout.sortOrder : 0);
             topLimit.setValue(isNumber(layout.topLimit) ? layout.topLimit : 0);
+
+            // title
+            if (isString(layout.title)) {
+                title.setValue(layout.title);
+            }
+            else {
+                title.reset();
+            }
         },
         items: [
             {
@@ -440,6 +474,15 @@ OptionsWindow = function(c) {
                 html: i18n.style
             },
             style,
+            {
+                bodyStyle: 'border:0 none; padding:7px'
+            },
+            {
+                bodyStyle: 'border:0 none; color:#222; font-size:12px; font-weight:bold',
+                style: 'margin-bottom:6px; margin-left:5px',
+                html: i18n.general
+            },
+            general,
             {
                 bodyStyle: 'border:0 none; padding:3px'
             },
