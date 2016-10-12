@@ -123,7 +123,7 @@ var Plugin = function() {
                 sessionStorageManager
             };
 
-            var uiManager = new manager.UiManager();
+            var uiManager = new manager.UiManager(instanceRefs);
             instanceRefs.uiManager = uiManager;
             uiManager.applyTo(arrayTo(api));
 
