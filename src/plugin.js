@@ -30,23 +30,23 @@ var periodConfig = new config.PeriodConfig();
 refs.periodConfig = periodConfig;
 
 // app manager
-var appManager = new manager.AppManager();
+var appManager = new manager.AppManager(refs);
 refs.appManager = appManager;
 
 // calendar manager
-var calendarManager = new manager.CalendarManager();
+var calendarManager = new manager.CalendarManager(refs);
 refs.calendarManager = calendarManager;
 
 // request manager
-var requestManager = new manager.RequestManager();
+var requestManager = new manager.RequestManager(refs);
 refs.requestManager = requestManager;
 
 // i18n manager
-var i18nManager = new manager.I18nManager();
+var i18nManager = new manager.I18nManager(refs);
 refs.i18nManager = i18nManager;
 
 // sessionstorage manager
-var sessionStorageManager = new manager.SessionStorageManager();
+var sessionStorageManager = new manager.SessionStorageManager(refs);
 refs.sessionStorageManager = sessionStorageManager;
 
 dimensionConfig.setI18nManager(i18nManager);
@@ -123,7 +123,7 @@ var Plugin = function() {
                 sessionStorageManager
             };
 
-            var uiManager = new manager.UiManager();
+            var uiManager = new manager.UiManager(instanceRefs);
             instanceRefs.uiManager = uiManager;
             uiManager.applyTo(arrayTo(api));
 
