@@ -131,6 +131,7 @@ var Plugin = function() {
             instanceRefs.instanceManager = instanceManager;
             instanceManager.apiResource = 'reportTable';
             instanceManager.apiEndpoint = 'reportTables';
+            instanceManager.apiModule = 'dhis-web-pivot';
             instanceManager.applyTo(arrayTo(api));
             instanceManager.plugin = true;
             instanceManager.dashboard = reportTablePlugin.dashboard;

@@ -150,6 +150,7 @@ function initialize() {
     // instance manager
     instanceManager.apiResource = 'reportTable';
     instanceManager.apiEndpoint = 'reportTables';
+    instanceManager.apiModule = 'dhis-web-pivot';
     instanceManager.dataStatisticsEventType = 'REPORT_TABLE_VIEW';
 
     // ui manager
