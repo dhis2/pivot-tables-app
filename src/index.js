@@ -99,7 +99,7 @@ var manifestReq = $.ajax({
 
 var systemInfoUrl = '/system/info.json';
 var systemSettingsUrl = '/systemSettings.json?key=keyCalendar&key=keyDateFormat&key=keyAnalysisRelativePeriod&key=keyHideUnapprovedDataInAnalytics&key=keyAnalysisDigitGroupSeparator';
-var userAccountUrl = '/me/user-account.json';
+var userAccountUrl = '/api/me/user-account.json';
 
 var systemInfoReq;
 var systemSettingsReq;
@@ -118,7 +118,7 @@ systemInfoReq.done(function(systemInfo) {
 
 systemSettingsReq.done(function(systemSettings) {
     appManager.systemSettings = systemSettings;
-    userAccountReq = $.getJSON(appManager.getApiPath() + userAccountUrl);
+    userAccountReq = $.getJSON(appManager.getPath() + userAccountUrl);
 
 userAccountReq.done(function(userAccount) {
     appManager.userAccount = userAccount;
