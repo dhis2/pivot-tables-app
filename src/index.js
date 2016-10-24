@@ -97,9 +97,9 @@ var manifestReq = $.ajax({
     }
 });
 
-var systemInfoUrl = '/api/system/info.json';
-var systemSettingsUrl = '/api/systemSettings.json?key=keyCalendar&key=keyDateFormat&key=keyAnalysisRelativePeriod&key=keyHideUnapprovedDataInAnalytics&key=keyAnalysisDigitGroupSeparator';
-var userAccountUrl = '/api/me/user-account.json';
+var systemInfoUrl = '/system/info.json';
+var systemSettingsUrl = '/systemSettings.json?key=keyCalendar&key=keyDateFormat&key=keyAnalysisRelativePeriod&key=keyHideUnapprovedDataInAnalytics&key=keyAnalysisDigitGroupSeparator';
+var userAccountUrl = '/me/user-account.json';
 
 var systemInfoReq;
 var systemSettingsReq;
@@ -109,16 +109,16 @@ manifestReq.done(function(text) {
     appManager.manifest = JSON.parse(text);
     appManager.env = process.env.NODE_ENV;
     appManager.setAuth();
-    systemInfoReq = $.getJSON(appManager.getPath() + systemInfoUrl);
+    systemInfoReq = $.getJSON(appManager.getApiPath() + systemInfoUrl);
 
 systemInfoReq.done(function(systemInfo) {
     appManager.systemInfo = systemInfo;
     appManager.path = systemInfo.contextPath;
-    systemSettingsReq = $.getJSON(appManager.getPath() + systemSettingsUrl);
+    systemSettingsReq = $.getJSON(appManager.getApiPath() + systemSettingsUrl);
 
 systemSettingsReq.done(function(systemSettings) {
     appManager.systemSettings = systemSettings;
-    userAccountReq = $.getJSON(appManager.getPath() + userAccountUrl);
+    userAccountReq = $.getJSON(appManager.getApiPath() + userAccountUrl);
 
 userAccountReq.done(function(userAccount) {
     appManager.userAccount = userAccount;
