@@ -6,12 +6,15 @@ import 'd2-analysis/css/ui/GridHeaders.css';
 import arrayFrom from 'd2-utilizr/lib/arrayFrom';
 import arrayTo from 'd2-utilizr/lib/arrayTo';
 
-import {api, pivot, manager, config, ui, init} from 'd2-analysis';
+import { api, pivot, manager, config, ui, init, override } from 'd2-analysis';
 
 import { Layout } from './api/Layout';
 
 import { LayoutWindow } from './ui/LayoutWindow';
 import { OptionsWindow } from './ui/OptionsWindow';
+
+// override
+override.extOverrides();
 
 // extend
 api.Layout = Layout;
