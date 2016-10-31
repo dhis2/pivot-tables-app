@@ -153,25 +153,6 @@ function initialize() {
     instanceManager.apiModule = 'dhis-web-pivot';
     instanceManager.dataStatisticsEventType = 'REPORT_TABLE_VIEW';
 
-    // ui manager
-    uiManager.disableRightClick();
-
-    uiManager.enableConfirmUnload();
-
-    uiManager.setIntroHtml(function() {
-        return '<div class="ns-viewport-text" style="padding:20px">' +
-            '<h3>' + i18nManager.get('example1') + '</h3>' +
-            '<div>- ' + i18nManager.get('example2') + '</div>' +
-            '<div>- ' + i18nManager.get('example3') + '</div>' +
-            '<div>- ' + i18nManager.get('example4') + '</div>' +
-            '<h3 style="padding-top:20px">' + i18nManager.get('example5') + '</h3>' +
-            '<div>- ' + i18nManager.get('example6') + '</div>' +
-            '<div>- ' + i18nManager.get('example7') + '</div>' +
-            '<div>- ' + i18nManager.get('example8') + '</div>' +
-            '</div>';
-    }());
-
-    // instance manager
     instanceManager.setFn(function(layout) {
         var sortingId = layout.sorting ? layout.sorting.id : null,
             table;
@@ -211,6 +192,24 @@ function initialize() {
         // statistics
         instanceManager.postDataStatistics();
     });
+
+    // ui manager
+    uiManager.disableRightClick();
+
+    uiManager.enableConfirmUnload();
+
+    uiManager.setIntroHtml(function() {
+        return '<div class="ns-viewport-text" style="padding:20px">' +
+            '<h3>' + i18nManager.get('example1') + '</h3>' +
+            '<div>- ' + i18nManager.get('example2') + '</div>' +
+            '<div>- ' + i18nManager.get('example3') + '</div>' +
+            '<div>- ' + i18nManager.get('example4') + '</div>' +
+            '<h3 style="padding-top:20px">' + i18nManager.get('example5') + '</h3>' +
+            '<div>- ' + i18nManager.get('example6') + '</div>' +
+            '<div>- ' + i18nManager.get('example7') + '</div>' +
+            '<div>- ' + i18nManager.get('example8') + '</div>' +
+            '</div>';
+    }());
 
     // windows
     uiManager.reg(LayoutWindow(refs), 'layoutWindow').hide();
