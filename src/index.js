@@ -12,6 +12,7 @@ import { Layout } from './api/Layout';
 
 import { LayoutWindow } from './ui/LayoutWindow';
 import { OptionsWindow } from './ui/OptionsWindow';
+import { DownloadButtonItems } from './ui/DownloadButtonItems';
 
 // override
 override.extOverrides();
@@ -260,7 +261,8 @@ function initialize() {
             defaultIntegrationButton,
             chartIntegrationButton,
             mapIntegrationButton
-        ]
+        ],
+        DownloadButtonItems: DownloadButtonItems
     }), 'viewport');
 }
 

@@ -148,22 +148,22 @@ var Plugin = function() {
                 // instance manager
             uiManager.setInstanceManager(instanceManager);
 
-            instanceManager.setFn(function(layout) {
-                var sortingId = layout.sorting ? layout.sorting.id : null,
+            instanceManager.setFn(function(_layout) {
+                var sortingId = _layout.sorting ? _layout.sorting.id : null,
                     html = '',
                     table;
 
                 // get table
                 var getTable = function() {
-                    var response = layout.getResponse();
-                    var colAxis = new pivot.TableAxis(layout, response, 'col');
-                    var rowAxis = new pivot.TableAxis(layout, response, 'row');
-                    return new pivot.Table(layout, response, colAxis, rowAxis, {skipTitle: true});
+                    var response = _layout.getResponse();
+                    var colAxis = new pivot.TableAxis(_layout, response, 'col');
+                    var rowAxis = new pivot.TableAxis(_layout, response, 'row');
+                    return new pivot.Table(_layout, response, colAxis, rowAxis, {skipTitle: true});
                 };
 
                 // pre-sort if id
                 if (sortingId && sortingId !== 'total') {
-                    layout.sort();
+                    _layout.sort();
                 }
 
                 // table
@@ -171,17 +171,17 @@ var Plugin = function() {
 
                 // sort if total
                 if (sortingId && sortingId === 'total') {
-                    layout.sort(table);
+                    _layout.sort(table);
                     table = getTable();
                 }
 
-                html += reportTablePlugin.showTitles ? uiManager.getTitleHtml(layout.title || layout.name) : '';
+                html += reportTablePlugin.showTitles ? uiManager.getTitleHtml(_layout.title || _layout.name) : '';
                 html += table.html;
 
-                uiManager.update(html, layout.el);
+                uiManager.update(html, _layout.el);
 
                 // events
-                tableManager.setColumnHeaderMouseHandlers(layout, table);
+                tableManager.setColumnHeaderMouseHandlers(_layout, table);
 
                 // mask
                 uiManager.unmask();
