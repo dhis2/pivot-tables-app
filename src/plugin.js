@@ -8,6 +8,9 @@ import { api, pivot, manager, config, init } from 'd2-analysis';
 
 import { Layout } from './api/Layout';
 
+// version
+const VERSION = '25';
+
 // extend
 api.Layout = Layout;
 
@@ -88,11 +91,12 @@ var Plugin = function() {
             return;
         }
 
+        appManager.manifestVersion = VERSION;
         appManager.path = t.url;
         appManager.setAuth(t.username && t.password ? t.username + ':' + t.password : null);
 
         // user account
-        $.getJSON(appManager.path + '/api/me/user-account.json').done(function(userAccount) {
+        $.getJSON(appManager.getPath() + '/api/me/user-account.json').done(function(userAccount) {
             appManager.userAccount = userAccount;
 
             requestManager.add(new api.Request(init.legendSetsInit(refs)));
