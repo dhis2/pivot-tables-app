@@ -52,6 +52,8 @@ refs.i18nManager = i18nManager;
 var sessionStorageManager = new manager.SessionStorageManager(refs);
 refs.sessionStorageManager = sessionStorageManager;
 
+// dependencies
+
 dimensionConfig.setI18nManager(i18nManager);
 optionConfig.setI18nManager(i18nManager);
 periodConfig.setI18nManager(i18nManager);
@@ -192,7 +194,7 @@ var Plugin = function() {
                 });
             }
             else {
-                instanceManager.getReport(layout);
+                instanceManager.getReport(new api.Layout(instanceRefs, layout));
             }
         });
     };
