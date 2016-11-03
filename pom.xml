@@ -6,11 +6,11 @@
 
   <groupId>org.hisp.dhis</groupId>
   <artifactId>dhis-app-pivot</artifactId>
-  <version>2.25-SNAPSHOT</version>
+  <version>2.26-SNAPSHOT</version>
   <packaging>jar</packaging>
   <name>Pivot Tables</name>
   <description>Pivot tables</description>
-  <url>https://github.com/dhis2/dhis2-pivot</url>
+  <url>https://github.com/dhis2/pivot-table-app</url>
 
   <organization>
     <name>DHIS 2</name>
@@ -34,14 +34,14 @@
   </licenses>
 
   <scm>
-    <connection>scm:git:git@github.com:dhis2/dhis2-pivot.git</connection>
-    <developerConnection>scm:git:git@github.com:dhis2/dhis2-pivot.git</developerConnection>
-    <url>git@github.com:dhis2/dhis2-pivot.git</url>
+    <connection>scm:git:git@github.com:dhis2/pivot-table-app.git</connection>
+    <developerConnection>scm:git:git@github.com:dhis2/pivot-table-app.git</developerConnection>
+    <url>git@github.com:dhis2/pivot-table-app.git</url>
   </scm>
 
   <issueManagement>
 	<system>GitHub</system>
-	<url>https://github.com/dhis2/dhis2-pivot</url>
+	<url>https://github.com/dhis2/pivot-table-app</url>
   </issueManagement>
 
   <distributionManagement>
