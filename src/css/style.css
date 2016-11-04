@@ -1217,7 +1217,7 @@ table.pivot.displaydensity-COMPACT td.pivot-filter {
 
     /* IE11 title fix */
 .ns-accordion .x-component.x-panel-header-text-container.x-box-item.x-component-default {
-    width: 100%;
+    width: 100% !important;
 }
 
 
