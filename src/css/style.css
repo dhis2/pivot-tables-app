@@ -1231,9 +1231,9 @@ table.pivot.displaydensity-COMPACT td.pivot-filter {
 }
 
 .ns-textarea.monospaced textarea {
-	font-family: monospace, consolas, courier new;
-	padding: 4px;
-	border: 0 none;
+    font-family: "Monospace", "Consolas", "Courier New", "Courier 10 Pitch" !important;
+    padding: 4px;
+    border: 0 none;
 }
 
 
