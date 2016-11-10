@@ -1,10 +1,9 @@
 import './css/style.css';
 
-import isArray from 'd2-utilizr/lib/isArray';
 import objectApplyIf from 'd2-utilizr/lib/objectApplyIf';
 import arrayTo from 'd2-utilizr/lib/arrayTo';
 
-import { api, pivot, manager, config, init } from 'd2-analysis';
+import { api, config, init, manager, pivot, util } from 'd2-analysis';
 
 import { Layout } from './api/Layout';
 
@@ -17,6 +16,7 @@ api.Layout = Layout;
 // references
 var refs = {
     api,
+    init,
     pivot
 };
 
@@ -63,152 +63,94 @@ dimensionConfig.applyTo(arrayTo(pivot));
 optionConfig.applyTo([].concat(arrayTo(api), arrayTo(pivot)));
 
 // plugin
-var Plugin = function() {
-    var t = this;
-
-    t.url = null;
-    t.username = null;
-    t.password = null;
-    t.spinner = false;
-
-    var _isPending = false;
-    var _isReady = false;
-
-    var _layouts = [];
-
-    t.add = function(...layouts) {
-        layouts = isArray(layouts[0]) ? layouts[0] : layouts;
-
-        if (layouts.length) {
-            _layouts = [..._layouts, ...layouts];
-        }
+function render(plugin, layout) {
+    var instanceRefs = {
+        dimensionConfig,
+        optionConfig,
+        periodConfig,
+        api,
+        pivot,
+        appManager,
+        calendarManager,
+        requestManager,
+        sessionStorageManager
     };
 
-    t.load = function(...layouts) {
-        t.add(isArray(layouts[0]) ? layouts[0] : layouts);
+    // ui manager
+    var uiManager = new manager.UiManager(instanceRefs);
+    instanceRefs.uiManager = uiManager;
+    uiManager.applyTo(arrayTo(api));
 
-        _run();
-    };
+    // instance manager
+    var instanceManager = new manager.InstanceManager(instanceRefs);
+    instanceRefs.instanceManager = instanceManager;
+    instanceManager.apiResource = 'reportTable';
+    instanceManager.apiEndpoint = 'reportTables';
+    instanceManager.apiModule = 'dhis-web-pivot';
+    instanceManager.plugin = true;
+    instanceManager.dashboard = reportTablePlugin.dashboard;
+    instanceManager.applyTo(arrayTo(api));
 
-    var _run = function() {
-        if (_isReady) {
-            while (_layouts.length) {
-                _load(_layouts.shift());
-            }
-        }
-        else if (!_isPending) {
-            _isPending = true;
+    // table manager
+    var tableManager = new manager.TableManager(instanceRefs);
+    instanceRefs.tableManager = tableManager;
 
-            _initialize();
-        }
-    };
+    // initialize
+    uiManager.setInstanceManager(instanceManager);
 
-    var _load = function(layout) {
-        if (t.spinner) {
-            $('#' + layout.el).append('<div class="spinner"></div>');
-        }
+    instanceManager.setFn(function(_layout) {
+        var sortingId = _layout.sorting ? _layout.sorting.id : null,
+            html = '',
+            table;
 
-        var instanceRefs = {
-            dimensionConfig,
-            optionConfig,
-            periodConfig,
-            api,
-            pivot,
-            appManager,
-            calendarManager,
-            requestManager,
-            sessionStorageManager
+        // get table
+        var getTable = function() {
+            var response = _layout.getResponse();
+            var colAxis = new pivot.TableAxis(_layout, response, 'col');
+            var rowAxis = new pivot.TableAxis(_layout, response, 'row');
+            return new pivot.Table(_layout, response, colAxis, rowAxis, {skipTitle: true});
         };
 
-        var uiManager = new manager.UiManager(instanceRefs);
-        instanceRefs.uiManager = uiManager;
-        uiManager.applyTo(arrayTo(api));
+        // pre-sort if id
+        if (sortingId && sortingId !== 'total') {
+            _layout.sort();
+        }
 
-        var instanceManager = new manager.InstanceManager(instanceRefs);
-        instanceRefs.instanceManager = instanceManager;
-        instanceManager.apiResource = 'reportTable';
-        instanceManager.apiEndpoint = 'reportTables';
-        instanceManager.apiModule = 'dhis-web-pivot';
-        instanceManager.plugin = true;
-        instanceManager.dashboard = reportTablePlugin.dashboard;
-        instanceManager.applyTo(arrayTo(api));
+        // table
+        table = getTable();
 
-        var tableManager = new manager.TableManager(instanceRefs);
-        instanceRefs.tableManager = tableManager;
-
-            // instance manager
-        uiManager.setInstanceManager(instanceManager);
-
-        instanceManager.setFn(function(_layout) {
-            var sortingId = _layout.sorting ? _layout.sorting.id : null,
-                html = '',
-                table;
-
-            // get table
-            var getTable = function() {
-                var response = _layout.getResponse();
-                var colAxis = new pivot.TableAxis(_layout, response, 'col');
-                var rowAxis = new pivot.TableAxis(_layout, response, 'row');
-                return new pivot.Table(_layout, response, colAxis, rowAxis, {skipTitle: true});
-            };
-
-            // pre-sort if id
-            if (sortingId && sortingId !== 'total') {
-                _layout.sort();
-            }
-
-            // table
+        // sort if total
+        if (sortingId && sortingId === 'total') {
+            _layout.sort(table);
             table = getTable();
-
-            // sort if total
-            if (sortingId && sortingId === 'total') {
-                _layout.sort(table);
-                table = getTable();
-            }
-
-            html += reportTablePlugin.showTitles ? uiManager.getTitleHtml(_layout.title || _layout.name) : '';
-            html += table.html;
-
-            uiManager.update(html, _layout.el);
-
-            // events
-            tableManager.setColumnHeaderMouseHandlers(_layout, table);
-
-            // mask
-            uiManager.unmask();
-        });
-
-        if (layout.id) {
-            instanceManager.getById(layout.id, function(_layout) {
-                _layout = new api.Layout(instanceRefs, objectApplyIf(layout, _layout));
-
-                instanceManager.getReport(_layout);
-            });
         }
-        else {
-            instanceManager.getReport(new api.Layout(instanceRefs, layout));
-        }
-    };
 
-    var _initialize = function() {
-        appManager.manifestVersion = VERSION;
-        appManager.path = t.url;
-        appManager.setAuth(t.username && t.password ? t.username + ':' + t.password : null);
+        html += reportTablePlugin.showTitles ? uiManager.getTitleHtml(_layout.title || _layout.name) : '';
+        html += table.html;
 
-        // user account
-        $.getJSON(appManager.getPath() + '/api/me/user-account.json').done(function(userAccount) {
-            appManager.userAccount = userAccount;
+        uiManager.update(html, _layout.el);
 
-            requestManager.add(new api.Request(init.legendSetsInit(refs)));
-            requestManager.add(new api.Request(init.dimensionsInit(refs)));
+        // events
+        tableManager.setColumnHeaderMouseHandlers(_layout, table);
 
-            _isReady = true;
-            _isPending = false;
+        // mask
+        uiManager.unmask();
+    });
 
-            requestManager.set(_run);
-            requestManager.run();
+    if (plugin.loadingIndicator) {
+        uiManager.renderLoadingIndicator(layout.el);
+    }
+
+    if (layout.id) {
+        instanceManager.getById(layout.id, function(_layout) {
+            _layout = new api.Layout(instanceRefs, objectApplyIf(layout, _layout));
+
+            instanceManager.getReport(_layout);
         });
-    };
+    }
+    else {
+        instanceManager.getReport(new api.Layout(instanceRefs, layout));
+    }
 };
 
-global.reportTablePlugin = new Plugin();
+global.reportTablePlugin = new util.Plugin({ refs, VERSION, renderFn: render });
