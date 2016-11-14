@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>plugin test</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="initial-scale=1"/>
+    <script type="text/javascript" src="jquery.min.js"></script>
+    <script type="text/javascript" src="./build/reporttable.js"></script>
+</head>
+<body>
+
+<button onclick="window.load1()">Load</button>
+<div id="c1"></div>
+<div id="c2"></div>
+<div id="c3"></div>
+
+<script>
+
+    reportTablePlugin.url = '//localhost:8080';
+    reportTablePlugin.username = 'admin';
+    reportTablePlugin.password = 'district';
+    reportTablePlugin.spinner = true;
+
+    window.c1 = { id: 'C0rhAq1oklh', el: 'c1' };
+    window.c2 = { id: 'xIWpSo5jjT1', el: 'c2' };
+    window.c3 = { id: 'jIISuEWxmoI', el: 'c3' };
+
+    window.load1 = function() {
+        reportTablePlugin.add(c1, c2);
+        reportTablePlugin.load();
+        reportTablePlugin.load([c3]);
+    };
+
+</script>
+
+</body>
+</html>
