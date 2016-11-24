@@ -31,6 +31,7 @@ export var Layout = function(refs, c, applyConfig, forceApplyConfig) {
     t.fontSize = isString(c.fontSize) && !isEmpty(c.fontSize) ? c.fontSize : refs.optionConfig.getFontSize('normal').id;
     t.digitGroupSeparator = isString(c.digitGroupSeparator) && !isEmpty(c.digitGroupSeparator) ? c.digitGroupSeparator : refs.optionConfig.getDigitGroupSeparator('space').id;
     t.legendSet = (new Record(c.legendSet)).val(true);
+    t.legendDisplayStyle = isString(c.legendDisplayStyle) ? c.legendDisplayStyle : refs.optionConfig.getLegendDisplayStyle('value').id;
 
     // graph map
     t.parentGraphMap = isObject(c.parentGraphMap) ? c.parentGraphMap : null;

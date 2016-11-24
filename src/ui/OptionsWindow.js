@@ -24,6 +24,7 @@ OptionsWindow = function(c) {
         completedOnly,
         digitGroupSeparator,
         legendSet,
+        legendDisplayStyle,
         title,
         displayDensity,
         fontSize,
@@ -217,6 +218,24 @@ OptionsWindow = function(c) {
 		}
     });
 
+    legendDisplayStyle = Ext.create('Ext.form.field.ComboBox', {
+        cls: 'ns-combo',
+        style: 'margin-bottom' + comboBottomMargin + 'px',
+        width: cmpWidth,
+        labelWidth: labelWidth,
+        fieldLabel: i18n.legend_display_style,
+        labelStyle: 'color:#333',
+        valueField: 'id',
+        displayField: 'name',
+        queryMode: 'local',
+        editable: false,
+        value: optionConfig.getLegendDisplayStyle('value').id,
+        store: Ext.create('Ext.data.Store', {
+            fields: ['id', 'name', 'index'],
+            data: optionConfig.getLegendDisplayStyleRecords()
+        })
+    });
+
     title = Ext.create('Ext.form.field.Text', {
         width: cmpWidth,
         labelWidth: labelWidth,
@@ -341,7 +360,8 @@ OptionsWindow = function(c) {
             displayDensity,
             fontSize,
             digitGroupSeparator,
-            legendSet
+            legendSet,
+            legendDisplayStyle
         ]
     };
 
@@ -396,6 +416,7 @@ OptionsWindow = function(c) {
                 fontSize: fontSize.getValue(),
                 digitGroupSeparator: digitGroupSeparator.getValue(),
                 legendSet: {id: legendSet.getValue()},
+                legendDisplayStyle: legendDisplayStyle.getValue(),
                 title: title.getValue(),
                 reportingPeriod: reportingPeriod.getValue(),
                 organisationUnit: organisationUnit.getValue(),
@@ -424,6 +445,7 @@ OptionsWindow = function(c) {
             fontSize.setValue(isString(layout.fontSize) ? layout.fontSize : optionConfig.getFontSize('normal').id);
             digitGroupSeparator.setValue(isString(layout.digitGroupSeparator) ? layout.digitGroupSeparator : optionConfig.getDigitGroupSeparator('space').id);
             legendSet.setValue(isObject(layout.legendSet) && isString(layout.legendSet.id) ? layout.legendSet.id : 0);
+            legendDisplayStyle.setValue(isObject(layout.legendDisplayStyle) && isString(layout.legendDisplayStyle.id) ? layout.legendDisplayStyle : optionConfig.getLegendDisplayStyle('value').id);
             reportingPeriod.setValue(isBoolean(layout.reportingPeriod) ? layout.reportingPeriod : false);
             organisationUnit.setValue(isBoolean(layout.organisationUnit) ? layout.organisationUnit : false);
             parentOrganisationUnit.setValue(isBoolean(layout.parentOrganisationUnit) ? layout.parentOrganisationUnit : false);
@@ -563,6 +585,7 @@ OptionsWindow = function(c) {
                 w.fontSize = fontSize;
                 w.digitGroupSeparator = digitGroupSeparator;
                 w.legendSet = legendSet;
+                w.legendDisplayStyle = legendDisplayStyle;
                 w.reportingPeriod = reportingPeriod;
                 w.organisationUnit = organisationUnit;
                 w.parentOrganisationUnit = parentOrganisationUnit;
