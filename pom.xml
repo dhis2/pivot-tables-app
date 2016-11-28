@@ -10,7 +10,7 @@
   <packaging>jar</packaging>
   <name>Pivot Tables</name>
   <description>Pivot tables</description>
-  <url>https://github.com/dhis2/pivot-table-app</url>
+  <url>https://github.com/dhis2/pivot-tables-app</url>
 
   <organization>
     <name>DHIS 2</name>
@@ -34,14 +34,14 @@
   </licenses>
 
   <scm>
-    <connection>scm:git:git@github.com:dhis2/pivot-table-app.git</connection>
-    <developerConnection>scm:git:git@github.com:dhis2/pivot-table-app.git</developerConnection>
-    <url>git@github.com:dhis2/pivot-table-app.git</url>
+    <connection>scm:git:git@github.com:dhis2/pivot-tables-app.git</connection>
+    <developerConnection>scm:git:git@github.com:dhis2/pivot-tables-app.git</developerConnection>
+    <url>git@github.com:dhis2/pivot-tables-app.git</url>
   </scm>
 
   <issueManagement>
 	<system>GitHub</system>
-	<url>https://github.com/dhis2/pivot-table-app</url>
+	<url>https://github.com/dhis2/pivot-tables-app</url>
   </issueManagement>
 
   <distributionManagement>
