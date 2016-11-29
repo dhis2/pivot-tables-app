@@ -229,7 +229,7 @@ OptionsWindow = function(c) {
         displayField: 'name',
         queryMode: 'local',
         editable: false,
-        value: optionConfig.getLegendDisplayStyle('value').id,
+        value: optionConfig.getLegendDisplayStyle('fill').id,
         store: Ext.create('Ext.data.Store', {
             fields: ['id', 'name', 'index'],
             data: optionConfig.getLegendDisplayStyleRecords()
@@ -445,7 +445,7 @@ OptionsWindow = function(c) {
             fontSize.setValue(isString(layout.fontSize) ? layout.fontSize : optionConfig.getFontSize('normal').id);
             digitGroupSeparator.setValue(isString(layout.digitGroupSeparator) ? layout.digitGroupSeparator : optionConfig.getDigitGroupSeparator('space').id);
             legendSet.setValue(isObject(layout.legendSet) && isString(layout.legendSet.id) ? layout.legendSet.id : 0);
-            legendDisplayStyle.setValue(isObject(layout.legendDisplayStyle) && isString(layout.legendDisplayStyle.id) ? layout.legendDisplayStyle : optionConfig.getLegendDisplayStyle('value').id);
+            legendDisplayStyle.setValue(isObject(layout.legendDisplayStyle) && isString(layout.legendDisplayStyle.id) ? layout.legendDisplayStyle : optionConfig.getLegendDisplayStyle('fill').id);
             reportingPeriod.setValue(isBoolean(layout.reportingPeriod) ? layout.reportingPeriod : false);
             organisationUnit.setValue(isBoolean(layout.organisationUnit) ? layout.organisationUnit : false);
             parentOrganisationUnit.setValue(isBoolean(layout.parentOrganisationUnit) ? layout.parentOrganisationUnit : false);
