@@ -215,7 +215,16 @@ OptionsWindow = function(c) {
 				{property: 'index', direction: 'ASC'},
 				{property: 'name', direction: 'ASC'}
 			]
-		}
+		},
+        listeners: {
+            select: function(cb) {
+                onLegendSetSelect({
+                    legendSet: {
+                        id: cb.getValue()
+                    }
+                });
+            }
+        }
     });
 
     legendDisplayStyle = Ext.create('Ext.form.field.ComboBox', {
@@ -229,7 +238,7 @@ OptionsWindow = function(c) {
         displayField: 'name',
         queryMode: 'local',
         editable: false,
-        value: optionConfig.getLegendDisplayStyle('value').id,
+        value: optionConfig.getLegendDisplayStyle('fill').id,
         store: Ext.create('Ext.data.Store', {
             fields: ['id', 'name', 'index'],
             data: optionConfig.getLegendDisplayStyleRecords()
@@ -444,8 +453,6 @@ OptionsWindow = function(c) {
             displayDensity.setValue(isString(layout.displayDensity) ? layout.displayDensity : optionConfig.getDisplayDensity('normal').id);
             fontSize.setValue(isString(layout.fontSize) ? layout.fontSize : optionConfig.getFontSize('normal').id);
             digitGroupSeparator.setValue(isString(layout.digitGroupSeparator) ? layout.digitGroupSeparator : optionConfig.getDigitGroupSeparator('space').id);
-            legendSet.setValue(isObject(layout.legendSet) && isString(layout.legendSet.id) ? layout.legendSet.id : 0);
-            legendDisplayStyle.setValue(isObject(layout.legendDisplayStyle) && isString(layout.legendDisplayStyle.id) ? layout.legendDisplayStyle : optionConfig.getLegendDisplayStyle('background').id);
             reportingPeriod.setValue(isBoolean(layout.reportingPeriod) ? layout.reportingPeriod : false);
             organisationUnit.setValue(isBoolean(layout.organisationUnit) ? layout.organisationUnit : false);
             parentOrganisationUnit.setValue(isBoolean(layout.parentOrganisationUnit) ? layout.parentOrganisationUnit : false);
@@ -453,6 +460,8 @@ OptionsWindow = function(c) {
             cumulative.setValue(isBoolean(layout.cumulative) ? layout.cumulative : false);
             sortOrder.setValue(isNumber(layout.sortOrder) ? layout.sortOrder : 0);
             topLimit.setValue(isNumber(layout.topLimit) ? layout.topLimit : 0);
+
+            onLegendSetSelect(layout);
 
             // title
             if (isString(layout.title)) {
@@ -596,6 +605,24 @@ OptionsWindow = function(c) {
             }
         }
     });
+
+    var onLegendSetSelect = function(layout) {
+        var legendSetId = layout.legendSet ? layout.legendSet.id : null;
+        var legendDisplayStyleId = layout.legendDisplayStyle;
+
+        if (legendSetId) {
+            legendSet.setValue(legendSetId);
+            legendDisplayStyle.enable();
+
+            if (legendDisplayStyleId) {
+                legendDisplayStyle.setValue(legendDisplayStyleId);
+            }
+        } else {
+            legendSet.reset();
+            legendDisplayStyle.reset();
+            legendDisplayStyle.disable();
+        }
+    };
 
     return window;
 };
