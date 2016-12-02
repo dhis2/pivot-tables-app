@@ -238,6 +238,7 @@ OptionsWindow = function(c) {
         displayField: 'name',
         queryMode: 'local',
         editable: false,
+        disabled: true,
         value: optionConfig.getLegendDisplayStyle('fill').id,
         store: Ext.create('Ext.data.Store', {
             fields: ['id', 'name', 'index'],
