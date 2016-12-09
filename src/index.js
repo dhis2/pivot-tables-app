@@ -137,6 +137,7 @@ requestManager.add(new api.Request(init.organisationUnitLevelsInit(refs)));
 requestManager.add(new api.Request(init.legendSetsInit(refs)));
 requestManager.add(new api.Request(init.dimensionsInit(refs)));
 requestManager.add(new api.Request(init.dataApprovalLevelsInit(refs)));
+requestManager.add(new api.Request(init.userFavoritesInit(refs)));
 
 requestManager.set(initialize);
 requestManager.run();
@@ -202,27 +203,13 @@ function initialize() {
 
     uiManager.enableConfirmUnload();
 
-    // Request for top favorites
-    var favoritesUrl = `${ appManager.getApiPath() }/dataStatistics/favorites.json?eventType=REPORT_TABLE_VIEW&username=${ appManager.userAccount.username }&pageSize=5`;
-    var favorites = [];
-
-    $.ajax({
-        dataType: 'json',
-        url: favoritesUrl,
-        async: false
-    }).success(function(response) {
-        favorites = response;
-    }).error(function() {
-        favorites = [];
-    });
-
     uiManager.setIntroHtml(function() {
         var html = '<div class="ns-viewport-text" style="padding:20px">';
 
-        if (favorites.length > 0) {
+        if (appManager.userFavorites.length > 0) {
             html += `<h3>${ i18nManager.get('example9') }</h3>`;
 
-            favorites.forEach(function(favorite) {
+            appManager.userFavorites.forEach(function(favorite) {
                 html += '<div>- <a href="#">' + favorite.name + '</a></div>';
             });
 
