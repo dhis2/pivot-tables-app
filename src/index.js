@@ -202,10 +202,37 @@ function initialize() {
 
     uiManager.enableConfirmUnload();
 
+    // Request for top favorites
+    var favoritesUrl = `${ appManager.getApiPath() }/dataStatistics/favorites.json?eventType=REPORT_TABLE_VIEW&username=${ appManager.userAccount.username }&pageSize=5`;
+    var favorites = [];
+
+    $.ajax({
+        dataType: 'json',
+        url: favoritesUrl,
+        async: false
+    }).success(function(response) {
+        favorites = response;
+    }).error(function() {
+        favorites = [];
+    });
+
     uiManager.setIntroHtml(function() {
-        return '<div class="ns-viewport-text" style="padding:20px">' +
-            '<h3>' + i18nManager.get('example1') + '</h3>' +
-            '<div>- ' + i18nManager.get('example2') + '</div>' +
+        var html = '<div class="ns-viewport-text" style="padding:20px">';
+
+        if (favorites.length > 0) {
+            html += `<h3>${ i18nManager.get('example9') }</h3>`;
+
+            favorites.forEach(function(favorite) {
+                html += '<div>- <a href="#">' + favorite.name + '</a></div>';
+            });
+
+            // margin top if favorites block exists
+            html += '<h3 style="margin-top:20px">' + i18nManager.get('example1') + '</h3>';
+        } else {
+            html += '<h3>' + i18nManager.get('example1') + '</h3>';
+        }
+
+        html += '<div>- ' + i18nManager.get('example2') + '</div>' +
             '<div>- ' + i18nManager.get('example3') + '</div>' +
             '<div>- ' + i18nManager.get('example4') + '</div>' +
             '<h3 style="padding-top:20px">' + i18nManager.get('example5') + '</h3>' +
@@ -213,6 +240,8 @@ function initialize() {
             '<div>- ' + i18nManager.get('example7') + '</div>' +
             '<div>- ' + i18nManager.get('example8') + '</div>' +
             '</div>';
+
+        return html;
     }());
 
     // windows
