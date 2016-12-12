@@ -207,11 +207,24 @@ function initialize() {
         var html = '<div class="ns-viewport-text" style="padding:20px">';
 
         if (appManager.userFavorites.length > 0) {
+            html += '<div id="top-favorites">';
             html += `<h3>${ i18nManager.get('example9') }</h3>`;
 
+            setTimeout(function() {
+                Ext.get('panel-1447').on('click', function(e, t) {
+                    t = Ext.get(t);
+
+                    if (t.hasCls('favorite')) {
+                        instanceManager.getById(t.id);
+                    }
+                });
+            }, 0);
+
             appManager.userFavorites.forEach(function(favorite) {
-                html += '<div>- <a href="#">' + favorite.name + '</a></div>';
+                html += '<div>- <a href="javascript:void(0)" class="favorite" id="' + favorite.id + '">' + favorite.name + '</a></div>';
             });
+
+            html += '</div>';
 
             // margin top if favorites block exists
             html += '<h3 style="margin-top:20px">' + i18nManager.get('example1') + '</h3>';
