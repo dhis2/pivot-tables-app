@@ -241,7 +241,7 @@ function initialize() {
         return html;
     }());
 
-    uiManager.callIntroFn();
+    uiManager.update();
 
     // windows
     uiManager.reg(LayoutWindow(refs), 'layoutWindow').hide();
