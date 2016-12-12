@@ -203,46 +203,45 @@ function initialize() {
 
     uiManager.enableConfirmUnload();
 
+    uiManager.setIntroFn(function() {
+        if (appManager.userFavorites.length) {
+            setTimeout(function() {
+                appManager.userFavorites.forEach(function(favorite) {
+                    Ext.get('favorite-' + favorite.id).addListener('click', function() {
+                        instanceManager.getById(favorite.id);
+                    });
+                });
+            }, 0);
+        }
+    });
+
     uiManager.setIntroHtml(function() {
         var html = '<div class="ns-viewport-text" style="padding:20px">';
 
-        if (appManager.userFavorites.length > 0) {
-            html += '<div id="top-favorites">';
-            html += `<h3>${ i18nManager.get('example9') }</h3>`;
-
-            setTimeout(function() {
-                Ext.get('panel-1447').on('click', function(e, t) {
-                    t = Ext.get(t);
-
-                    if (t.hasCls('favorite')) {
-                        instanceManager.getById(t.id);
-                    }
-                });
-            }, 0);
-
-            appManager.userFavorites.forEach(function(favorite) {
-                html += '<div>- <a href="javascript:void(0)" class="favorite" id="' + favorite.id + '">' + favorite.name + '</a></div>';
-            });
-
-            html += '</div>';
-
-            // margin top if favorites block exists
-            html += '<h3 style="margin-top:20px">' + i18nManager.get('example1') + '</h3>';
-        } else {
-            html += '<h3>' + i18nManager.get('example1') + '</h3>';
-        }
-
-        html += '<div>- ' + i18nManager.get('example2') + '</div>' +
+        html += '<h3>' + i18nManager.get('example1') + '</h3>' +
+            '<div>- ' + i18nManager.get('example2') + '</div>' +
             '<div>- ' + i18nManager.get('example3') + '</div>' +
             '<div>- ' + i18nManager.get('example4') + '</div>' +
             '<h3 style="padding-top:20px">' + i18nManager.get('example5') + '</h3>' +
             '<div>- ' + i18nManager.get('example6') + '</div>' +
             '<div>- ' + i18nManager.get('example7') + '</div>' +
-            '<div>- ' + i18nManager.get('example8') + '</div>' +
-            '</div>';
+            '<div>- ' + i18nManager.get('example8') + '</div>';
+
+        if (appManager.userFavorites.length > 0) {
+            html += '<div id="top-favorites" style="margin-top: 20px; padding: 0">';
+            html += `<h3>${ i18nManager.get('example9') }</h3>`;
+
+            appManager.userFavorites.forEach(function(favorite) {
+                html += '<div>- <a style="padding: 0" href="javascript:void(0)" class="favorite" id="favorite-' + favorite.id + '">' + favorite.name + '</a></div>';
+            });
+
+            html += '</div>';
+        }
 
         return html;
     }());
+
+    uiManager.callIntroFn();
 
     // windows
     uiManager.reg(LayoutWindow(refs), 'layoutWindow').hide();
