@@ -232,7 +232,7 @@ function initialize() {
             html += `<h3>${ i18nManager.get('example9') }</h3>`;
 
             appManager.userFavorites.forEach(function(favorite) {
-                html += '<div>- <a style="padding: 0" href="javascript:void(0)" class="favorite" id="favorite-' + favorite.id + '">' + favorite.name + '</a></div>';
+                html += '<div>- <a href="javascript:void(0)" class="favorite favorite-li" id="favorite-' + favorite.id + '">' + favorite.name + '</a></div>';
             });
 
             html += '</div>';
