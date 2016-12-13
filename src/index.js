@@ -208,7 +208,7 @@ function initialize() {
             setTimeout(function() {
                 appManager.userFavorites.forEach(function(favorite) {
                     Ext.get('favorite-' + favorite.id).addListener('click', function() {
-                        instanceManager.getById(favorite.id);
+                        instanceManager.getById(favorite.id, null, true);
                     });
                 });
             }, 0);
