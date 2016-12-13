@@ -32,6 +32,7 @@
  * PT Statusbar
  * PT Accordion
  * PT Textarea
+ * PT Favorites list
 */
 
 /*----------------------------------------------------------------------------
@@ -362,7 +363,6 @@ table.pivot.displaydensity-COMPACT td.pivot-filter {
 	display: table-cell;
 	width: 2px;
 }
-
 
 /*----------------------------------------------------------------------------
  * NS viewport
@@ -1236,6 +1236,17 @@ table.pivot.displaydensity-COMPACT td.pivot-filter {
     border: 0 none;
 }
 
+/*----------------------------------------------------------------------------
+ * PT Favorites list
+ *--------------------------------------------------------------------------*/
+
+.favorite-li {
+    padding: 0;
+}
+
+.favorite-li:hover {
+    color: #222;
+}
 
 /*----------------------------------------------------------------------------
  * East Panel
