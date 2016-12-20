@@ -230,10 +230,10 @@ table.pivot {
 }
 
 table.pivot.displaydensity-COMFORTABLE td {
-	padding: 7px !important;
+	padding: 7px;
 }
 table.pivot.displaydensity-COMPACT td {
-	padding: 3px !important;
+	padding: 3px;
 }
 table.pivot.fontsize-LARGE td {
 	font-size: 13px;
