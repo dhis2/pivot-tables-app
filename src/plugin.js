@@ -79,7 +79,7 @@ function render(plugin, layout) {
     // ui manager
     var uiManager = new manager.UiManager(instanceRefs);
     instanceRefs.uiManager = uiManager;
-    uiManager.applyTo(arrayTo(api));
+    uiManager.applyTo([].concat(arrayTo(api), arrayTo(pivot)));
 
     // instance manager
     var instanceManager = new manager.InstanceManager(instanceRefs);
