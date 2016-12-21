@@ -88,7 +88,7 @@ uiManager.setI18nManager(i18nManager);
     // static
 appManager.applyTo([].concat(arrayTo(api), arrayTo(pivot)));
 instanceManager.applyTo(arrayTo(api));
-uiManager.applyTo(arrayTo(api));
+uiManager.applyTo([].concat(arrayTo(api), arrayTo(pivot)));
 dimensionConfig.applyTo(arrayTo(pivot));
 optionConfig.applyTo([].concat(arrayTo(api), arrayTo(pivot)));
 
