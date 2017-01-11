@@ -1,6 +1,6 @@
 {
   "name": "pivot-tables-app",
-  "version": "25.0.0",
+  "version": "25.0.1",
   "description": "DHIS 2 Pivot Table",
   "main": "index.html",
   "scripts": {
