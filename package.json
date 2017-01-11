@@ -1,6 +1,6 @@
 {
   "name": "pivot-tables-app",
-  "version": "25.0.1",
+  "version": "25.0.2",
   "description": "DHIS 2 Pivot Table",
   "main": "index.html",
   "scripts": {
@@ -26,7 +26,7 @@
   "homepage": "https://github.com/dhis2/pivot-tables-app#readme",
   "dependencies": {
     "d2-utilizr": "^0.2.11",
-    "d2-analysis": "^25.0.7"
+    "d2-analysis": "^25.0.8"
   },
   "devDependencies": {
     "babel-core": "^6.3.13",
