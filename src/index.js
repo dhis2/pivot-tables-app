@@ -149,7 +149,7 @@ function initialize() {
     var i18n = i18nManager.get();
 
     // app manager
-    appManager.appName = 'Pivot Table';
+    appManager.appName = i18n.pivot_tables;
     appManager.sessionName = 'table';
 
     // instance manager
