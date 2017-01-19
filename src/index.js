@@ -92,9 +92,7 @@ uiManager.applyTo([].concat(arrayTo(api), arrayTo(pivot)));
 dimensionConfig.applyTo(arrayTo(pivot));
 optionConfig.applyTo([].concat(arrayTo(api), arrayTo(pivot)));
 
-// app
-appManager.appName = 'Pivot Table';
-appManager.sessionName = 'table';
+// config
 
 instanceManager.apiResource = 'reportTable';
 instanceManager.apiEndpoint = 'reportTables';
@@ -157,19 +155,9 @@ function initialize() {
 
     var i18n = i18nManager.get();
 
-<<<<<<< HEAD
-=======
-    // app manager
-    appManager.appName = i18n.pivot_tables;
+    appManager.appName = i18n.pivot_tables || 'Pivot Tables';
     appManager.sessionName = 'table';
 
-    // instance manager
-    instanceManager.apiResource = 'reportTable';
-    instanceManager.apiEndpoint = 'reportTables';
-    instanceManager.apiModule = 'dhis-web-pivot';
-    instanceManager.dataStatisticsEventType = 'REPORT_TABLE_VIEW';
-
->>>>>>> fd3fac3c714ceb55ead275515679bb2063593968
     instanceManager.setFn(function(layout) {
         var sortingId = layout.sorting ? layout.sorting.id : null,
             table;
