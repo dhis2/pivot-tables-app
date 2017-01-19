@@ -92,6 +92,15 @@ uiManager.applyTo([].concat(arrayTo(api), arrayTo(pivot)));
 dimensionConfig.applyTo(arrayTo(pivot));
 optionConfig.applyTo([].concat(arrayTo(api), arrayTo(pivot)));
 
+// app
+appManager.appName = 'Pivot Table';
+appManager.sessionName = 'table';
+
+instanceManager.apiResource = 'reportTable';
+instanceManager.apiEndpoint = 'reportTables';
+instanceManager.apiModule = 'dhis-web-pivot';
+instanceManager.dataStatisticsEventType = 'REPORT_TABLE_VIEW';
+
 // requests
 var manifestReq = $.ajax({
     url: 'manifest.webapp',
@@ -147,16 +156,6 @@ requestManager.run();
 function initialize() {
 
     var i18n = i18nManager.get();
-
-    // app manager
-    appManager.appName = 'Pivot Table';
-    appManager.sessionName = 'table';
-
-    // instance manager
-    instanceManager.apiResource = 'reportTable';
-    instanceManager.apiEndpoint = 'reportTables';
-    instanceManager.apiModule = 'dhis-web-pivot';
-    instanceManager.dataStatisticsEventType = 'REPORT_TABLE_VIEW';
 
     instanceManager.setFn(function(layout) {
         var sortingId = layout.sorting ? layout.sorting.id : null,
