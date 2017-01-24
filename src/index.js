@@ -153,11 +153,18 @@ requestManager.run();
 
 function initialize() {
 
+    // i18n init
     var i18n = i18nManager.get();
 
+    optionConfig.init();
+    dimensionConfig.init();
+    periodConfig.init();
+
+    // app manager
     appManager.appName = i18n.pivot_tables || 'Pivot Tables';
     appManager.sessionName = 'table';
 
+    // instance manager
     instanceManager.setFn(function(layout) {
         var sortingId = layout.sorting ? layout.sorting.id : null,
             table;
