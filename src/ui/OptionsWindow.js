@@ -216,7 +216,11 @@ OptionsWindow = function(c) {
 				{property: 'name', direction: 'ASC'}
 			]
 		},
-        listeners: {
+        listeners:{
+            focus: function(combobox) {
+                combobox.expand();
+                combobox.collapse();
+            },
             select: function(cb) {
                 onLegendSetSelect({
                     legendSet: {
