@@ -44,6 +44,8 @@ refs.uiConfig = uiConfig;
 
     // app manager
 var appManager = new manager.AppManager();
+appManager.sessionName = 'table';
+appManager.apiVersion = 25;
 refs.appManager = appManager;
 
     // calendar manager
@@ -68,6 +70,10 @@ refs.uiManager = uiManager;
 
     // instance manager
 var instanceManager = new manager.InstanceManager(refs);
+instanceManager.apiResource = 'reportTable';
+instanceManager.apiEndpoint = 'reportTables';
+instanceManager.apiModule = 'dhis-web-pivot';
+instanceManager.dataStatisticsEventType = 'REPORT_TABLE_VIEW';
 refs.instanceManager = instanceManager;
 
     // table manager
@@ -75,29 +81,17 @@ var tableManager = new manager.TableManager(refs);
 refs.tableManager = tableManager;
 
 // dependencies
-
-    // instance manager
 uiManager.setInstanceManager(instanceManager);
-
-    // i18n manager
 dimensionConfig.setI18nManager(i18nManager);
 optionConfig.setI18nManager(i18nManager);
 periodConfig.setI18nManager(i18nManager);
 uiManager.setI18nManager(i18nManager);
 
-    // static
 appManager.applyTo([].concat(arrayTo(api), arrayTo(pivot)));
 instanceManager.applyTo(arrayTo(api));
 uiManager.applyTo([].concat(arrayTo(api), arrayTo(pivot)));
 dimensionConfig.applyTo(arrayTo(pivot));
 optionConfig.applyTo([].concat(arrayTo(api), arrayTo(pivot)));
-
-// config
-
-instanceManager.apiResource = 'reportTable';
-instanceManager.apiEndpoint = 'reportTables';
-instanceManager.apiModule = 'dhis-web-pivot';
-instanceManager.dataStatisticsEventType = 'REPORT_TABLE_VIEW';
 
 // requests
 var manifestReq = $.ajax({
@@ -112,24 +106,23 @@ var systemInfoUrl = '/system/info.json';
 var systemSettingsUrl = '/systemSettings.json?key=keyCalendar&key=keyDateFormat&key=keyAnalysisRelativePeriod&key=keyHideUnapprovedDataInAnalytics&key=keyAnalysisDigitGroupSeparator';
 var userAccountUrl = '/api/me/user-account.json';
 
-var systemInfoReq;
-var systemSettingsReq;
-var userAccountReq;
-
 manifestReq.done(function(text) {
     appManager.manifest = JSON.parse(text);
     appManager.env = process.env.NODE_ENV;
     appManager.setAuth();
-    systemInfoReq = $.getJSON(appManager.getApiPath() + systemInfoUrl);
+
+    var systemInfoReq = $.getJSON(appManager.getApiPath() + systemInfoUrl);
 
 systemInfoReq.done(function(systemInfo) {
     appManager.systemInfo = systemInfo;
     appManager.path = systemInfo.contextPath;
-    systemSettingsReq = $.getJSON(appManager.getApiPath() + systemSettingsUrl);
+
+    var systemSettingsReq = $.getJSON(appManager.getApiPath() + systemSettingsUrl);
 
 systemSettingsReq.done(function(systemSettings) {
     appManager.systemSettings = systemSettings;
-    userAccountReq = $.getJSON(appManager.getPath() + userAccountUrl);
+
+    var userAccountReq = $.getJSON(appManager.getPath() + userAccountUrl);
 
 userAccountReq.done(function(userAccount) {
     appManager.userAccount = userAccount;
@@ -162,7 +155,6 @@ function initialize() {
 
     // app manager
     appManager.appName = i18n.pivot_tables || 'Pivot Tables';
-    appManager.sessionName = 'table';
 
     // instance manager
     instanceManager.setFn(function(layout) {

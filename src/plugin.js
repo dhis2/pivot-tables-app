@@ -7,9 +7,6 @@ import { api, config, init, manager, pivot, util } from 'd2-analysis';
 
 import { Layout } from './api/Layout';
 
-// version
-const VERSION = '25';
-
 // extend
 api.Layout = Layout;
 
@@ -34,6 +31,7 @@ refs.periodConfig = periodConfig;
 
 // app manager
 var appManager = new manager.AppManager(refs);
+appManager.apiVersion = 25;
 refs.appManager = appManager;
 
 // calendar manager
@@ -53,7 +51,6 @@ var sessionStorageManager = new manager.SessionStorageManager(refs);
 refs.sessionStorageManager = sessionStorageManager;
 
 // dependencies
-
 dimensionConfig.setI18nManager(i18nManager);
 dimensionConfig.init();
 optionConfig.setI18nManager(i18nManager);
@@ -156,4 +153,4 @@ function render(plugin, layout) {
     }
 };
 
-global.reportTablePlugin = new util.Plugin({ refs, VERSION, renderFn: render });
+global.reportTablePlugin = new util.Plugin({ refs, renderFn: render });
