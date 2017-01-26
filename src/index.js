@@ -110,6 +110,7 @@ manifestReq.done(function(text) {
     appManager.manifest = JSON.parse(text);
     appManager.env = process.env.NODE_ENV;
     appManager.setAuth();
+    appManager.logVersion();
 
     var systemInfoReq = $.getJSON(appManager.getApiPath() + systemInfoUrl);
 
