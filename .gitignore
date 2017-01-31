@@ -2,6 +2,7 @@
 node_modules/
 lib/
 npm-debug.log
+yarn-error.log
 .idea
 *.gzip
 build/
