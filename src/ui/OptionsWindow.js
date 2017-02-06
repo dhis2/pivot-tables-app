@@ -644,14 +644,17 @@ OptionsWindow = function(c) {
         var legendDisplayStrategyId = isString(layout.legendDisplayStrategy) ? layout.legendDisplayStrategy : optionConfig.getLegendDisplayStrategy('fixed').id;
 
         legendDisplayStyle.enable();
+        legendDisplayStrategy.setValue(legendDisplayStrategyId);
 
         if (legendDisplayStrategyId === optionConfig.getLegendDisplayStrategy('fixed').id) {
             legendSet.enable();
+
+            if (legendSet.getValue() === 0) {
+                legendDisplayStyle.disable();
+            }
         } else {
             legendSet.disable();
         }
-
-        legendDisplayStrategy.setValue(legendDisplayStrategyId);
     };
 
     var onLegendSetSelect = function(layout) {
