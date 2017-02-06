@@ -45,7 +45,7 @@ refs.uiConfig = uiConfig;
     // app manager
 var appManager = new manager.AppManager();
 appManager.sessionName = 'table';
-appManager.apiVersion = 25;
+appManager.apiVersion = 26;
 refs.appManager = appManager;
 
     // calendar manager
