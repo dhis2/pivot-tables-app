@@ -137,6 +137,11 @@ requestManager.run();
 
 function initialize() {
 
+    // init
+    optionConfig.init();
+    dimensionConfig.init();
+    periodConfig.init();
+
     // app manager
     appManager.appName = 'Pivot Table';
     appManager.sessionName = 'table';
