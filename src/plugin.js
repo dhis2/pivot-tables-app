@@ -97,6 +97,12 @@ var Plugin = function() {
     };
 
     var _load = function(layouts) {
+
+        // init
+        optionConfig.init();
+        dimensionConfig.init();
+        periodConfig.init();
+
         layouts.forEach(function(layout) {
             if (t.spinner) {
                 $('#' + layout.el).append('<div class="spinner"></div>');
