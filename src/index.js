@@ -203,19 +203,8 @@ function initialize() {
 
     uiManager.enableConfirmUnload();
 
-    uiManager.setIntroFn(function() {
-        if (appManager.userFavorites.length) {
-            setTimeout(function() {
-                appManager.userFavorites.forEach(function(favorite) {
-                    Ext.get('favorite-' + favorite.id).addListener('click', function() {
-                        instanceManager.getById(favorite.id, null, true);
-                    });
-                });
-            }, 0);
-        }
-    });
+    var introHtml = function() {
 
-    uiManager.setIntroHtml(function() {
         var html = '<div class="ns-viewport-text" style="padding:20px">';
 
         html += '<h3>' + i18nManager.get('example1') + '</h3>' +
@@ -231,6 +220,7 @@ function initialize() {
             html += '<div id="top-favorites" style="margin-top: 20px; padding: 0">';
             html += `<h3>${ i18nManager.get('example9') }</h3>`;
 
+
             appManager.userFavorites.forEach(function(favorite) {
                 html += '<div>- <a href="javascript:void(0)" class="favorite favorite-li" id="favorite-' + favorite.id + '">' + favorite.name + '</a></div>';
             });
@@ -239,9 +229,14 @@ function initialize() {
         }
 
         return html;
-    }());
+    }
 
-    uiManager.update();
+    uiManager.introHtmlIsAsync = true;
+    uiManager.setIntroHtml(introHtml());
+    uiManager.setUpdateIntroHtmlFn(function() {
+        return new api.Request(init.userFavoritesInit(refs)).run()
+            .then(() => introHtml());
+    });
 
     // windows
     uiManager.reg(LayoutWindow(refs), 'layoutWindow').hide();
@@ -293,6 +288,19 @@ function initialize() {
         ],
         DownloadButtonItems: DownloadButtonItems
     }), 'viewport');
+
+    // subscribe functions to viewport regions to update ui on renew
+    uiManager.subscribe('centerRegion', () => {
+        if (appManager.userFavorites.length) {
+            appManager.userFavorites.forEach(function(favorite) {
+                Ext.get('favorite-' + favorite.id).addListener('click', function() {
+                    instanceManager.getById(favorite.id, null, true);
+                });
+            });
+        }
+    });
+
+    uiManager.update();
 }
 
 global.refs = refs;
