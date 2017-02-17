@@ -235,7 +235,7 @@ function initialize() {
     uiManager.setIntroHtml(introHtml());
     uiManager.setUpdateIntroHtmlFn(function() {
         return new api.Request(init.userFavoritesInit(refs)).run()
-            .then(() => introHtml());
+            .then(() => uiManager.setIntroHtml(introHtml()));
     });
 
     // windows
