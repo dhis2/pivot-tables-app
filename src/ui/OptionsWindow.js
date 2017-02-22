@@ -17,6 +17,7 @@ OptionsWindow = function(c) {
         showRowSubTotals,
         showDimensionLabels,
         hideEmptyRows,
+        hideEmptyColumns,
         skipRounding,
         aggregationType,
         dataApprovalLevel,
@@ -83,6 +84,11 @@ OptionsWindow = function(c) {
 
     hideEmptyRows = Ext.create('Ext.form.field.Checkbox', {
         boxLabel: i18n.hide_empty_rows,
+        style: 'margin-top:' + separatorTopMargin + 'px;' + 'margin-bottom:' + comboBottomMargin + 'px'
+    });
+
+    hideEmptyColumns = Ext.create('Ext.form.field.Checkbox', {
+        boxLabel: i18n.hide_empty_columns,
         style: 'margin-bottom:' + checkboxBottomMargin + 'px'
     });
 
@@ -345,6 +351,7 @@ OptionsWindow = function(c) {
             showRowSubTotals,
             showDimensionLabels,
             hideEmptyRows,
+            hideEmptyColumns,
             skipRounding,
             aggregationType,
             dataApprovalLevel
@@ -450,6 +457,7 @@ OptionsWindow = function(c) {
             showRowSubTotals.setValue(isBoolean(layout.showRowSubTotals) ? layout.showRowSubTotals : true);
             showDimensionLabels.setValue(isBoolean(layout.showDimensionLabels) ? layout.showDimensionLabels : true);
             hideEmptyRows.setValue(isBoolean(layout.hideEmptyRows) ? layout.hideEmptyRows : false);
+            hideEmptyColumns.setValue(isBoolean(layout.hideEmptyColumns) ? layout.hideEmptyColumns : false);
             skipRounding.setValue(isBoolean(layout.skipRounding) ? layout.skipRounding : false);
             aggregationType.setValue(isString(layout.aggregationType) ? layout.aggregationType : optionConfig.getAggregationType('def').id);
             dataApprovalLevel.setValue(isObject(layout.dataApprovalLevel) && isString(layout.dataApprovalLevel.id) ? layout.dataApprovalLevel.id : optionConfig.getDataApprovalLevel('def').id);
@@ -590,6 +598,7 @@ OptionsWindow = function(c) {
                 w.showRowSubTotals = showRowSubTotals;
                 w.showDimensionLabels = showDimensionLabels;
                 w.hideEmptyRows = hideEmptyRows;
+                w.hideEmptyColumns = hideEmptyColumns;
                 w.skipRounding = skipRounding;
                 w.aggregationType = aggregationType;
                 w.dataApprovalLevel = dataApprovalLevel;
