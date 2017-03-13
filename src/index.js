@@ -131,14 +131,14 @@ userAccountReq.done(function(userAccount) {
     calendarManager.setDateFormat(appManager.getDateFormat());
     calendarManager.init(appManager.systemSettings.keyCalendar);
 
-requestManager.add(new api.Request(init.i18nInit(refs)));
-requestManager.add(new api.Request(init.authViewUnapprovedDataInit(refs)));
-requestManager.add(new api.Request(init.rootNodesInit(refs)));
-requestManager.add(new api.Request(init.organisationUnitLevelsInit(refs)));
-requestManager.add(new api.Request(init.legendSetsInit(refs)));
-requestManager.add(new api.Request(init.dimensionsInit(refs)));
-requestManager.add(new api.Request(init.dataApprovalLevelsInit(refs)));
-requestManager.add(new api.Request(init.userFavoritesInit(refs)));
+requestManager.add(new api.Request(refs, init.i18nInit(refs)));
+requestManager.add(new api.Request(refs, init.authViewUnapprovedDataInit(refs)));
+requestManager.add(new api.Request(refs, init.rootNodesInit(refs)));
+requestManager.add(new api.Request(refs, init.organisationUnitLevelsInit(refs)));
+requestManager.add(new api.Request(refs, init.legendSetsInit(refs)));
+requestManager.add(new api.Request(refs, init.dimensionsInit(refs)));
+requestManager.add(new api.Request(refs, init.dataApprovalLevelsInit(refs)));
+requestManager.add(new api.Request(refs, init.userFavoritesInit(refs)));
 
 requestManager.set(initialize);
 requestManager.run();
