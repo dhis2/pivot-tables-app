@@ -1363,3 +1363,8 @@ table.pivot.displaydensity-COMPACT td.pivot-filter {
 .ns-panel-title-east-default .x-panel-body {
     border-left: 0;
 }
+
+.x-menu label {
+    font-weight: bold;
+    padding-left: 5px;
+}
