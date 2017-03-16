@@ -255,6 +255,8 @@ function initialize() {
 
     var eastRegion = uiManager.reg(ui.EastRegion(refs), 'eastRegion');
 
+    var westRegionItems = uiManager.reg(ui.WestRegionAggregateItems(refs), 'accordion');
+
     var defaultIntegrationButton = uiManager.reg(ui.IntegrationButton(refs, {
         isDefaultButton: true,
         btnText: i18n.table,
@@ -285,13 +287,20 @@ function initialize() {
     uiManager.reg(ui.Viewport(refs, {
         northRegion: northRegion,
         eastRegion: eastRegion,
-        westRegionItems: ui.WestRegionAggregateItems(refs),
+        westRegionItems: westRegionItems,
         integrationButtons: [
             defaultIntegrationButton,
             chartIntegrationButton,
             mapIntegrationButton
         ],
         DownloadButtonItems: DownloadButtonItems
+    }, {
+        getLayoutWindow: function() {
+            return uiManager.get('layoutWindow');
+        },
+        getOptionsWindow: function() {
+            return uiManager.get('optionsWindow');
+        },
     }), 'viewport');
 }
 
