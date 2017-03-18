@@ -6,7 +6,7 @@ import 'd2-analysis/css/ui/GridHeaders.css';
 import arrayFrom from 'd2-utilizr/lib/arrayFrom';
 import arrayTo from 'd2-utilizr/lib/arrayTo';
 
-import { api, pivot, manager, config, ui, init, override } from 'd2-analysis';
+import { api, table, manager, config, ui, init, override } from 'd2-analysis';
 
 import { Layout } from './api/Layout';
 
@@ -23,7 +23,7 @@ api.Layout = Layout;
 // references
 var refs = {
     api,
-    pivot
+    table
 };
 
     // dimension config
@@ -87,11 +87,11 @@ optionConfig.setI18nManager(i18nManager);
 periodConfig.setI18nManager(i18nManager);
 uiManager.setI18nManager(i18nManager);
 
-appManager.applyTo([].concat(arrayTo(api), arrayTo(pivot)));
+appManager.applyTo([].concat(arrayTo(api), arrayTo(table)));
 instanceManager.applyTo(arrayTo(api));
-uiManager.applyTo([].concat(arrayTo(api), arrayTo(pivot)));
-dimensionConfig.applyTo(arrayTo(pivot));
-optionConfig.applyTo([].concat(arrayTo(api), arrayTo(pivot)));
+uiManager.applyTo([].concat(arrayTo(api), arrayTo(table)));
+dimensionConfig.applyTo(arrayTo(table));
+optionConfig.applyTo([].concat(arrayTo(api), arrayTo(table)));
 
 // requests
 var manifestReq = $.ajax({
@@ -163,14 +163,14 @@ function initialize() {
     // instance manager
     instanceManager.setFn(function(layout) {
         var sortingId = layout.sorting ? layout.sorting.id : null,
-            table;
+            tableObject;
 
         // get table
         var getTable = function() {
             var response = layout.getResponse();
-            var colAxis = new pivot.TableAxis(layout, response, 'col');
-            var rowAxis = new pivot.TableAxis(layout, response, 'row');
-            return new pivot.Table(layout, response, colAxis, rowAxis);
+            var colAxis = new table.PivotTableAxis(refs, layout, response, 'col');
+            var rowAxis = new table.PivotTableAxis(refs, layout, response, 'row');
+            return new table.PivotTable(refs, layout, response, colAxis, rowAxis);
         };
 
         // pre-sort if id
@@ -179,20 +179,20 @@ function initialize() {
         }
 
         // table
-        table = getTable();
+        tableObject = getTable();
 
         // sort if total
         if (sortingId && sortingId === 'total') {
-            layout.sort(table);
-            table = getTable();
+            layout.sort(tableObject);
+            tableObject = getTable();
         }
 
         // render
-        uiManager.update(table.html);
+        uiManager.update(tableObject.html);
 
         // events
-        tableManager.setColumnHeaderMouseHandlers(layout, table);
-        tableManager.setValueMouseHandlers(layout, table);
+        tableManager.setColumnHeaderMouseHandlers(layout, tableObject);
+        tableManager.setValueMouseHandlers(layout, tableObject);
 
         // mask
         uiManager.unmask();
