@@ -305,7 +305,7 @@ function initialize() {
         // only update if row/column has gone off screen
         if(prevRowLength !== rowLength || prevColumnLength !== columnLength) {
             uiManager.update(table.render(rowLength, columnLength, cellWidth, cellHeight));
-            bindEventListeners();
+            // bindEventListeners();
         }
 
         // store previous update
