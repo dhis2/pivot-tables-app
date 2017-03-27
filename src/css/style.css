@@ -262,6 +262,15 @@ table.pivot.fontsize-SMALL td {
 .pivot td {
 	padding: 5px;
 	border: 1px solid #b2b2b2;
+	width: 120px !important;
+	min-width: 120px !important;
+	height: 25px !important;
+	min-height: 25px !important;
+	/*max-height: 25px !important;
+	max-width: 120px !important; */ 
+	overflow: hidden;
+	text-overflow: ellipsis;
+	white-space: nowrap;
 }
 
 .pivot-filter {

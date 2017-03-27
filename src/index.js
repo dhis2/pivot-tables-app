@@ -143,9 +143,20 @@ requestManager.add(new api.Request(init.userFavoritesInit(refs)));
 requestManager.set(initialize);
 requestManager.run();
 
+
 });});});});
 
 function initialize() {
+
+    var table;
+
+    // table update parameters
+    var prevRowLength = 0,
+        prevColumnLength = 0,
+        columnLength,
+        rowLength,
+        cellHeight = 25,
+        cellWidth = 120;
 
     // i18n init
     var i18n = i18nManager.get();
@@ -159,8 +170,7 @@ function initialize() {
 
     // instance manager
     instanceManager.setFn(function(layout) {
-        var sortingId = layout.sorting ? layout.sorting.id : null,
-            table;
+        var sortingId = layout.sorting ? layout.sorting.id : null;
 
         // get table
         var getTable = function() {
@@ -196,6 +206,8 @@ function initialize() {
 
         // statistics
         instanceManager.postDataStatistics();
+
+        uiManager.scrollTo("centerRegion", 0, 0);
     });
 
     // ui manager
@@ -276,6 +288,21 @@ function initialize() {
         menuItem3Text: i18n.open_last_map
     });
 
+    var updateTableContent = function(posFromLeft, posFromTop) {
+        // calculate number of rows and columns to render
+        rowLength = Math.floor(posFromTop / cellHeight);
+        columnLength = Math.floor(posFromLeft / cellWidth);
+
+        // only update if row/column has gone off screen
+        if(prevRowLength !== rowLength || prevColumnLength !== columnLength) {
+            uiManager.update(table.render(rowLength, columnLength, cellWidth, cellHeight));
+        }
+
+        // store previous update
+        prevRowLength = rowLength;
+        prevColumnLength = columnLength;
+    }
+
     // viewport
     uiManager.reg(ui.Viewport(refs, {
         northRegion: northRegion,
@@ -298,6 +325,11 @@ function initialize() {
                 });
             });
         }
+    });
+
+    // subscribe functions to scroll event
+    uiManager.setScrollFn('centerRegion', (left = 0, top = 0) => {
+        updateTableContent(left, top);
     });
 
     uiManager.update();
