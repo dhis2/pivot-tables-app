@@ -266,8 +266,8 @@ table.pivot.fontsize-SMALL td {
 	min-width: 120px !important;
 	height: 25px !important;
 	min-height: 25px !important;
-	/*max-height: 25px !important;
-	max-width: 120px !important; */ 
+	max-height: 25px;
+	max-width: 120px;
 	overflow: hidden;
 	text-overflow: ellipsis;
 	white-space: nowrap;
@@ -291,6 +291,10 @@ table.pivot.displaydensity-COMPACT td.pivot-filter {
 .pivot-dim {
 	background-color: #dae6f8;
 	text-align: center;
+}
+.pivot-padding {
+	max-width: none!important;
+	max-height: none!important;
 }
 .pivot-dim.highlighted {
 	background-color: #c5d8f6;
