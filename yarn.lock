@@ -1301,16 +1301,16 @@ currently-unhandled@^0.4.1:
   dependencies:
     array-find-index "^1.0.1"
 
-d2-analysis@26.0.5:
-  version "26.0.5"
-  resolved "https://registry.yarnpkg.com/d2-analysis/-/d2-analysis-26.0.5.tgz#c6d023417fac17af00b6103e9587051d797ac7ee"
+d2-analysis@27.0.2:
+  version "27.0.2"
+  resolved "https://registry.yarnpkg.com/d2-analysis/-/d2-analysis-27.0.2.tgz#3b032400a9358245b3c4a722717314324e42f28b"
   dependencies:
-    d2-utilizr "^0.2.11"
+    d2-utilizr "^0.2.13"
     jquery "2.1.4"
 
-d2-utilizr@^0.2.11:
-  version "0.2.11"
-  resolved "https://registry.yarnpkg.com/d2-utilizr/-/d2-utilizr-0.2.11.tgz#addf9c70fedb04ea237115ab158ac79d75885c39"
+d2-utilizr@0.2.13, d2-utilizr@^0.2.13:
+  version "0.2.13"
+  resolved "https://registry.yarnpkg.com/d2-utilizr/-/d2-utilizr-0.2.13.tgz#aff6dfb054f92e2c974cf69f38f4fdc13699a6d3"
   dependencies:
     lodash.isboolean "^3.0.3"
     lodash.isfunction "^3.0.8"
