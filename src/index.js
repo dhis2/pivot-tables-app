@@ -148,7 +148,8 @@ requestManager.run();
 
 function initialize() {
 
-    var table;
+    var table,
+        layout;
 
     // table update parameters
     var prevRowLength = 0,
@@ -169,7 +170,10 @@ function initialize() {
     appManager.appName = i18n.pivot_tables || 'Pivot Tables';
 
     // instance manager
-    instanceManager.setFn(function(layout) {
+    instanceManager.setFn(function(tableLayout) {
+
+        layout = tableLayout;
+        
         var sortingId = layout.sorting ? layout.sorting.id : null;
 
         // get table
@@ -198,8 +202,7 @@ function initialize() {
         uiManager.update(table.html);
 
         // events
-        tableManager.setColumnHeaderMouseHandlers(layout, table);
-        tableManager.setValueMouseHandlers(layout, table);
+        bindEventListeners();
 
         // mask
         uiManager.unmask();
@@ -209,6 +212,12 @@ function initialize() {
 
         uiManager.scrollTo("centerRegion", 0, 0);
     });
+
+
+    var bindEventListeners = function() {
+        tableManager.setColumnHeaderMouseHandlers(layout, table);
+        tableManager.setValueMouseHandlers(layout, table);
+    }
 
     // ui manager
     uiManager.disableRightClick();
@@ -296,6 +305,7 @@ function initialize() {
         // only update if row/column has gone off screen
         if(prevRowLength !== rowLength || prevColumnLength !== columnLength) {
             uiManager.update(table.render(rowLength, columnLength, cellWidth, cellHeight));
+            bindEventListeners();
         }
 
         // store previous update
