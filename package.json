@@ -25,7 +25,7 @@
   },
   "homepage": "https://github.com/dhis2/dhis2-pivot#readme",
   "dependencies": {
-    "d2-analysis": "26.0.5",
+    "d2-analysis": "26.0.6",
     "d2-utilizr": "0.2.11"
   },
   "devDependencies": {
