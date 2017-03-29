@@ -43,7 +43,7 @@ var uiConfig = new config.UiConfig();
 refs.uiConfig = uiConfig;
 
     // app manager
-var appManager = new manager.AppManager();
+var appManager = new manager.AppManager(refs);
 appManager.sessionName = 'table';
 appManager.apiVersion = 26;
 refs.appManager = appManager;
