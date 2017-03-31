@@ -64,18 +64,7 @@ optionConfig.applyTo([].concat(arrayTo(api), arrayTo(table)));
 
 // plugin
 function render(plugin, layout) {
-    var instanceRefs = {
-        dimensionConfig,
-        optionConfig,
-        periodConfig,
-        api,
-        table,
-        appManager,
-        calendarManager,
-        requestManager,
-        i18nManager,
-        sessionStorageManager
-    };
+    var instanceRefs = Object.assign({}, refs);
 
     // ui manager
     var uiManager = new manager.UiManager(instanceRefs);
