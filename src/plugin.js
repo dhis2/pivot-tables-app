@@ -3,7 +3,7 @@ import './css/style.css';
 import objectApplyIf from 'd2-utilizr/lib/objectApplyIf';
 import arrayTo from 'd2-utilizr/lib/arrayTo';
 
-import { api, config, init, manager, pivot, util } from 'd2-analysis';
+import { api, table, manager, config, init, util } from 'd2-analysis';
 
 import { Layout } from './api/Layout';
 
@@ -14,7 +14,7 @@ api.Layout = Layout;
 var refs = {
     api,
     init,
-    pivot
+    table
 };
 
 // dimension config
@@ -31,7 +31,7 @@ refs.periodConfig = periodConfig;
 
 // app manager
 var appManager = new manager.AppManager(refs);
-appManager.apiVersion = 25;
+appManager.apiVersion = 26;
 refs.appManager = appManager;
 
 // calendar manager
@@ -58,9 +58,9 @@ optionConfig.init();
 periodConfig.setI18nManager(i18nManager);
 periodConfig.init();
 
-appManager.applyTo([].concat(arrayTo(api), arrayTo(pivot)));
-dimensionConfig.applyTo(arrayTo(pivot));
-optionConfig.applyTo([].concat(arrayTo(api), arrayTo(pivot)));
+appManager.applyTo([].concat(arrayTo(api), arrayTo(table)));
+dimensionConfig.applyTo(arrayTo(table));
+optionConfig.applyTo([].concat(arrayTo(api), arrayTo(table)));
 
 // plugin
 function render(plugin, layout) {
@@ -69,17 +69,18 @@ function render(plugin, layout) {
         optionConfig,
         periodConfig,
         api,
-        pivot,
+        table,
         appManager,
         calendarManager,
         requestManager,
+        i18nManager,
         sessionStorageManager
     };
 
     // ui manager
     var uiManager = new manager.UiManager(instanceRefs);
     instanceRefs.uiManager = uiManager;
-    uiManager.applyTo([].concat(arrayTo(api), arrayTo(pivot)));
+    uiManager.applyTo([].concat(arrayTo(api), arrayTo(table)));
 
     // instance manager
     var instanceManager = new manager.InstanceManager(instanceRefs);
@@ -101,14 +102,14 @@ function render(plugin, layout) {
     instanceManager.setFn(function(_layout) {
         var sortingId = _layout.sorting ? _layout.sorting.id : null,
             html = '',
-            table;
+            tableObject;
 
         // get table
         var getTable = function() {
             var response = _layout.getResponse();
-            var colAxis = new pivot.TableAxis(_layout, response, 'col');
-            var rowAxis = new pivot.TableAxis(_layout, response, 'row');
-            return new pivot.Table(_layout, response, colAxis, rowAxis, {skipTitle: true});
+            var colAxis = new table.PivotTableAxis(instanceRefs, _layout, response, 'col');
+            var rowAxis = new table.PivotTableAxis(instanceRefs, _layout, response, 'row');
+            return new table.PivotTable(instanceRefs, _layout, response, colAxis, rowAxis, {skipTitle: true});
         };
 
         // pre-sort if id
@@ -117,21 +118,21 @@ function render(plugin, layout) {
         }
 
         // table
-        table = getTable();
+        tableObject = getTable();
 
         // sort if total
         if (sortingId && sortingId === 'total') {
-            _layout.sort(table);
-            table = getTable();
+            _layout.sort(tableObject);
+            tableObject = getTable();
         }
 
         html += reportTablePlugin.showTitles ? uiManager.getTitleHtml(_layout.title || _layout.name) : '';
-        html += table.html;
+        html += tableObject.html;
 
         uiManager.update(html, _layout.el);
 
         // events
-        tableManager.setColumnHeaderMouseHandlers(_layout, table);
+        tableManager.setColumnHeaderMouseHandlers(_layout, tableObject);
 
         // mask
         uiManager.unmask();
