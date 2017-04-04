@@ -17,6 +17,12 @@ var refs = {
     table
 };
 
+// inits
+var inits = [
+    init.legendSetsInit,
+    init.dimensionsInit
+];
+
 // dimension config
 var dimensionConfig = new config.DimensionConfig();
 refs.dimensionConfig = dimensionConfig;
@@ -143,4 +149,4 @@ function render(plugin, layout) {
     }
 };
 
-global.reportTablePlugin = new util.Plugin({ refs, renderFn: render });
+global.reportTablePlugin = new util.Plugin({ refs, inits, renderFn: render });
