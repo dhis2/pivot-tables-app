@@ -148,16 +148,14 @@ requestManager.run();
 
 function initialize() {
 
-    var table,
-        layout;
-
     // table update parameters
     var prevRowLength = 0,
         prevColumnLength = 0,
+        cellHeight = 25,
+        cellWidth = 120,
         columnLength,
         rowLength,
-        cellHeight = 25,
-        cellWidth = 120;
+        dynamicTable;
 
     // i18n init
     var i18n = i18nManager.get();
@@ -170,17 +168,16 @@ function initialize() {
     appManager.appName = i18n.pivot_tables || 'Pivot Tables';
 
     // instance manager
-    instanceManager.setFn(function(tableLayout) {
+    instanceManager.setFn(function(layout) {
 
-        layout = tableLayout;
-        
-        var sortingId = layout.sorting ? layout.sorting.id : null;
+        var sortingId = layout.sorting ? layout.sorting.id : null,
+            table;
 
         // get table
-        var getTable = function() {
-            var response = layout.getResponse();
-            var colAxis = new pivot.TableAxis(layout, response, 'col');
-            var rowAxis = new pivot.TableAxis(layout, response, 'row');
+        const getTable = function() {
+            var response = layout.getResponse(),
+                colAxis = new pivot.TableAxis(layout, response, 'col'),
+                rowAxis = new pivot.TableAxis(layout, response, 'row');
             return new pivot.Table(layout, response, colAxis, rowAxis);
         };
 
@@ -199,10 +196,11 @@ function initialize() {
         }
 
         // render
-        uiManager.update(table.html);
+        uiManager.update(table.render());
 
         // events
-        bindEventListeners();
+        tableManager.setColumnHeaderMouseHandlers(layout, table);
+        tableManager.setValueMouseHandlers(layout, table);
 
         // mask
         uiManager.unmask();
@@ -210,21 +208,20 @@ function initialize() {
         // statistics
         instanceManager.postDataStatistics();
 
+        if(table.dynamic) {
+            dynamicTable = table;
+            bindScrollEvents();
+        }
+
         uiManager.scrollTo("centerRegion", 0, 0);
     });
-
-
-    var bindEventListeners = function() {
-        tableManager.setColumnHeaderMouseHandlers(layout, table);
-        tableManager.setValueMouseHandlers(layout, table);
-    }
 
     // ui manager
     uiManager.disableRightClick();
 
     uiManager.enableConfirmUnload();
 
-    var introHtml = function() {
+    const introHtml = function() {
 
         var html = '<div class="ns-viewport-text" style="padding:20px">';
 
@@ -267,17 +264,17 @@ function initialize() {
     uiManager.reg(ui.FavoriteWindow(refs), 'favoriteWindow').hide();
 
     // viewport
-    var northRegion = uiManager.reg(ui.NorthRegion(refs), 'northRegion');
+    const northRegion = uiManager.reg(ui.NorthRegion(refs), 'northRegion');
 
-    var eastRegion = uiManager.reg(ui.EastRegion(refs), 'eastRegion');
+    const eastRegion = uiManager.reg(ui.EastRegion(refs), 'eastRegion');
 
-    var defaultIntegrationButton = uiManager.reg(ui.IntegrationButton(refs, {
+    const defaultIntegrationButton = uiManager.reg(ui.IntegrationButton(refs, {
         isDefaultButton: true,
         btnText: i18n.table,
         btnIconCls: 'ns-button-icon-table'
     }), 'defaultIntegrationButton');
 
-    var chartIntegrationButton = ui.IntegrationButton(refs, {
+    const chartIntegrationButton = ui.IntegrationButton(refs, {
         objectName: 'chart',
         moduleName: 'dhis-web-visualizer',
         btnIconCls: 'ns-button-icon-chart',
@@ -287,7 +284,7 @@ function initialize() {
         menuItem3Text: i18n.open_last_chart
     });
 
-    var mapIntegrationButton = ui.IntegrationButton(refs, {
+    const mapIntegrationButton = ui.IntegrationButton(refs, {
         objectName: 'map',
         moduleName: 'dhis-web-mapping',
         btnIconCls: 'ns-button-icon-map',
@@ -297,20 +294,26 @@ function initialize() {
         menuItem3Text: i18n.open_last_map
     });
 
-    var updateTableContent = function(posFromLeft, posFromTop) {
+    const updateTableContent = function(posFromLeft, posFromTop) {
         // calculate number of rows and columns to render
         rowLength = Math.floor(posFromTop / cellHeight);
         columnLength = Math.floor(posFromLeft / cellWidth);
 
         // only update if row/column has gone off screen
         if(prevRowLength !== rowLength || prevColumnLength !== columnLength) {
-            uiManager.update(table.render(rowLength, columnLength, cellWidth, cellHeight));
-            // bindEventListeners();
+            uiManager.update(dynamicTable.render(rowLength, columnLength, cellWidth, cellHeight));
         }
 
         // store previous update
         prevRowLength = rowLength;
         prevColumnLength = columnLength;
+    }
+
+    const bindScrollEvents = function() {
+        // subscribe functions to scroll event
+        uiManager.setScrollFn('centerRegion', (left = 0, top = 0) => {
+            updateTableContent(left, top);
+        });
     }
 
     // viewport
@@ -335,11 +338,6 @@ function initialize() {
                 });
             });
         }
-    });
-
-    // subscribe functions to scroll event
-    uiManager.setScrollFn('centerRegion', (left = 0, top = 0) => {
-        updateTableContent(left, top);
     });
 
     uiManager.update();
