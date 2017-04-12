@@ -1,6 +1,6 @@
 {
   "name": "dhis2-pivot",
-  "version": "24.0.0",
+  "version": "24.0.1",
   "description": "DHIS 2 Pivot Tables",
   "main": "index.html",
   "scripts": {
