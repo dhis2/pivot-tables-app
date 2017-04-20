@@ -94,59 +94,21 @@ dimensionConfig.applyTo(arrayTo(table));
 optionConfig.applyTo([].concat(arrayTo(api), arrayTo(table)));
 
 // requests
-var manifestReq = $.ajax({
-    url: 'manifest.webapp',
-    dataType: 'text',
-    headers: {
-        'Accept': 'text/plain; charset=utf-8'
-    }
+appManager.init(() => {
+    requestManager.add(new api.Request(refs, init.i18nInit(refs)));
+    requestManager.add(new api.Request(refs, init.authViewUnapprovedDataInit(refs)));
+    requestManager.add(new api.Request(refs, init.rootNodesInit(refs)));
+    requestManager.add(new api.Request(refs, init.organisationUnitLevelsInit(refs)));
+    requestManager.add(new api.Request(refs, init.legendSetsInit(refs)));
+    requestManager.add(new api.Request(refs, init.dimensionsInit(refs)));
+    requestManager.add(new api.Request(refs, init.dataApprovalLevelsInit(refs)));
+    requestManager.add(new api.Request(refs, init.userFavoritesInit(refs)));
+
+    requestManager.set(initialize);
+    requestManager.run();
 });
 
-var systemInfoUrl = '/system/info.json';
-var systemSettingsUrl = '/systemSettings.json?key=keyCalendar&key=keyDateFormat&key=keyAnalysisRelativePeriod&key=keyHideUnapprovedDataInAnalytics&key=keyAnalysisDigitGroupSeparator';
-var userAccountUrl = '/api/me/user-account.json';
-
-manifestReq.done(function(text) {
-    appManager.manifest = JSON.parse(text);
-    appManager.env = process.env.NODE_ENV;
-    appManager.setAuth();
-    appManager.logVersion();
-
-    var systemInfoReq = $.getJSON(appManager.getApiPath() + systemInfoUrl);
-
-systemInfoReq.done(function(systemInfo) {
-    appManager.systemInfo = systemInfo;
-    appManager.path = systemInfo.contextPath;
-
-    var systemSettingsReq = $.getJSON(appManager.getApiPath() + systemSettingsUrl);
-
-systemSettingsReq.done(function(systemSettings) {
-    appManager.systemSettings = systemSettings;
-
-    var userAccountReq = $.getJSON(appManager.getPath() + userAccountUrl);
-
-userAccountReq.done(function(userAccount) {
-    appManager.userAccount = userAccount;
-    calendarManager.setBaseUrl(appManager.getPath());
-    calendarManager.setDateFormat(appManager.getDateFormat());
-    calendarManager.init(appManager.systemSettings.keyCalendar);
-
-requestManager.add(new api.Request(refs, init.i18nInit(refs)));
-requestManager.add(new api.Request(refs, init.authViewUnapprovedDataInit(refs)));
-requestManager.add(new api.Request(refs, init.rootNodesInit(refs)));
-requestManager.add(new api.Request(refs, init.organisationUnitLevelsInit(refs)));
-requestManager.add(new api.Request(refs, init.legendSetsInit(refs)));
-requestManager.add(new api.Request(refs, init.dimensionsInit(refs)));
-requestManager.add(new api.Request(refs, init.dataApprovalLevelsInit(refs)));
-requestManager.add(new api.Request(refs, init.userFavoritesInit(refs)));
-
-requestManager.set(initialize);
-requestManager.run();
-
-});});});});
-
 function initialize() {
-
     // i18n init
     var i18n = i18nManager.get();
 
