@@ -421,7 +421,7 @@ table.pivot.displaydensity-COMPACT td.pivot-filter {
 .ns-panel-title-dimension {
 	height: 17px;
 	background-repeat: no-repeat;
-	padding-left: 22px
+	padding-left: 20px
 }
 
 .ns-panel-title-data {
@@ -805,7 +805,7 @@ table.pivot.displaydensity-COMPACT td.pivot-filter {
 }
 
 .x-btn-default-toolbar-small-pressed {
-	border-color: #bbb;
+	border-color: #aaa;
     background-image: none;
     background-color: #d6d6d6;
     background-image: -webkit-gradient(linear, 50% 0%, 50% 100%, color-stop(0%, #d1d1d1), color-stop(100%, #e5e5e5));
@@ -1194,8 +1194,8 @@ table.pivot.displaydensity-COMPACT td.pivot-filter {
 	border-bottom: 0 none;
 }
 	/* accordion title dock outer, last */
-.ns-accordion .ns-accordion-last {
-	border: 1px solid #c5c5c5;
+.ns-accordion .ns-accordion-first {
+	border-top: 1px solid #c5c5c5;
 }
 
 	/* accordion title dock text, shared */
@@ -1362,4 +1362,9 @@ table.pivot.displaydensity-COMPACT td.pivot-filter {
 
 .ns-panel-title-east-default .x-panel-body {
     border-left: 0;
+}
+
+.x-menu label {
+    font-weight: bold;
+    padding-left: 5px;
 }

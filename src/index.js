@@ -6,7 +6,7 @@ import 'd2-analysis/css/ui/GridHeaders.css';
 import arrayFrom from 'd2-utilizr/lib/arrayFrom';
 import arrayTo from 'd2-utilizr/lib/arrayTo';
 
-import { api, pivot, manager, config, ui, init, override } from 'd2-analysis';
+import { api, table, manager, config, ui, init, override } from 'd2-analysis';
 
 import { Layout } from './api/Layout';
 
@@ -23,7 +23,7 @@ api.Layout = Layout;
 // references
 var refs = {
     api,
-    pivot
+    table
 };
 
     // dimension config
@@ -43,9 +43,9 @@ var uiConfig = new config.UiConfig();
 refs.uiConfig = uiConfig;
 
     // app manager
-var appManager = new manager.AppManager();
+var appManager = new manager.AppManager(refs);
 appManager.sessionName = 'table';
-appManager.apiVersion = 25;
+appManager.apiVersion = 26;
 refs.appManager = appManager;
 
     // calendar manager
@@ -87,66 +87,28 @@ optionConfig.setI18nManager(i18nManager);
 periodConfig.setI18nManager(i18nManager);
 uiManager.setI18nManager(i18nManager);
 
-appManager.applyTo([].concat(arrayTo(api), arrayTo(pivot)));
+appManager.applyTo([].concat(arrayTo(api), arrayTo(table)));
 instanceManager.applyTo(arrayTo(api));
-uiManager.applyTo([].concat(arrayTo(api), arrayTo(pivot)));
-dimensionConfig.applyTo(arrayTo(pivot));
-optionConfig.applyTo([].concat(arrayTo(api), arrayTo(pivot)));
+uiManager.applyTo([].concat(arrayTo(api), arrayTo(table)));
+dimensionConfig.applyTo(arrayTo(table));
+optionConfig.applyTo([].concat(arrayTo(api), arrayTo(table)));
 
 // requests
-var manifestReq = $.ajax({
-    url: 'manifest.webapp',
-    dataType: 'text',
-    headers: {
-        'Accept': 'text/plain; charset=utf-8'
-    }
+appManager.init(() => {
+    requestManager.add(new api.Request(refs, init.i18nInit(refs)));
+    requestManager.add(new api.Request(refs, init.authViewUnapprovedDataInit(refs)));
+    requestManager.add(new api.Request(refs, init.rootNodesInit(refs)));
+    requestManager.add(new api.Request(refs, init.organisationUnitLevelsInit(refs)));
+    requestManager.add(new api.Request(refs, init.legendSetsInit(refs)));
+    requestManager.add(new api.Request(refs, init.dimensionsInit(refs)));
+    requestManager.add(new api.Request(refs, init.dataApprovalLevelsInit(refs)));
+    requestManager.add(new api.Request(refs, init.userFavoritesInit(refs)));
+
+    requestManager.set(initialize);
+    requestManager.run();
 });
 
-var systemInfoUrl = '/system/info.json';
-var systemSettingsUrl = '/systemSettings.json?key=keyCalendar&key=keyDateFormat&key=keyAnalysisRelativePeriod&key=keyHideUnapprovedDataInAnalytics&key=keyAnalysisDigitGroupSeparator';
-var userAccountUrl = '/api/me/user-account.json';
-
-manifestReq.done(function(text) {
-    appManager.manifest = JSON.parse(text);
-    appManager.env = process.env.NODE_ENV;
-    appManager.setAuth();
-    appManager.logVersion();
-
-    var systemInfoReq = $.getJSON(appManager.getApiPath() + systemInfoUrl);
-
-systemInfoReq.done(function(systemInfo) {
-    appManager.systemInfo = systemInfo;
-    appManager.path = systemInfo.contextPath;
-
-    var systemSettingsReq = $.getJSON(appManager.getApiPath() + systemSettingsUrl);
-
-systemSettingsReq.done(function(systemSettings) {
-    appManager.systemSettings = systemSettings;
-
-    var userAccountReq = $.getJSON(appManager.getPath() + userAccountUrl);
-
-userAccountReq.done(function(userAccount) {
-    appManager.userAccount = userAccount;
-    calendarManager.setBaseUrl(appManager.getPath());
-    calendarManager.setDateFormat(appManager.getDateFormat());
-    calendarManager.init(appManager.systemSettings.keyCalendar);
-
-requestManager.add(new api.Request(init.i18nInit(refs)));
-requestManager.add(new api.Request(init.authViewUnapprovedDataInit(refs)));
-requestManager.add(new api.Request(init.rootNodesInit(refs)));
-requestManager.add(new api.Request(init.organisationUnitLevelsInit(refs)));
-requestManager.add(new api.Request(init.legendSetsInit(refs)));
-requestManager.add(new api.Request(init.dimensionsInit(refs)));
-requestManager.add(new api.Request(init.dataApprovalLevelsInit(refs)));
-requestManager.add(new api.Request(init.userFavoritesInit(refs)));
-
-requestManager.set(initialize);
-requestManager.run();
-
-});});});});
-
 function initialize() {
-
     // i18n init
     var i18n = i18nManager.get();
 
@@ -154,20 +116,23 @@ function initialize() {
     dimensionConfig.init();
     periodConfig.init();
 
+    // ui config
+    uiConfig.checkout('aggregate');
+
     // app manager
     appManager.appName = i18n.pivot_tables || 'Pivot Tables';
 
     // instance manager
     instanceManager.setFn(function(layout) {
         var sortingId = layout.sorting ? layout.sorting.id : null,
-            table;
+            tableObject;
 
         // get table
         var getTable = function() {
             var response = layout.getResponse();
-            var colAxis = new pivot.TableAxis(layout, response, 'col');
-            var rowAxis = new pivot.TableAxis(layout, response, 'row');
-            return new pivot.Table(layout, response, colAxis, rowAxis);
+            var colAxis = new table.PivotTableAxis(refs, layout, response, 'col');
+            var rowAxis = new table.PivotTableAxis(refs, layout, response, 'row');
+            return new table.PivotTable(refs, layout, response, colAxis, rowAxis);
         };
 
         // pre-sort if id
@@ -176,20 +141,20 @@ function initialize() {
         }
 
         // table
-        table = getTable();
+        tableObject = getTable();
 
         // sort if total
         if (sortingId && sortingId === 'total') {
-            layout.sort(table);
-            table = getTable();
+            layout.sort(tableObject);
+            tableObject = getTable();
         }
 
         // render
-        uiManager.update(table.html);
+        uiManager.update(tableObject.html);
 
         // events
-        tableManager.setColumnHeaderMouseHandlers(layout, table);
-        tableManager.setValueMouseHandlers(layout, table);
+        tableManager.setColumnHeaderMouseHandlers(layout, tableObject);
+        tableManager.setValueMouseHandlers(layout, tableObject);
 
         // mask
         uiManager.unmask();
@@ -255,6 +220,8 @@ function initialize() {
 
     var eastRegion = uiManager.reg(ui.EastRegion(refs), 'eastRegion');
 
+    var westRegionItems = uiManager.reg(ui.WestRegionAggregateItems(refs), 'accordion');
+
     var defaultIntegrationButton = uiManager.reg(ui.IntegrationButton(refs, {
         isDefaultButton: true,
         btnText: i18n.table,
@@ -285,13 +252,20 @@ function initialize() {
     uiManager.reg(ui.Viewport(refs, {
         northRegion: northRegion,
         eastRegion: eastRegion,
-        westRegionItems: ui.WestRegionAggregateItems(refs),
+        westRegionItems: westRegionItems,
         integrationButtons: [
             defaultIntegrationButton,
             chartIntegrationButton,
             mapIntegrationButton
         ],
         DownloadButtonItems: DownloadButtonItems
+    }, {
+        getLayoutWindow: function() {
+            return uiManager.get('layoutWindow');
+        },
+        getOptionsWindow: function() {
+            return uiManager.get('optionsWindow');
+        },
     }), 'viewport');
 }
 
