@@ -132,6 +132,7 @@ userAccountReq.done(function(userAccount) {
 
 requestManager.add(new api.Request(init.i18nInit(refs)));
 requestManager.add(new api.Request(init.authViewUnapprovedDataInit(refs)));
+requestManager.add(new api.Request(init.isAdminInit(refs)));
 requestManager.add(new api.Request(init.rootNodesInit(refs)));
 requestManager.add(new api.Request(init.organisationUnitLevelsInit(refs)));
 requestManager.add(new api.Request(init.legendSetsInit(refs)));
