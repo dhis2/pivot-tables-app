@@ -24,6 +24,7 @@ OptionsWindow = function(c) {
         completedOnly,
         digitGroupSeparator,
         legendSet,
+        legendDisplayStrategy,
         legendDisplayStyle,
         title,
         displayDensity,
@@ -190,6 +191,31 @@ OptionsWindow = function(c) {
             fields: ['id', 'name', 'index'],
             data: optionConfig.getDigitGroupSeparatorRecords()
         })
+    });
+
+    legendDisplayStrategy = Ext.create('Ext.form.field.ComboBox', {
+        cls: 'ns-combo',
+        style: 'margin-bottom:' + comboBottomMargin + 'px',
+        width: cmpWidth,
+        labelWidth: labelWidth,
+        fieldLabel: i18n.legend_display_strategy,
+        labelStyle: 'color:#333',
+        valueField: 'id',
+        displayField: 'name',
+        queryMode: 'local',
+        editable: false,
+        value: 0,
+        store: {
+            fields: ['id', 'name', 'index'],
+            data: optionConfig.getLegendDisplayStrategyRecords()
+        },
+        listeners: {
+            select: function(cb) {
+                onLegendDisplayStrategySelect({
+                    legendDisplayStrategy: cb.getValue()
+                });
+            }
+        }
     });
 
     legendSet = Ext.create('Ext.form.field.ComboBox', {
@@ -374,6 +400,7 @@ OptionsWindow = function(c) {
             displayDensity,
             fontSize,
             digitGroupSeparator,
+            legendDisplayStrategy,
             legendSet,
             legendDisplayStyle
         ]
@@ -431,6 +458,7 @@ OptionsWindow = function(c) {
                 digitGroupSeparator: digitGroupSeparator.getValue(),
                 legendSet: {id: legendSet.getValue()},
                 legendDisplayStyle: legendDisplayStyle.getValue(),
+                legendDisplayStrategy: legendDisplayStrategy.getValue(),
                 title: title.getValue(),
                 reportingPeriod: reportingPeriod.getValue(),
                 organisationUnit: organisationUnit.getValue(),
@@ -467,6 +495,7 @@ OptionsWindow = function(c) {
             topLimit.setValue(isNumber(layout.topLimit) ? layout.topLimit : 0);
 
             onLegendSetSelect(layout);
+            onLegendDisplayStrategySelect(layout);
 
             // title
             if (isString(layout.title)) {
@@ -627,6 +656,21 @@ OptionsWindow = function(c) {
             legendDisplayStyle.reset();
             legendDisplayStyle.disable();
         }
+    };
+
+    var onLegendDisplayStrategySelect = function(layout) {
+        var legendDisplayStrategyId = isString(layout.legendDisplayStrategy) ? layout.legendDisplayStrategy : optionConfig.getLegendDisplayStrategy('fixed').id;
+            legendDisplayStyle.enable();
+            legendDisplayStrategy.setValue(legendDisplayStrategyId);
+
+            if (legendDisplayStrategyId === optionConfig.getLegendDisplayStrategy('fixed').id) {
+                legendSet.enable();
+                if (legendSet.getValue() === 0) {
+                    legendDisplayStyle.disable();
+                }
+            } else {
+                legendSet.disable();
+            }
     };
 
     return window;
