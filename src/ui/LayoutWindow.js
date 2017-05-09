@@ -349,14 +349,6 @@ LayoutWindow = function(c) {
         }
     };
 
-    var getSetup = function() {
-        return {
-            col: getStoreKeys(colStore),
-            row: getStoreKeys(rowStore),
-            filter: getStoreKeys(filterStore)
-        };
-    };
-
     var window = Ext.create('Ext.window.Window', {
         title: i18n.table_layout,
         bodyStyle: 'background-color:#fff; padding:' + margin + 'px',
@@ -364,7 +356,6 @@ LayoutWindow = function(c) {
         autoShow: true,
         modal: true,
         resizable: false,
-        getSetup: getSetup,
         dimensionStore: dimensionStore,
         rowStore: rowStore,
         colStore: colStore,

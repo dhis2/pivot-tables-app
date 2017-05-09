@@ -32,9 +32,9 @@ export var Layout = function(refs, c, applyConfig, forceApplyConfig) {
     t.displayDensity = isString(c.displayDensity) && !isEmpty(c.displayDensity) ? c.displayDensity : refs.optionConfig.getDisplayDensity('normal').id;
     t.fontSize = isString(c.fontSize) && !isEmpty(c.fontSize) ? c.fontSize : refs.optionConfig.getFontSize('normal').id;
     t.digitGroupSeparator = isString(c.digitGroupSeparator) && !isEmpty(c.digitGroupSeparator) ? c.digitGroupSeparator : refs.optionConfig.getDigitGroupSeparator('space').id;
-    t.legendSet = (new Record(c.legendSet)).val(true);
+    t.legendSet = isObject(c.legendSet) ? c.legendSet : null;
     t.legendDisplayStyle = isString(c.legendDisplayStyle) ? c.legendDisplayStyle : refs.optionConfig.getLegendDisplayStyle('fill').id;
-
+    t.legendDisplayStrategy = isString(c.legendDisplayStrategy) ? c.legendDisplayStrategy : refs.optionConfig.getLegendDisplayStrategy('fixed').id;
     // graph map
     t.parentGraphMap = isObject(c.parentGraphMap) ? c.parentGraphMap : null;
 
