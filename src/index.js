@@ -167,7 +167,7 @@ function initialize() {
     // app manager
     appManager.appName = i18n.pivot_tables || 'Pivot Tables';
 
-    // instance manager
+    // instance manag
     instanceManager.setFn(function(layout) {
 
         var sortingId = layout.sorting ? layout.sorting.id : null,
@@ -301,7 +301,7 @@ function initialize() {
 
         // only update if row/column has gone off screen
         if(prevRowLength !== rowLength || prevColumnLength !== columnLength) {
-            uiManager.update(dynamicTable.render(rowLength, columnLength, cellWidth, cellHeight));
+            uiManager.update(dynamicTable.update(columnLength, rowLength));
         }
 
         // store previous update
