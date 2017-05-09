@@ -110,16 +110,6 @@ appManager.init(() => {
 });
 
 function initialize() {
-
-    // table update parameters
-    var prevRowLength = 0,
-        prevColumnLength = 0,
-        cellHeight = 25,
-        cellWidth = 120,
-        columnLength,
-        rowLength,
-        dynamicTable;
-
     // i18n init
     var i18n = i18nManager.get();
 
@@ -255,28 +245,6 @@ function initialize() {
         menuItem2Text: i18n.open_this_table_as_map,
         menuItem3Text: i18n.open_last_map
     });
-
-    const updateTableContent = function(posFromLeft, posFromTop) {
-        // calculate number of rows and columns to render
-        rowLength = Math.floor(posFromTop / cellHeight);
-        columnLength = Math.floor(posFromLeft / cellWidth);
-
-        // only update if row/column has gone off screen
-        if(prevRowLength !== rowLength || prevColumnLength !== columnLength) {
-            uiManager.update(dynamicTable.update(columnLength, rowLength));
-        }
-
-        // store previous update
-        prevRowLength = rowLength;
-        prevColumnLength = columnLength;
-    }
-
-    const bindScrollEvents = function() {
-        // subscribe functions to scroll event
-        uiManager.setScrollFn('centerRegion', (left = 0, top = 0) => {
-            updateTableContent(left, top);
-        });
-    }
 
     // viewport
     uiManager.reg(ui.Viewport(refs, {
