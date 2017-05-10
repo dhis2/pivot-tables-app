@@ -1368,3 +1368,7 @@ table.pivot.displaydensity-COMPACT td.pivot-filter {
     font-weight: bold;
     padding-left: 5px;
 }
+
+.ns-menu-item-float {
+	background-image:url('../images/float_16.png');
+}
