@@ -7,3 +7,4 @@ yarn-error.log
 *.gzip
 build/
 target/
+.DS_Store
