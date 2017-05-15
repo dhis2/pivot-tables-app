@@ -93,7 +93,6 @@ uiManager.applyTo([].concat(arrayTo(api), arrayTo(table)));
 dimensionConfig.applyTo(arrayTo(table));
 optionConfig.applyTo([].concat(arrayTo(api), arrayTo(table)));
 
-
 // requests
 appManager.init(() => {
     requestManager.add(new api.Request(refs, init.i18nInit(refs)));
@@ -217,6 +216,8 @@ function initialize() {
     const northRegion = uiManager.reg(ui.NorthRegion(refs), 'northRegion');
 
     const eastRegion = uiManager.reg(ui.EastRegion(refs), 'eastRegion');
+
+    var westRegionItems = uiManager.reg(ui.WestRegionAggregateItems(refs), 'accordion');
 
     var westRegionItems = uiManager.reg(ui.WestRegionAggregateItems(refs), 'accordion');
 

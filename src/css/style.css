@@ -283,10 +283,6 @@ table.pivot.displaydensity-COMPACT td.pivot-filter {
 	background-color: #dae6f8;
 	text-align: center;
 }
-.pivot-padding {
-	max-width: none!important;
-	max-height: none!important;
-}
 .pivot-dim.highlighted {
 	background-color: #c5d8f6;
 }
@@ -1371,4 +1367,8 @@ table.pivot.displaydensity-COMPACT td.pivot-filter {
 .x-menu label {
     font-weight: bold;
     padding-left: 5px;
+}
+
+.ns-menu-item-float {
+	background-image:url('../images/float_16.png');
 }
