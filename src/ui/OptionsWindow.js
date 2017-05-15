@@ -128,7 +128,7 @@ OptionsWindow = function(c) {
         valueField: 'id',
         displayField: 'name',
         editable: false,
-        value: optionConfig.getAggregationType('def').id,
+        value: optionConfig.getDisplayType('value').name,
         store: Ext.create('Ext.data.Store', {
             fields: ['id', 'name', 'index'],
             data: optionConfig.getDisplayTypeRecords()
