@@ -168,6 +168,8 @@ function initialize() {
 
     uiManager.enableConfirmUnload();
 
+    uiManager.introHtmlIsAsync = true;
+
     const introHtml = function() {
 
         var html = '<div class="ns-viewport-text" style="padding:20px">';
@@ -195,8 +197,6 @@ function initialize() {
 
         return html;
     }
-
-    uiManager.introHtmlIsAsync = true;
 
     uiManager.setIntroHtml(introHtml());
 
