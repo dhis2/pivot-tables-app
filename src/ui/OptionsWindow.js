@@ -3,109 +3,75 @@ import {isString, isNumber, isBoolean, isObject} from 'd2-utilizr';
 export var OptionsWindow;
 
 OptionsWindow = function(c) {
-    var t = this,
+    var t = this;
 
-        appManager = c.appManager,
+    var appManager = c.appManager,
         uiManager = c.uiManager,
         instanceManager = c.instanceManager,
         i18n = c.i18nManager.get(),
-        optionConfig = c.optionConfig,
+        optionConfig = c.optionConfig;
 
-        showColTotals,
-        showRowTotals,
-        showColSubTotals,
-        showRowSubTotals,
-        showDimensionLabels,
-        hideEmptyRows,
-        hideEmptyColumns,
-        skipRounding,
-        aggregationType,
-        displayType,
-        dataApprovalLevel,
-        showHierarchy,
-        completedOnly,
-        digitGroupSeparator,
-        legendSet,
-        legendDisplayStrategy,
-        legendDisplayStyle,
-        title,
-        displayDensity,
-        fontSize,
-        reportingPeriod,
-        organisationUnit,
-        parentOrganisationUnit,
-        regression,
-        cumulative,
-        sortOrder,
-        topLimit,
-
-        data,
-        organisationUnits,
-        events,
-        style,
-        general,
-        parameters,
-        window,
-
-        comboboxWidth = 262,
+    var comboboxWidth = 262,
         comboBottomMargin = 1,
         checkboxBottomMargin = 2,
         separatorTopMargin = 6,
         cmpWidth = 360,
         labelWidth = 125;
 
-    showColTotals = Ext.create('Ext.form.field.Checkbox', {
+    var showColTotals = Ext.create('Ext.form.field.Checkbox', {
         boxLabel: i18n.show_col_totals,
         style: 'margin-bottom:' + checkboxBottomMargin + 'px',
         checked: true
     });
 
-    showRowTotals = Ext.create('Ext.form.field.Checkbox', {
+    var showRowTotals = Ext.create('Ext.form.field.Checkbox', {
         boxLabel: i18n.show_row_totals,
         style: 'margin-bottom:' + checkboxBottomMargin + 'px',
         checked: true
     });
 
-    showColSubTotals = Ext.create('Ext.form.field.Checkbox', {
+    var showColSubTotals = Ext.create('Ext.form.field.Checkbox', {
         boxLabel: i18n.show_col_subtotals,
         style: 'margin-top:' + separatorTopMargin + 'px; margin-bottom:' + checkboxBottomMargin + 'px',
         checked: true
     });
 
-    showRowSubTotals = Ext.create('Ext.form.field.Checkbox', {
+    var showRowSubTotals = Ext.create('Ext.form.field.Checkbox', {
         boxLabel: i18n.show_row_subtotals,
         style: 'margin-bottom:' + checkboxBottomMargin + 'px',
         checked: true
     });
 
-    showDimensionLabels = Ext.create('Ext.form.field.Checkbox', {
+    var showDimensionLabels = Ext.create('Ext.form.field.Checkbox', {
         boxLabel: i18n.show_dimension_labels,
         style: 'margin-top:' + separatorTopMargin + 'px; margin-bottom:' + comboBottomMargin + 'px',
         checked: true
     });
 
-    hideEmptyRows = Ext.create('Ext.form.field.Checkbox', {
+    var hideEmptyRows = Ext.create('Ext.form.field.Checkbox', {
         boxLabel: i18n.hide_empty_rows,
         style: 'margin-top:' + separatorTopMargin + 'px;' + 'margin-bottom:' + comboBottomMargin + 'px'
     });
 
-    hideEmptyColumns = Ext.create('Ext.form.field.Checkbox', {
+    var hideEmptyColumns = Ext.create('Ext.form.field.Checkbox', {
         boxLabel: i18n.hide_empty_columns,
         style: 'margin-bottom:' + checkboxBottomMargin + 'px'
     });
 
-    skipRounding = Ext.create('Ext.form.field.Checkbox', {
+    var skipRounding = Ext.create('Ext.form.field.Checkbox', {
         boxLabel: i18n.skip_rounding,
         style: 'margin-top:' + separatorTopMargin + 'px; margin-bottom:' + comboBottomMargin + 'px'
     });
 
-    aggregationType = Ext.create('Ext.form.field.ComboBox', {
+    var aggregationType = Ext.create('Ext.form.field.ComboBox', {
         cls: 'ns-combo',
         style: 'margin-top:' + (separatorTopMargin + 1) + 'px; margin-bottom:' + comboBottomMargin + 'px',
         width: cmpWidth,
         labelWidth: labelWidth,
         fieldLabel: i18n.aggregation_type,
         labelStyle: 'color:#333',
+        labelSeparator: '',
+        labelSeparator: '',
         queryMode: 'local',
         valueField: 'id',
         displayField: 'name',
@@ -117,13 +83,14 @@ OptionsWindow = function(c) {
         })
     });
 
-    displayType = Ext.create('Ext.form.field.ComboBox', {
+    var displayType = Ext.create('Ext.form.field.ComboBox', {
         cls: 'ns-combo',
-        style: 'margin-top:' + (separatorTopMargin + 1) + 'px; margin-bottom:' + comboBottomMargin + 'px',
+        style: 'margin-bottom:' + comboBottomMargin + 'px',
         width: cmpWidth,
         labelWidth: labelWidth,
         fieldLabel: i18n.display_type,
         labelStyle: 'color:#333',
+        labelSeparator: '',
         queryMode: 'local',
         valueField: 'id',
         displayField: 'name',
@@ -135,13 +102,14 @@ OptionsWindow = function(c) {
         })
     });
 
-    dataApprovalLevel = Ext.create('Ext.form.field.ComboBox', {
+    var dataApprovalLevel = Ext.create('Ext.form.field.ComboBox', {
         cls: 'ns-combo',
         style: 'margin-bottom:' + comboBottomMargin + 'px',
         width: cmpWidth,
         labelWidth: labelWidth,
         fieldLabel: i18n.data_approved_at_level,
         labelStyle: 'color:#333',
+        labelSeparator: '',
         queryMode: 'local',
         valueField: 'id',
         displayField: 'name',
@@ -154,23 +122,24 @@ OptionsWindow = function(c) {
         })
     });
 
-    showHierarchy = Ext.create('Ext.form.field.Checkbox', {
+    var showHierarchy = Ext.create('Ext.form.field.Checkbox', {
         boxLabel: i18n.show_hierarchy,
         style: 'margin-bottom:' + checkboxBottomMargin + 'px',
     });
 
-    completedOnly = Ext.create('Ext.form.field.Checkbox', {
+    var completedOnly = Ext.create('Ext.form.field.Checkbox', {
         boxLabel: i18n.include_only_completed_events_only,
         style: 'margin-bottom:' + checkboxBottomMargin + 'px',
     });
 
-    displayDensity = Ext.create('Ext.form.field.ComboBox', {
+    var displayDensity = Ext.create('Ext.form.field.ComboBox', {
         cls: 'ns-combo',
         style: 'margin-bottom:' + comboBottomMargin + 'px',
         width: cmpWidth,
         labelWidth: labelWidth,
         fieldLabel: i18n.display_density,
         labelStyle: 'color:#333',
+        labelSeparator: '',
         queryMode: 'local',
         valueField: 'id',
         displayField: 'name',
@@ -182,13 +151,14 @@ OptionsWindow = function(c) {
         })
     });
 
-    fontSize = Ext.create('Ext.form.field.ComboBox', {
+    var fontSize = Ext.create('Ext.form.field.ComboBox', {
         cls: 'ns-combo',
         style: 'margin-bottom:' + comboBottomMargin + 'px',
         width: cmpWidth,
         labelWidth: labelWidth,
         fieldLabel: i18n.font_size,
         labelStyle: 'color:#333',
+        labelSeparator: '',
         queryMode: 'local',
         valueField: 'id',
         displayField: 'name',
@@ -200,8 +170,9 @@ OptionsWindow = function(c) {
         })
     });
 
-    digitGroupSeparator = Ext.create('Ext.form.field.ComboBox', {
+    var digitGroupSeparator = Ext.create('Ext.form.field.ComboBox', {
         labelStyle: 'color:#333',
+        labelSeparator: '',
         cls: 'ns-combo',
         style: 'margin-bottom:' + comboBottomMargin + 'px',
         width: cmpWidth,
@@ -218,77 +189,67 @@ OptionsWindow = function(c) {
         })
     });
 
-    legendDisplayStrategy = Ext.create('Ext.form.field.ComboBox', {
+    var legendSet = Ext.create('Ext.form.field.ComboBox', {
         cls: 'ns-combo',
         style: 'margin-bottom:' + comboBottomMargin + 'px',
         width: cmpWidth,
         labelWidth: labelWidth,
-        fieldLabel: i18n.legend_display_strategy,
+        fieldLabel: i18n.apply_legend,
         labelStyle: 'color:#333',
+        labelSeparator: '',
         valueField: 'id',
         displayField: 'name',
         queryMode: 'local',
         editable: false,
-        value: 0,
-        store: {
-            fields: ['id', 'name', 'index'],
-            data: optionConfig.getLegendDisplayStrategyRecords()
-        },
-        listeners: {
-            select: function(cb) {
-                onLegendDisplayStrategySelect({
-                    legendDisplayStrategy: cb.getValue()
-                });
-            }
-        }
-    });
-
-    legendSet = Ext.create('Ext.form.field.ComboBox', {
-        cls: 'ns-combo',
-        style: 'margin-bottom:' + comboBottomMargin + 'px',
-        width: cmpWidth,
-        labelWidth: labelWidth,
-        fieldLabel: i18n.legend_set,
-        labelStyle: 'color:#333',
-        valueField: 'id',
-        displayField: 'name',
-        queryMode: 'local',
-        editable: false,
-        value: 0,
+        value: 'NONE',
         store: {
 			fields: ['id', 'name', 'index'],
 			data: appManager.legendSets.concat([{
-				id: 0,
-				name: i18n.none,
-				index: -1
-			}]),
+                id: 'NONE',
+                name: i18n.none,
+                index: -2
+            },{
+                id: optionConfig.getLegendDisplayStrategy('by_data_item').id,
+                name: optionConfig.getLegendDisplayStrategy('by_data_item').name,
+                index: -1
+            }]),
 			sorters: [
 				{property: 'index', direction: 'ASC'},
 				{property: 'name', direction: 'ASC'}
 			]
 		},
-        listeners:{
+        listeners: {
             focus: function(combobox) {
                 combobox.expand();
                 combobox.collapse();
             },
-            select: function(cb) {
-                onLegendSetSelect({
-                    legendSet: {
-                        id: cb.getValue()
-                    }
-                });
+            select: function(cmp) {
+                var byDataItemId = optionConfig.getLegendDisplayStrategy('by_data_item').id;
+                var fixedId = optionConfig.getLegendDisplayStrategy('fixed').id;
+                var noneId = 'NONE';
+                var value = cmp.getValue();
+                var config = {};
+
+                if (value === byDataItemId) {
+                    config.legendDisplayStrategy = value;
+                }
+                else if (value !== noneId) {
+                    config.legendSet = {id: value};
+                }
+
+                onLegendSetSelect(getLegendS2C(config));
             }
         }
     });
 
-    legendDisplayStyle = Ext.create('Ext.form.field.ComboBox', {
+    var legendDisplayStyle = Ext.create('Ext.form.field.ComboBox', {
         cls: 'ns-combo',
-        style: 'margin-bottom' + comboBottomMargin + 'px',
+        style: 'margin-bottom:' + comboBottomMargin + 'px',
         width: cmpWidth,
         labelWidth: labelWidth,
-        fieldLabel: i18n.legend_display_style,
+        fieldLabel: i18n.style,
         labelStyle: 'color:#333',
+        labelSeparator: '',
         valueField: 'id',
         displayField: 'name',
         queryMode: 'local',
@@ -301,11 +262,13 @@ OptionsWindow = function(c) {
         })
     });
 
-    title = Ext.create('Ext.form.field.Text', {
+    var title = Ext.create('Ext.form.field.Text', {
         width: cmpWidth,
         labelWidth: labelWidth,
         fieldLabel: i18n.table_title,
+        emptyText: i18n.table_title,
         labelStyle: 'color:#333',
+        labelSeparator: '',
         maxLength: 250,
         enforceMaxLength: true,
         style: 'margin-bottom:0',
@@ -314,38 +277,39 @@ OptionsWindow = function(c) {
         }
     });
 
-    reportingPeriod = Ext.create('Ext.form.field.Checkbox', {
+    var reportingPeriod = Ext.create('Ext.form.field.Checkbox', {
         boxLabel: i18n.reporting_period,
         style: 'margin-bottom:' + checkboxBottomMargin + 'px'
     });
 
-    organisationUnit = Ext.create('Ext.form.field.Checkbox', {
+    var organisationUnit = Ext.create('Ext.form.field.Checkbox', {
         boxLabel: i18n.organisation_unit,
         style: 'margin-bottom:' + checkboxBottomMargin + 'px'
     });
 
-    parentOrganisationUnit = Ext.create('Ext.form.field.Checkbox', {
+    var parentOrganisationUnit = Ext.create('Ext.form.field.Checkbox', {
         boxLabel: i18n.parent_organisation_unit,
         style: 'margin-bottom:' + checkboxBottomMargin + 'px'
     });
 
-    regression = Ext.create('Ext.form.field.Checkbox', {
+    var regression = Ext.create('Ext.form.field.Checkbox', {
         boxLabel: i18n.include_regression,
         style: 'margin-bottom:' + checkboxBottomMargin + 'px'
     });
 
-    cumulative = Ext.create('Ext.form.field.Checkbox', {
+    var cumulative = Ext.create('Ext.form.field.Checkbox', {
         boxLabel: i18n.include_cumulative,
         style: 'margin-bottom:6px'
     });
 
-    sortOrder = Ext.create('Ext.form.field.ComboBox', {
+    var sortOrder = Ext.create('Ext.form.field.ComboBox', {
         cls: 'ns-combo',
         style: 'margin-bottom:1px',
         width: cmpWidth - 8,
         labelWidth: labelWidth,
         fieldLabel: i18n.sort_order,
         labelStyle: 'color:#333',
+        labelSeparator: '',
         queryMode: 'local',
         valueField: 'id',
         displayField: 'name',
@@ -361,13 +325,14 @@ OptionsWindow = function(c) {
         })
     });
 
-    topLimit = Ext.create('Ext.form.field.ComboBox', {
+    var topLimit = Ext.create('Ext.form.field.ComboBox', {
         cls: 'ns-combo',
         style: 'margin-bottom:3px',
         width: cmpWidth - 8,
         labelWidth: labelWidth,
         fieldLabel: i18n.top_limit,
         labelStyle: 'color:#333',
+        labelSeparator: '',
         queryMode: 'local',
         valueField: 'id',
         displayField: 'name',
@@ -386,7 +351,7 @@ OptionsWindow = function(c) {
         })
     });
 
-    data = {
+    var data = {
         bodyStyle: 'border:0 none',
         style: 'margin-left:14px',
         items: [
@@ -404,15 +369,7 @@ OptionsWindow = function(c) {
         ]
     };
 
-    organisationUnits = {
-        bodyStyle: 'border:0 none',
-        style: 'margin-left:14px',
-        items: [
-            showHierarchy
-        ]
-    };
-
-    events = {
+    var events = {
         bodyStyle: 'border:0 none',
         style: 'margin-left:14px',
         items: [
@@ -420,20 +377,34 @@ OptionsWindow = function(c) {
         ]
     };
 
-    style = {
+    var organisationUnits = {
         bodyStyle: 'border:0 none',
         style: 'margin-left:14px',
         items: [
-            displayDensity,
-            fontSize,
-            digitGroupSeparator,
-            legendDisplayStrategy,
+            showHierarchy
+        ]
+    };
+
+    var legend = {
+        bodyStyle: 'border:0 none',
+        style: 'margin-left:14px',
+        items: [
             legendSet,
             legendDisplayStyle
         ]
     };
 
-    general = {
+    var style = {
+        bodyStyle: 'border:0 none',
+        style: 'margin-left:14px',
+        items: [
+            displayDensity,
+            fontSize,
+            digitGroupSeparator
+        ]
+    };
+
+    var general = {
         bodyStyle: 'border:0 none',
         style: 'margin-left:14px',
         items: [
@@ -441,7 +412,7 @@ OptionsWindow = function(c) {
         ]
     };
 
-    parameters = Ext.create('Ext.panel.Panel', {
+    var parameters = Ext.create('Ext.panel.Panel', {
         bodyStyle: 'border:0 none; background:transparent',
         style: 'margin-left:14px',
         items: [
@@ -456,7 +427,7 @@ OptionsWindow = function(c) {
         hidden: true
     });
 
-    window = Ext.create('Ext.window.Window', {
+    var window = Ext.create('Ext.window.Window', {
         title: i18n.table_options,
         bodyStyle: 'background-color:#fff; padding:2px',
         closeAction: 'hide',
@@ -468,7 +439,7 @@ OptionsWindow = function(c) {
             this.setOptions();
         },
         getOptions: function() {
-            return {
+            return Object.assign({
                 showRowTotals: showRowTotals.getValue(),
                 showColTotals: showColTotals.getValue(),
                 showColSubTotals: showColSubTotals.getValue(),
@@ -485,9 +456,6 @@ OptionsWindow = function(c) {
                 displayDensity: displayDensity.getValue(),
                 fontSize: fontSize.getValue(),
                 digitGroupSeparator: digitGroupSeparator.getValue(),
-                legendSet: {id: legendSet.getValue()},
-                legendDisplayStyle: legendDisplayStyle.getValue(),
-                legendDisplayStrategy: legendDisplayStrategy.getValue(),
                 title: title.getValue(),
                 reportingPeriod: reportingPeriod.getValue(),
                 organisationUnit: organisationUnit.getValue(),
@@ -496,7 +464,7 @@ OptionsWindow = function(c) {
                 cumulative: cumulative.getValue(),
                 sortOrder: sortOrder.getValue(),
                 topLimit: topLimit.getValue()
-            };
+            }, getLegendC2S());
         },
         setOptions: function(layout) {
             layout = layout || {};
@@ -525,8 +493,11 @@ OptionsWindow = function(c) {
             sortOrder.setValue(isNumber(layout.sortOrder) ? layout.sortOrder : 0);
             topLimit.setValue(isNumber(layout.topLimit) ? layout.topLimit : 0);
 
-            onLegendSetSelect(layout);
-            onLegendDisplayStrategySelect(layout);
+            // legend
+            var legendConfig = getLegendS2C(layout);
+
+            legendSet.setValue(legendConfig.legend);
+            onLegendSetSelect(legendConfig);
 
             // title
             if (isString(layout.title)) {
@@ -549,6 +520,15 @@ OptionsWindow = function(c) {
             {
                 bodyStyle: 'border:0 none; color:#222; font-size:12px; font-weight:bold',
                 style: 'margin-bottom:6px; margin-left:5px',
+                html: i18n.events
+            },
+            events,
+            {
+                bodyStyle: 'border:0 none; padding:7px'
+            },
+            {
+                bodyStyle: 'border:0 none; color:#222; font-size:12px; font-weight:bold',
+                style: 'margin-bottom:6px; margin-left:5px',
                 html: i18n.organisation_units
             },
             organisationUnits,
@@ -558,9 +538,9 @@ OptionsWindow = function(c) {
             {
                 bodyStyle: 'border:0 none; color:#222; font-size:12px; font-weight:bold',
                 style: 'margin-bottom:6px; margin-left:5px',
-                html: i18n.events
+                html: i18n.legend
             },
-            events,
+            legend,
             {
                 bodyStyle: 'border:0 none; padding:7px'
             },
@@ -673,37 +653,55 @@ OptionsWindow = function(c) {
         }
     });
 
-    var onLegendSetSelect = function(layout) {
-        var legendSetId = layout.legendSet ? layout.legendSet.id : null;
-        var legendDisplayStyleId = layout.legendDisplayStyle;
+    var getLegendS2C = function(layout) {
+        layout = layout || {};
+console.log(layout);
+        var byDataItemId = optionConfig.getLegendDisplayStrategy('by_data_item').id;
+        var fillId = optionConfig.getLegendDisplayStyle('fill').id;
+        var noneId = 'NONE';
 
-        if (legendSetId) {
-            legendSet.setValue(legendSetId);
-            legendDisplayStyle.enable();
-
-            if (legendDisplayStyleId) {
-                legendDisplayStyle.setValue(legendDisplayStyleId);
-            }
-        } else {
-            legendSet.reset();
-            legendDisplayStyle.reset();
-            legendDisplayStyle.disable();
-        }
+        return {
+            legend: isObject(layout.legendSet) ? layout.legendSet.id : (layout.legendDisplayStrategy === byDataItemId ? byDataItemId : noneId),
+            legendDisplayStyle: isString(layout.legendDisplayStyle) ? layout.legendDisplayStyle : null
+        };
     };
 
-    var onLegendDisplayStrategySelect = function(layout) {
-        var legendDisplayStrategyId = isString(layout.legendDisplayStrategy) ? layout.legendDisplayStrategy : optionConfig.getLegendDisplayStrategy('fixed').id;
-            legendDisplayStyle.enable();
-            legendDisplayStrategy.setValue(legendDisplayStrategyId);
+    var getLegendC2S = function() {
+        var legendSetValue = legendSet.getValue();
+        var legendDisplayStyleValue = legendDisplayStyle.getValue();
 
-            if (legendDisplayStrategyId === optionConfig.getLegendDisplayStrategy('fixed').id) {
-                legendSet.enable();
-                if (legendSet.getValue() === 0) {
-                    legendDisplayStyle.disable();
-                }
-            } else {
-                legendSet.disable();
-            }
+        var noneId = 'NONE';
+        var fixedId = optionConfig.getLegendDisplayStrategy('fixed').id;
+        var byDataItemId = optionConfig.getLegendDisplayStrategy('by_data_item').id;
+        var fillId = optionConfig.getLegendDisplayStyle('fill').id;
+        var config = {};
+
+        if (legendSetValue === noneId) {
+            config.legendDisplayStrategy = fixedId;
+            config.legendDisplayStyle = fillId;
+        }
+        else if (legendSetValue === byDataItemId) {
+            config.legendDisplayStrategy = byDataItemId;
+            config.legendDisplayStyle = legendDisplayStyleValue;
+        }
+        else {
+            config.legendSet = {id: legendSetValue};
+            config.legendDisplayStrategy = fixedId;
+            config.legendDisplayStyle = legendDisplayStyleValue;
+        }
+console.log(config);
+        return config;
+    };
+
+    var onLegendSetSelect = function(layout) {
+        var none = 'NONE';
+console.log(layout);
+console.log("");
+        legendDisplayStyle.setDisabled(layout.legend === none);
+
+        if (isString(layout.legendDisplayStyle)) {
+            legendDisplayStyle.setValue(layout.legendDisplayStyle);
+        }
     };
 
     return window;
