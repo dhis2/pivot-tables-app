@@ -71,7 +71,6 @@ OptionsWindow = function(c) {
         fieldLabel: i18n.aggregation_type,
         labelStyle: 'color:#333',
         labelSeparator: '',
-        labelSeparator: '',
         queryMode: 'local',
         valueField: 'id',
         displayField: 'name',
@@ -83,22 +82,22 @@ OptionsWindow = function(c) {
         })
     });
 
-    var displayType = Ext.create('Ext.form.field.ComboBox', {
+    var numberType = Ext.create('Ext.form.field.ComboBox', {
         cls: 'ns-combo',
         style: 'margin-bottom:' + comboBottomMargin + 'px',
         width: cmpWidth,
         labelWidth: labelWidth,
-        fieldLabel: i18n.display_type,
+        fieldLabel: i18n.number_type,
         labelStyle: 'color:#333',
         labelSeparator: '',
         queryMode: 'local',
         valueField: 'id',
         displayField: 'name',
         editable: false,
-        value: optionConfig.getDisplayType('value').name,
+        value: optionConfig.getNumberType('value').name,
         store: Ext.create('Ext.data.Store', {
             fields: ['id', 'name', 'index'],
-            data: optionConfig.getDisplayTypeRecords()
+            data: optionConfig.getNumberTypeRecords()
         })
     });
 
@@ -364,7 +363,7 @@ OptionsWindow = function(c) {
             hideEmptyColumns,
             skipRounding,
             aggregationType,
-            displayType,
+            numberType,
             dataApprovalLevel
         ]
     };
@@ -449,7 +448,7 @@ OptionsWindow = function(c) {
                 hideEmptyColumns: hideEmptyColumns.getValue(),
                 skipRounding: skipRounding.getValue(),
                 aggregationType: aggregationType.getValue(),
-                displayType: displayType.getValue(),
+                numberType: numberType.getValue(),
                 dataApprovalLevel: {id: dataApprovalLevel.getValue()},
                 showHierarchy: showHierarchy.getValue(),
                 completedOnly: completedOnly.getValue(),
@@ -478,7 +477,7 @@ OptionsWindow = function(c) {
             hideEmptyColumns.setValue(isBoolean(layout.hideEmptyColumns) ? layout.hideEmptyColumns : false);
             skipRounding.setValue(isBoolean(layout.skipRounding) ? layout.skipRounding : false);
             aggregationType.setValue(isString(layout.aggregationType) ? layout.aggregationType : optionConfig.getAggregationType('def').id);
-            displayType.setValue(isString(layout.displayType) ? layout.displayType : optionConfig.getDisplayType('value').id);
+            numberType.setValue(isString(layout.numberType) ? layout.numberType : optionConfig.getNumberType('value').id);
             dataApprovalLevel.setValue(isObject(layout.dataApprovalLevel) && isString(layout.dataApprovalLevel.id) ? layout.dataApprovalLevel.id : optionConfig.getDataApprovalLevel('def').id);
             showHierarchy.setValue(isBoolean(layout.showHierarchy) ? layout.showHierarchy : false);
             completedOnly.setValue(isBoolean(layout.completedOnly) ? layout.completedOnly : false);
@@ -633,7 +632,7 @@ OptionsWindow = function(c) {
                 w.hideEmptyColumns = hideEmptyColumns;
                 w.skipRounding = skipRounding;
                 w.aggregationType = aggregationType;
-                w.displayType = displayType;
+                w.numberType = numberType;
                 w.dataApprovalLevel = dataApprovalLevel;
                 w.showHierarchy = showHierarchy;
                 w.completedOnly = completedOnly;
