@@ -694,8 +694,7 @@ console.log(config);
 
     var onLegendSetSelect = function(layout) {
         var none = 'NONE';
-console.log(layout);
-console.log("");
+
         legendDisplayStyle.setDisabled(layout.legend === none);
 
         if (isString(layout.legendDisplayStyle)) {
