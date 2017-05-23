@@ -109,6 +109,7 @@ appManager.init(() => {
 });
 
 function initialize() {
+
     // i18n init
     var i18n = i18nManager.get();
 
@@ -168,6 +169,7 @@ function initialize() {
 
     uiManager.enableConfirmUnload();
 
+    // intro
     uiManager.introHtmlIsAsync = true;
 
     const introHtml = function() {
