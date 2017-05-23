@@ -94,7 +94,7 @@ OptionsWindow = function(c) {
         valueField: 'id',
         displayField: 'name',
         editable: false,
-        value: optionConfig.getNumberType('value').name,
+        value: optionConfig.getNumberType('value').id,
         store: Ext.create('Ext.data.Store', {
             fields: ['id', 'name', 'index'],
             data: optionConfig.getNumberTypeRecords()
