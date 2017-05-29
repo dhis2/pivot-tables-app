@@ -654,7 +654,7 @@ OptionsWindow = function(c) {
 
     var getLegendS2C = function(layout) {
         layout = layout || {};
-console.log(layout);
+
         var byDataItemId = optionConfig.getLegendDisplayStrategy('by_data_item').id;
         var fillId = optionConfig.getLegendDisplayStyle('fill').id;
         var noneId = 'NONE';
@@ -688,7 +688,7 @@ console.log(layout);
             config.legendDisplayStrategy = fixedId;
             config.legendDisplayStyle = legendDisplayStyleValue;
         }
-console.log(config);
+
         return config;
     };
 
