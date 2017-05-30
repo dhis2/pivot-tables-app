@@ -48,13 +48,13 @@ OptionsWindow = function(c) {
         checked: true
     });
 
-    var hideEmptyRows = Ext.create('Ext.form.field.Checkbox', {
-        boxLabel: i18n.hide_empty_rows,
+    var hideEmptyColumns = Ext.create('Ext.form.field.Checkbox', {
+        boxLabel: i18n.hide_empty_columns,
         style: 'margin-top:' + separatorTopMargin + 'px;' + 'margin-bottom:' + comboBottomMargin + 'px'
     });
 
-    var hideEmptyColumns = Ext.create('Ext.form.field.Checkbox', {
-        boxLabel: i18n.hide_empty_columns,
+    var hideEmptyRows = Ext.create('Ext.form.field.Checkbox', {
+        boxLabel: i18n.hide_empty_rows,
         style: 'margin-bottom:' + checkboxBottomMargin + 'px'
     });
 
@@ -359,8 +359,8 @@ OptionsWindow = function(c) {
             showColSubTotals,
             showRowSubTotals,
             showDimensionLabels,
-            hideEmptyRows,
             hideEmptyColumns,
+            hideEmptyRows,
             skipRounding,
             aggregationType,
             numberType,
