@@ -1,7 +1,7 @@
 {
-  "name": "dhis2-pivot",
+  "name": "pivot-tables-app",
   "version": "28.0.1",
-  "description": "DHIS2 pivot tables app",
+  "description": "Pivot tables app",
   "main": "index.html",
   "scripts": {
     "lint": "./node_modules/eslint/bin/eslint.js src `git diff --cached --name-only | grep \\.js$`",
