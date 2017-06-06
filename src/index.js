@@ -26,6 +26,14 @@ var refs = {
     table
 };
 
+const cellWidth = 120,
+      cellHeight = 25;
+
+let previousHorizontalSize,
+    previousVerticalSize,
+    currentHorizontalSize,
+    currentVerticalSize;
+
     // dimension config
 var dimensionConfig = new config.DimensionConfig();
 refs.dimensionConfig = dimensionConfig;
@@ -125,14 +133,14 @@ function initialize() {
 
     // instance manager
     instanceManager.setFn(function(layout) {
-        var sortingId = layout.sorting ? layout.sorting.id : null,
+        let sortingId = layout.sorting ? layout.sorting.id : null,
             tableObject;
 
         // get table
-        var getTable = function() {
-            var response = layout.getResponse();
-            var colAxis = new table.PivotTableAxis(refs, layout, response, 'col');
-            var rowAxis = new table.PivotTableAxis(refs, layout, response, 'row');
+        let getTable = function() {
+            let response = layout.getResponse(),
+                colAxis = new table.PivotTableAxis(refs, layout, response, 'col');
+                rowAxis = new table.PivotTableAxis(refs, layout, response, 'row');
             return new table.PivotTable(refs, layout, response, colAxis, rowAxis);
         };
 
@@ -162,6 +170,12 @@ function initialize() {
 
         // statistics
         instanceManager.postDataStatistics();
+
+        if (tableObject.isDynamic) {
+
+        }
+
+        uiManager.scrollTo("centerRegion", 0, 0);
     });
 
     // ui manager
@@ -248,6 +262,42 @@ function initialize() {
         menuItem2Text: i18n.open_this_table_as_map,
         menuItem3Text: i18n.open_last_map
     });
+
+    const getTableRenderWidth = (horizontalPosition, cellWidth) => {
+        return Math.floor(horizontalPosition / cellWidth);
+    }
+
+    const getTableRenderHeight = (verticalPosition, cellHeight) => {
+        return Math.floor(verticalPosition / cellHeight);
+    }
+
+    const tableHasChangedSize = () => {
+        return previousVerticalSize !== currentVerticalSize || previousHorizontalSize !== currentHorizontalSize;
+    }
+
+    const updateTableContent = () => {
+        if (tableHasChangedSize()) {
+            uiManager.update(dynamicTable.update(currentHorizontalSize, currentVerticalSize));
+        }
+    }
+
+    const updateCurrentTableSize = (left, top) => {
+        currentVerticalSize = getTableRenderWidth(top);
+        currentHorizontalSize = getTableRenderHeight(left);
+    }
+
+    const updatePreviousTableSize = () => {
+        previousVerticalSize = currentVerticalSize;
+        previousHorizontalSize = currentHorizontalSize;
+    }
+
+    const bindScrollEvents = function() {
+        uiManager.setScrollFn('centerRegion', (left = 0, top = 0) => {
+            updateCurrentTableSize(left, top);
+            updateTableContent();
+            updatePreviousTableSize();
+        });
+    }
 
     // viewport
     uiManager.reg(ui.Viewport(refs, {
