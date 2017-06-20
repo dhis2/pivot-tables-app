@@ -53,7 +53,7 @@
     "webpack-dev-server": "1.14.0"
   },
   "manifest.webapp": {
-    "name": "DHIS2 pivot tables app",
+    "name": "Pivot tables app",
     "icons": {
       "48": "icon.png"
     },
