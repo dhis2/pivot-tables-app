@@ -7,7 +7,7 @@
     "lint": "./node_modules/eslint/bin/eslint.js src `git diff --cached --name-only | grep \\.js$`",
     "validate": "npm ls --depth 0",
     "start": "webpack-dev-server",
-    "build": "rm -rf build && webpack --config webpack.config.prod.js && cp ./index.html build && cp ./jquery.min.js build && cp ./manifest.webapp build && cp -r i18n build && cp -r dhis2 build && cp -r extjs build"
+    "build": "rm -rf build && webpack --config webpack.config.prod.js && cp ./index.html build && cp ./jquery*.min.js build && cp ./manifest.webapp build && cp -r i18n build && cp -r dhis2 build && cp -r extjs build"
   },
   "repository": {
     "type": "git",
