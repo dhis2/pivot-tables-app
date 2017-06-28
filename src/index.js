@@ -26,14 +26,6 @@ var refs = {
     table
 };
 
-const cellWidth = 120,
-      cellHeight = 25;
-
-let previousHorizontalSize,
-    previousVerticalSize,
-    currentHorizontalSize,
-    currentVerticalSize;
-
     // dimension config
 var dimensionConfig = new config.DimensionConfig();
 refs.dimensionConfig = dimensionConfig;
@@ -119,7 +111,9 @@ appManager.init(() => {
 function initialize() {
 
     // i18n init
-    var i18n = i18nManager.get();
+    var i18n = i18nManager.get(),
+        currentTable,
+        lll;
 
     optionConfig.init();
     dimensionConfig.init();
@@ -139,7 +133,7 @@ function initialize() {
         // get table
         let getTable = function() {
             let response = layout.getResponse(),
-                colAxis = new table.PivotTableAxis(refs, layout, response, 'col');
+                colAxis = new table.PivotTableAxis(refs, layout, response, 'col'),
                 rowAxis = new table.PivotTableAxis(refs, layout, response, 'row');
             return new table.PivotTable(refs, layout, response, colAxis, rowAxis);
         };
@@ -158,8 +152,11 @@ function initialize() {
             tableObject = getTable();
         }
 
+        tableObject.setWindowWidth(uiManager.get('centerRegion').getWidth());
+        tableObject.setWindowHeight(uiManager.get('centerRegion').getHeight());
+
         // render
-        uiManager.update(tableObject.html);
+        uiManager.update(tableObject.render());
 
         // events
         tableManager.setColumnHeaderMouseHandlers(layout, tableObject);
@@ -171,9 +168,10 @@ function initialize() {
         // statistics
         instanceManager.postDataStatistics();
 
-        if (tableObject.isDynamic) {
+        currentTable = tableObject;
 
-        }
+        bindScrollEvents();
+        bindOnResizeEvents();
 
         uiManager.scrollTo("centerRegion", 0, 0);
     });
@@ -263,40 +261,37 @@ function initialize() {
         menuItem3Text: i18n.open_last_map
     });
 
-    const getTableRenderWidth = (horizontalPosition, cellWidth) => {
-        return Math.floor(horizontalPosition / cellWidth);
-    }
+    const updateTableContent = function(posFromLeft, posFromTop) {
+        const cellWidth = 120,
+              cellHeight = 25;
 
-    const getTableRenderHeight = (verticalPosition, cellHeight) => {
-        return Math.floor(verticalPosition / cellHeight);
-    }
+        // calculate number of rows and columns to render
+        let rowLength = Math.floor(posFromTop / cellHeight),
+            columnLength = Math.floor(posFromLeft / cellWidth);
 
-    const tableHasChangedSize = () => {
-        return previousVerticalSize !== currentVerticalSize || previousHorizontalSize !== currentHorizontalSize;
-    }
+        // only update if row/column has gone off screen
+        if(currentTable.rowStart !== rowLength || currentTable.columnStart !== columnLength) {
+            uiManager.update(currentTable.update(columnLength, rowLength));
 
-    const updateTableContent = () => {
-        if (tableHasChangedSize()) {
-            uiManager.update(dynamicTable.update(currentHorizontalSize, currentVerticalSize));
+            // TODO: Enable this to get mouse events
+            // tableManager.setColumnHeaderMouseHandlers(layout, currentTable);
+            // tableManager.setValueMouseHandlers(layout, currentTable);
         }
     }
 
-    const updateCurrentTableSize = (left, top) => {
-        currentVerticalSize = getTableRenderWidth(top);
-        currentHorizontalSize = getTableRenderHeight(left);
-    }
-
-    const updatePreviousTableSize = () => {
-        previousVerticalSize = currentVerticalSize;
-        previousHorizontalSize = currentHorizontalSize;
-    }
-
-    const bindScrollEvents = function() {
-        uiManager.setScrollFn('centerRegion', (left = 0, top = 0) => {
-            updateCurrentTableSize(left, top);
-            updateTableContent();
-            updatePreviousTableSize();
+    const bindScrollEvents = () => {
+        uiManager.setScrollFn('centerRegion', (event) => {
+            updateTableContent(event.target.scrollLeft, event.target.scrollTop);
         });
+    }
+
+    const bindOnResizeEvents = () => {
+        //TODO: Enable this to get on resize event
+        // uiManager.setOnResizeFn('centerRegion', (e) => {
+        //     currentTable.setWindowWidth(uiManager.get('centerRegion').getWidth());
+        //     currentTable.setWindowHeight(uiManager.get('centerRegion').getHeight());
+        //     uiManager.update(currentTable.render())
+        // });
     }
 
     // viewport
