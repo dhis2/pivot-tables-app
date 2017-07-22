@@ -65,9 +65,9 @@ table.pivot td {
 	font-family: 'Helvetica Neue','Helvetica','Arial','sans-serif' !important;
 }
 
-table.pivot td:first-child {
+/* table.pivot td:first-child {
 	position: fixed;
-}
+} */
 
 #init {
     display: table;
@@ -251,15 +251,32 @@ table.pivot-fixed tbody {
     overflow-x: hidden;
 }
 
-table.pivot-row-fixed tbody {
+table.pivot-row-sticky {
+	position: absolute;
+	left: 0;
+	top: 0;
+}
+
+/* table.pivot-row-fixed tbody {
 	width: 500px;
 	overflow-x: scroll;
 	margin-left: 5em;
 	overflow-y: visible;
 	padding: 0;	
+} */
+
+ div.sticky-scroller {
+    margin-left: 240px;
+    overflow-x: scroll;
+    overflow-y: visible;
+    padding-bottom: 5px;
+    width: calc(100% - 240px);
+} 
+
+div.table-wrapper {
+	width: 100%;
+	height: 100%;
 }
-
-
 
 table.pivot.displaydensity-COMFORTABLE td {
 	padding-top: 7px !important;
