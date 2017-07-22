@@ -113,7 +113,7 @@ function initialize() {
     // i18n init
     var i18n = i18nManager.get(),
         currentTable,
-        lll;
+        lay;
 
     optionConfig.init();
     dimensionConfig.init();
@@ -126,7 +126,7 @@ function initialize() {
     appManager.appName = i18n.pivot_tables || 'Pivot Tables';
 
     // instance manager
-    instanceManager.setFn(function(layout) {
+    instanceManager.setFn((layout) => {
         let sortingId = layout.sorting ? layout.sorting.id : null,
             tableObject;
 
@@ -152,8 +152,8 @@ function initialize() {
             tableObject = getTable();
         }
 
-        tableObject.setWindowWidth(uiManager.get('centerRegion').getWidth());
-        tableObject.setWindowHeight(uiManager.get('centerRegion').getHeight());
+        tableObject.setWindowSize(uiManager.get('centerRegion').getWidth(),
+                                  uiManager.get('centerRegion').getHeight());
 
         // render
         uiManager.update(tableObject.render());
@@ -161,6 +161,8 @@ function initialize() {
         // events
         tableManager.setColumnHeaderMouseHandlers(layout, tableObject);
         tableManager.setValueMouseHandlers(layout, tableObject);
+
+        lay = layout;
 
         // mask
         uiManager.unmask();
@@ -170,8 +172,10 @@ function initialize() {
 
         currentTable = tableObject;
 
-        bindScrollEvents();
-        bindOnResizeEvents();
+        if (currentTable.clipping) {
+            bindScrollEvents();
+            bindOnResizeEvents();
+        }
 
         uiManager.scrollTo("centerRegion", 0, 0);
     });
@@ -272,10 +276,8 @@ function initialize() {
         // only update if row/column has gone off screen
         if(currentTable.rowStart !== rowLength || currentTable.columnStart !== columnLength) {
             uiManager.update(currentTable.update(columnLength, rowLength));
-
-            // TODO: Enable this to get mouse events
-            // tableManager.setColumnHeaderMouseHandlers(layout, currentTable);
-            // tableManager.setValueMouseHandlers(layout, currentTable);
+            // tableManager.setColumnHeaderMouseHandlers(lay, currentTable);
+            // tableManager.setValueMouseHandlers(lay, currentTable);
         }
     }
 

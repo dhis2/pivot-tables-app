@@ -65,6 +65,10 @@ table.pivot td {
 	font-family: 'Helvetica Neue','Helvetica','Arial','sans-serif' !important;
 }
 
+table.pivot td:first-child {
+	position: fixed;
+}
+
 #init {
     display: table;
     margin: 300px auto;
@@ -231,6 +235,32 @@ table.pivot {
 	border: 0 none;
 }
 
+table.pivot-fixed {
+	height: 100%;
+	overflow-x: scroll;
+	overflow-y: hidden;
+}
+
+table.pivot-fixed thead {
+    display: block;
+}
+
+table.pivot-fixed tbody {
+    display: block;
+    overflow-y: auto;
+    overflow-x: hidden;
+}
+
+table.pivot-row-fixed tbody {
+	width: 500px;
+	overflow-x: scroll;
+	margin-left: 5em;
+	overflow-y: visible;
+	padding: 0;	
+}
+
+
+
 table.pivot.displaydensity-COMFORTABLE td {
 	padding-top: 7px !important;
 	padding-right: 7px;
@@ -315,6 +345,9 @@ table.pivot.displaydensity-COMPACT td.pivot-filter {
 	background-color: #fff;
     border-bottom-color: #fff !important;
     border-left-color: #fff !important;
+}
+.pivot-padding {
+	border: none !important;
 }
 
 .pivot-value {

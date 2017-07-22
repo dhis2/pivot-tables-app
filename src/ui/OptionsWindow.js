@@ -58,6 +58,16 @@ OptionsWindow = function(c) {
         style: 'margin-bottom:' + checkboxBottomMargin + 'px'
     });
 
+    var stickyColumnDimension = Ext.create('Ext.form.field.Checkbox', {
+        boxLabel: i18n.sticky_column_dimension,
+        style: 'margin-top:' + separatorTopMargin + 'px;' + 'margin-bottom:' + checkboxBottomMargin + 'px'
+    });
+
+    var stickyRowDimension = Ext.create('Ext.form.field.Checkbox', {
+        boxLabel: i18n.sticky_row_dimension,
+        style: 'margin-bottom:' + checkboxBottomMargin + 'px'
+    });
+
     var skipRounding = Ext.create('Ext.form.field.Checkbox', {
         boxLabel: i18n.skip_rounding,
         style: 'margin-top:' + separatorTopMargin + 'px; margin-bottom:' + comboBottomMargin + 'px'
@@ -361,6 +371,8 @@ OptionsWindow = function(c) {
             showDimensionLabels,
             hideEmptyColumns,
             hideEmptyRows,
+            stickyColumnDimension,
+            stickyRowDimension,
             skipRounding,
             aggregationType,
             numberType,
@@ -444,8 +456,10 @@ OptionsWindow = function(c) {
                 showColSubTotals: showColSubTotals.getValue(),
                 showRowSubTotals: showRowSubTotals.getValue(),
                 showDimensionLabels: showDimensionLabels.getValue(),
-                hideEmptyRows: hideEmptyRows.getValue(),
                 hideEmptyColumns: hideEmptyColumns.getValue(),
+                hideEmptyRows: hideEmptyRows.getValue(),
+                stickyColumnDimension: stickyColumnDimension.getValue(),
+                stickyRowDimension: stickyRowDimension.getValue(),
                 skipRounding: skipRounding.getValue(),
                 aggregationType: aggregationType.getValue(),
                 numberType: numberType.getValue(),
@@ -473,8 +487,10 @@ OptionsWindow = function(c) {
             showColSubTotals.setValue(isBoolean(layout.showColSubTotals) ? layout.showColSubTotals : true);
             showRowSubTotals.setValue(isBoolean(layout.showRowSubTotals) ? layout.showRowSubTotals : true);
             showDimensionLabels.setValue(isBoolean(layout.showDimensionLabels) ? layout.showDimensionLabels : true);
-            hideEmptyRows.setValue(isBoolean(layout.hideEmptyRows) ? layout.hideEmptyRows : false);
             hideEmptyColumns.setValue(isBoolean(layout.hideEmptyColumns) ? layout.hideEmptyColumns : false);
+            hideEmptyRows.setValue(isBoolean(layout.hideEmptyRows) ? layout.hideEmptyRows : false);
+            stickyColumnDimension.setValue(isBoolean(layout.stickyColumnDimension) ? layout.stickyColumnDimension : false);
+            stickyRowDimension.setValue(isBoolean(layout.stickyRowDimension) ? layout.stickyRowDimension : false);
             skipRounding.setValue(isBoolean(layout.skipRounding) ? layout.skipRounding : false);
             aggregationType.setValue(isString(layout.aggregationType) ? layout.aggregationType : optionConfig.getAggregationType('def').id);
             numberType.setValue(isString(layout.numberType) ? layout.numberType : optionConfig.getNumberType('value').id);
@@ -630,6 +646,8 @@ OptionsWindow = function(c) {
                 w.showDimensionLabels = showDimensionLabels;
                 w.hideEmptyRows = hideEmptyRows;
                 w.hideEmptyColumns = hideEmptyColumns;
+                w.stickyColumnDimension = stickyColumnDimension;
+                w.stickyRowDimension = stickyRowDimension;
                 w.skipRounding = skipRounding;
                 w.aggregationType = aggregationType;
                 w.numberType = numberType;
