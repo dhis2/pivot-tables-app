@@ -235,42 +235,43 @@ table.pivot {
 	border: 0 none;
 }
 
-table.pivot-fixed {
+table.pivot tr {
+	height: 100%;
+}
+
+table.pivot-sticky-column {
 	height: 100%;
 	overflow-x: scroll;
 	overflow-y: hidden;
 }
 
-table.pivot-fixed thead {
-    display: block;
+table.pivot-sticky-column thead {
+	display: block;
+	width: 100%;
 }
 
-table.pivot-fixed tbody {
+table.pivot-sticky-column tbody {
     display: block;
     overflow-y: auto;
     overflow-x: hidden;
 }
 
-table.pivot-row-sticky {
+table.pivot-sticky-row {
 	position: absolute;
-	left: 0;
-	top: 0;
 }
 
-/* table.pivot-row-fixed tbody {
-	width: 500px;
-	overflow-x: scroll;
-	margin-left: 5em;
-	overflow-y: visible;
-	padding: 0;	
-} */
+table.pivot-sticky-row tr:first-child .pivot-empty:first-child {
+	position: absolute;
+	left: 0px;
+	top: 0px; 
+	height: 100%;
+}
 
- div.sticky-scroller {
+ div.sticky-wrapper {
     margin-left: 240px;
     overflow-x: scroll;
     overflow-y: visible;
     padding-bottom: 5px;
-    width: calc(100% - 240px);
 } 
 
 div.table-wrapper {
