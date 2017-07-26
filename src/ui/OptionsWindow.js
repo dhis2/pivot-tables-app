@@ -42,6 +42,12 @@ OptionsWindow = function(c) {
         checked: true
     });
 
+    var enableTableClipping = Ext.create('Ext.form.field.Checkbox', {
+        boxLabel: i18n.table_clipping,
+        style: 'margin-top:' + separatorTopMargin + 'px; margin-bottom:' + checkboxBottomMargin + 'px',
+        checked: true
+    });
+
     var showDimensionLabels = Ext.create('Ext.form.field.Checkbox', {
         boxLabel: i18n.show_dimension_labels,
         style: 'margin-top:' + separatorTopMargin + 'px; margin-bottom:' + comboBottomMargin + 'px',
@@ -373,6 +379,7 @@ OptionsWindow = function(c) {
             hideEmptyRows,
             stickyColumnDimension,
             stickyRowDimension,
+            enableTableClipping,
             skipRounding,
             aggregationType,
             numberType,
@@ -455,6 +462,7 @@ OptionsWindow = function(c) {
                 showColTotals: showColTotals.getValue(),
                 showColSubTotals: showColSubTotals.getValue(),
                 showRowSubTotals: showRowSubTotals.getValue(),
+                enableTableClipping: enableTableClipping.getValue(),
                 showDimensionLabels: showDimensionLabels.getValue(),
                 hideEmptyColumns: hideEmptyColumns.getValue(),
                 hideEmptyRows: hideEmptyRows.getValue(),
@@ -486,6 +494,7 @@ OptionsWindow = function(c) {
             showColTotals.setValue(isBoolean(layout.showColTotals) ? layout.showColTotals : true);
             showColSubTotals.setValue(isBoolean(layout.showColSubTotals) ? layout.showColSubTotals : true);
             showRowSubTotals.setValue(isBoolean(layout.showRowSubTotals) ? layout.showRowSubTotals : true);
+            enableTableClipping.setValue(isBoolean(layout.enableTableClipping) ? layout.enableTableClipping : true);
             showDimensionLabels.setValue(isBoolean(layout.showDimensionLabels) ? layout.showDimensionLabels : true);
             hideEmptyColumns.setValue(isBoolean(layout.hideEmptyColumns) ? layout.hideEmptyColumns : false);
             hideEmptyRows.setValue(isBoolean(layout.hideEmptyRows) ? layout.hideEmptyRows : false);
@@ -643,6 +652,7 @@ OptionsWindow = function(c) {
                 w.showRowTotals = showRowTotals;
                 w.showColSubTotals = showColSubTotals
                 w.showRowSubTotals = showRowSubTotals;
+                w.enableTableClipping = enableTableClipping;
                 w.showDimensionLabels = showDimensionLabels;
                 w.hideEmptyRows = hideEmptyRows;
                 w.hideEmptyColumns = hideEmptyColumns;

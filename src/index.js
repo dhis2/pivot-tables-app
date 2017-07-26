@@ -130,6 +130,8 @@ function initialize() {
         let sortingId = layout.sorting ? layout.sorting.id : null,
             tableObject;
 
+        // uiManager.setScrollFn('centerRegion', null);
+
         // get table
         let getTable = function() {
             let response = layout.getResponse(),

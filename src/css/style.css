@@ -268,7 +268,6 @@ table.pivot-sticky-row tr:first-child .pivot-empty:first-child {
 }
 
  div.sticky-wrapper {
-    margin-left: 240px;
     overflow-x: scroll;
     overflow-y: visible;
     padding-bottom: 5px;
