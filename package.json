@@ -25,14 +25,14 @@
   },
   "homepage": "https://github.com/dhis2/dhis2-pivot#readme",
   "dependencies": {
-    "d2-analysis": "26.0.6",
+    "d2-analysis": "26.0.9",
     "d2-utilizr": "0.2.11"
   },
   "devDependencies": {
     "babel-core": "^6.3.13",
     "babel-eslint": "5.0.0-beta6",
     "babel-loader": "^6.2.0",
-    "babel-polyfill": "^6.3.14",
+    "babel-plugin-transform-object-assign": "^6.22.0",
     "babel-preset-es2015": "^6.3.13",
     "babel-preset-stage-2": "^6.3.13",
     "css-loader": "0.18.0",
