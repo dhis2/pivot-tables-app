@@ -26,6 +26,9 @@ var refs = {
     table
 };
 
+console.log(refs);
+
+
     // dimension config
 var dimensionConfig = new config.DimensionConfig();
 refs.dimensionConfig = dimensionConfig;
