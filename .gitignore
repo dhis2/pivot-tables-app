@@ -8,3 +8,4 @@ yarn-error.log
 build/
 target/
 .DS_Store
+manifest.webapp

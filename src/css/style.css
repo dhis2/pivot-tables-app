@@ -688,6 +688,21 @@ table.pivot.displaydensity-COMPACT td.pivot-filter {
     background-color: #f6f6f6;
 }
 
+/*----------------------------------------------------------------------------
+ * Panel Tools
+ *--------------------------------------------------------------------------*/
+
+.x-tool-triple-chevron-left {
+	background-image: url('../images/arrowlefttriple.png') !important;
+}
+
+.x-tool-triple-chevron-right {
+	background-image: url('../images/arrowrighttriple.png') !important;
+}
+
+.tool-triple-chevron-right img {
+	width: 20px !important;
+}
 
 /*----------------------------------------------------------------------------
  * PT Toolbar
@@ -1172,6 +1187,10 @@ table.pivot.displaydensity-COMPACT td.pivot-filter {
 .ns-tree.x-tree-panel .x-grid-row .x-grid-cell-inner {
     height: 17px;
     font-size: 10px;
+}
+
+.ns-tree .x-grid-table {
+	width: 100%!important;
 }
 
 	/* Selected row background */
