@@ -724,14 +724,7 @@ babel-register@^6.18.0:
     mkdirp "^0.5.1"
     source-map-support "^0.4.2"
 
-babel-runtime@^6.0.0, babel-runtime@^6.11.6, babel-runtime@^6.18.0, babel-runtime@^6.20.0, babel-runtime@^6.9.0, babel-runtime@^6.9.1:
-  version "6.20.0"
-  resolved "https://registry.yarnpkg.com/babel-runtime/-/babel-runtime-6.20.0.tgz#87300bdcf4cd770f09bf0048c64204e17806d16f"
-  dependencies:
-    core-js "^2.4.0"
-    regenerator-runtime "^0.10.0"
-
-babel-runtime@^6.22.0:
+babel-runtime@^6.0.0, babel-runtime@^6.11.6, babel-runtime@^6.18.0, babel-runtime@^6.20.0, babel-runtime@^6.22.0, babel-runtime@^6.9.0, babel-runtime@^6.9.1:
   version "6.25.0"
   resolved "https://registry.yarnpkg.com/babel-runtime/-/babel-runtime-6.25.0.tgz#33b98eaa5d482bb01a8d1aa6b437ad2b01aec41c"
   dependencies:
@@ -1314,9 +1307,9 @@ currently-unhandled@^0.4.1:
   dependencies:
     array-find-index "^1.0.1"
 
-d2-analysis@v27.0.63:
-  version "27.0.63"
-  resolved "https://registry.yarnpkg.com/d2-analysis/-/d2-analysis-27.0.63.tgz#2c433d4bbcc2e248681c218133077334582f87c4"
+d2-analysis@27.0.64:
+  version "27.0.64"
+  resolved "https://registry.yarnpkg.com/d2-analysis/-/d2-analysis-27.0.64.tgz#26ab4ac09b45c27fab071496ba540b11b8002a1a"
   dependencies:
     d2-utilizr "0.2.13"
     jquery "2.1.4"
