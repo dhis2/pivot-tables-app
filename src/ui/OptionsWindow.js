@@ -196,11 +196,14 @@ OptionsWindow = function(c) {
         valueField: 'id',
         displayField: 'name',
         editable: false,
-        hidden: !(appManager.systemSettings.keyHideUnapprovedDataInAnalytics && appManager.viewUnapprovedData),
+        hidden: !(appManager.systemSettings.keyIgnoreAnalyticsApprovalYearThreshold !== -1 && appManager.viewUnapprovedData),
         value: optionConfig.getDataApprovalLevel('def').id,
         store: Ext.create('Ext.data.Store', {
             fields: ['id', 'name'],
-            data: appManager.dataApprovalLevels.unshift(optionConfig.getDataApprovalLevel('def'))
+            data: [
+                optionConfig.getDataApprovalLevel('def'),
+                ...appManager.dataApprovalLevels
+            ]
         })
     });
 
