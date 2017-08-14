@@ -281,7 +281,7 @@ function initialize() {
         }
     });
 
-    uiManager.update();
+    //uiManager.update();
 }
 
 global.refs = refs;
