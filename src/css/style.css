@@ -257,7 +257,17 @@ table.pivot-sticky-column tbody {
 }
 
 table.pivot-sticky-row {
-	position: absolute;
+	position: sticky;
+	position: -webkit-sticky;
+	align-self: flex-start;
+	display:absolute;
+	left: 0;
+}
+
+table.pivot-sticky-column-2 {
+	position: sticky;
+	top: 0;
+
 }
 
 table.pivot-sticky-row tr:first-child .pivot-empty:first-child {
@@ -456,7 +466,7 @@ table.pivot.displaydensity-COMPACT td.pivot-filter {
     border-color: #dadada;
 }
 .x-panel .x-grid-body {
-    border-style: none;
+	border-style: none;
 }
 
 
