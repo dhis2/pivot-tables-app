@@ -29,6 +29,7 @@ export var Layout = function(refs, c, applyConfig, forceApplyConfig) {
     t.skipRounding = isBoolean(c.skipRounding) ? c.skipRounding : false;
     t.aggregationType = isString(c.aggregationType) ? c.aggregationType : refs.optionConfig.getAggregationType('def').id;
     t.numberType = isString(c.numberType) ? c.numberType : refs.optionConfig.getNumberType('value').id;
+    t.measureCriteria = isString(c.measureCriteria) ? c.measureCriteria : '';
     t.dataApprovalLevel = isObject(c.dataApprovalLevel) && isString(c.dataApprovalLevel.id) ? c.dataApprovalLevel : null;
     t.showHierarchy = isBoolean(c.showHierarchy) ? c.showHierarchy : false;
     t.completedOnly = isBoolean(c.completedOnly) ? c.completedOnly : false;

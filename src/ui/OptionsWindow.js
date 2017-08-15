@@ -117,6 +117,89 @@ OptionsWindow = function(c) {
         })
     });
 
+    const measureCriteriaContainer = Ext.create('Ext.container.Container', {
+        style: 'border:0 none; margin-bottom:' + comboBottomMargin + 'px',
+        width: cmpWidth,
+        layout: {
+            type: 'hbox',
+            align: 'middle',
+        }
+    });
+
+    measureCriteriaContainer.operator1Select = Ext.create('Ext.form.field.ComboBox', {
+        style: 'margin:0',
+        width: 170,
+        fieldLabel: 'Measure criteria',
+        labelWidth: labelWidth,
+        labelSeparator: '',
+        queryMode: 'local',
+        valueField: 'id',
+        displayField: 'name',
+        editable: false,
+        store: {
+            fields: ['id', 'name'],
+            data: [
+                {id: 'EQ', name: '='},
+                {id: 'GT', name: '>'},
+                {id: 'GE', name: '>='},
+                {id: 'LT', name: '<'},
+                {id: 'LE', name: '<='}
+            ]
+        }
+    });
+
+    measureCriteriaContainer.operator2Select = measureCriteriaContainer.operator1Select.cloneConfig({
+        width: 40,
+        fieldLabel: ''
+    });
+
+    measureCriteriaContainer.value1Input = Ext.create('Ext.form.field.Number', {
+        width: 60,
+        style: 'margin:0',
+    });
+
+    measureCriteriaContainer.value2Input = measureCriteriaContainer.value1Input.cloneConfig();
+
+    measureCriteriaContainer.add([
+        measureCriteriaContainer.operator1Select,
+        measureCriteriaContainer.value1Input,
+        {
+            bodyStyle: 'border:0 none',
+            html: '&nbsp;AND&nbsp;',
+        },
+        measureCriteriaContainer.operator2Select,
+        measureCriteriaContainer.value2Input,
+    ]);
+
+    measureCriteriaContainer._getValue = function () {
+        let measureCriteria = [];
+
+        if (this.value1Input.getValue() && this.operator1Select.getValue()) {
+            measureCriteria.push(this.operator1Select.getValue() + ':' + this.value1Input.getValue());
+        }
+
+        if (this.value2Input.getValue() && this.operator2Select.getValue()) {
+            measureCriteria.push(this.operator2Select.getValue() + ':' + this.value2Input.getValue());
+        }
+
+        return measureCriteria.join(';');
+    };
+
+    measureCriteriaContainer._setValue = function (value) {
+        const filters = value.split(';');
+        let i = 1;
+        let op, v;
+
+        filters.forEach(filter => {
+            [op, v] = filter.split(':');
+
+            this[`operator${ i }Select`].setValue(op);
+            this[`value${ i }Input`].setValue(v);
+
+            i++;
+        });
+    };
+
     var dataApprovalLevel = Ext.create('Ext.form.field.ComboBox', {
         cls: 'ns-combo',
         style: 'margin-bottom:' + comboBottomMargin + 'px',
@@ -129,11 +212,14 @@ OptionsWindow = function(c) {
         valueField: 'id',
         displayField: 'name',
         editable: false,
-        hidden: !(appManager.systemSettings.keyHideUnapprovedDataInAnalytics && appManager.viewUnapprovedData),
+        hidden: !(appManager.systemSettings.keyIgnoreAnalyticsApprovalYearThreshold !== -1 && appManager.viewUnapprovedData),
         value: optionConfig.getDataApprovalLevel('def').id,
         store: Ext.create('Ext.data.Store', {
             fields: ['id', 'name'],
-            data: appManager.dataApprovalLevels.unshift(optionConfig.getDataApprovalLevel('def'))
+            data: [
+                optionConfig.getDataApprovalLevel('def'),
+                ...appManager.dataApprovalLevels
+            ]
         })
     });
 
@@ -383,6 +469,7 @@ OptionsWindow = function(c) {
             skipRounding,
             aggregationType,
             numberType,
+            measureCriteriaContainer,
             dataApprovalLevel
         ]
     };
@@ -471,6 +558,7 @@ OptionsWindow = function(c) {
                 skipRounding: skipRounding.getValue(),
                 aggregationType: aggregationType.getValue(),
                 numberType: numberType.getValue(),
+                measureCriteria: measureCriteriaContainer._getValue(),
                 dataApprovalLevel: {id: dataApprovalLevel.getValue()},
                 showHierarchy: showHierarchy.getValue(),
                 completedOnly: completedOnly.getValue(),
@@ -503,6 +591,7 @@ OptionsWindow = function(c) {
             skipRounding.setValue(isBoolean(layout.skipRounding) ? layout.skipRounding : false);
             aggregationType.setValue(isString(layout.aggregationType) ? layout.aggregationType : optionConfig.getAggregationType('def').id);
             numberType.setValue(isString(layout.numberType) ? layout.numberType : optionConfig.getNumberType('value').id);
+            measureCriteriaContainer._setValue(isString(layout.measureCriteria) ? layout.measureCriteria : '');
             dataApprovalLevel.setValue(isObject(layout.dataApprovalLevel) && isString(layout.dataApprovalLevel.id) ? layout.dataApprovalLevel.id : optionConfig.getDataApprovalLevel('def').id);
             showHierarchy.setValue(isBoolean(layout.showHierarchy) ? layout.showHierarchy : false);
             completedOnly.setValue(isBoolean(layout.completedOnly) ? layout.completedOnly : false);
@@ -661,6 +750,7 @@ OptionsWindow = function(c) {
                 w.skipRounding = skipRounding;
                 w.aggregationType = aggregationType;
                 w.numberType = numberType;
+                w.measureCriteriaContainer = measureCriteriaContainer;
                 w.dataApprovalLevel = dataApprovalLevel;
                 w.showHierarchy = showHierarchy;
                 w.completedOnly = completedOnly;
