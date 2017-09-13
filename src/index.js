@@ -182,9 +182,11 @@ function initialize() {
                 // calculate number of rows and columns to render
                 let rowLength = Math.floor(event.target.scrollTop / tableObject.cellHeight),
                     columnLength = Math.floor(event.target.scrollLeft / tableObject.cellWidth);
-    
+
+                let offset = rowLength === 0 ? 0 : 1;
+
                 // only update if row/column has gone off screen
-                if(tableObject.rowStart !== rowLength || tableObject.columnStart !== columnLength) {
+                if (tableObject.rowStart + offset !== rowLength || tableObject.columnStart !== columnLength) {
                     uiManager.update(tableObject.update(columnLength, rowLength));
                     tableManager.setColumnHeaderMouseHandlers(layout, tableObject);
                     tableManager.setValueMouseHandlers(layout, tableObject);
