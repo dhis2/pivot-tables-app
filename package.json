@@ -26,7 +26,7 @@
   "homepage": "https://github.com/dhis2/dhis2-pivot#readme",
   "dependencies": {
     "babel-plugin-transform-object-assign": "^6.22.0",
-    "d2-analysis": "27.0.80",
+    "d2-analysis": "27.0.81",
     "d2-utilizr": "0.2.13"
   },
   "devDependencies": {
