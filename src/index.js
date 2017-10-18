@@ -97,6 +97,7 @@ optionConfig.applyTo([].concat(arrayTo(api), arrayTo(table)));
 appManager.init(() => {
     requestManager.add(new api.Request(refs, init.i18nInit(refs)));
     requestManager.add(new api.Request(refs, init.authViewUnapprovedDataInit(refs)));
+    requestManager.add(new api.Request(refs, init.isAdminInit(refs)));
     requestManager.add(new api.Request(refs, init.rootNodesInit(refs)));
     requestManager.add(new api.Request(refs, init.organisationUnitLevelsInit(refs)));
     requestManager.add(new api.Request(refs, init.legendSetsInit(refs)));
@@ -280,7 +281,7 @@ function initialize() {
         }
     });
 
-    uiManager.update();
+    //uiManager.update();
 }
 
 global.refs = refs;
