@@ -127,20 +127,16 @@ function initialize() {
     // instance manager
     instanceManager.setFn((layout) => {
         let sortingId = layout.sorting ? layout.sorting.id : null,
-            tableObject;
+            pivotTable;
 
         // get table
-        let getTable = function() {
-            let response = layout.getResponse(),
-                dynamic  = false;
-
-            if (getTableSize(response.metaData.dimensions) > 50000) {
-                dynamic = true;
-            }
-
+        let buildPivotTable = function() {
+            let response = layout.getResponse();
+            
             let colAxis = new table.PivotTableAxis(refs, layout, response, 'col'),
                 rowAxis = new table.PivotTableAxis(refs, layout, response, 'row');
-            return new table.PivotTable(refs, layout, response, colAxis, rowAxis, {dynamic});
+                
+            return new table.PivotTable(refs, layout, response, colAxis, rowAxis);
         };
 
         // pre-sort if id
@@ -149,25 +145,25 @@ function initialize() {
         }
 
         // table
-        tableObject = getTable();
+        pivotTable = buildPivotTable();
 
         // sort if total
         if (sortingId && sortingId === 'total') {
-            layout.sort(tableObject);
-            tableObject = getTable();
+            layout.sort(pivotTable);
+            pivotTable = buildPivotTable();
         }
 
-        tableObject.setWindowSize(
+        pivotTable.setViewportSize(
             uiManager.get('centerRegion').getWidth(),
             uiManager.get('centerRegion').getHeight()
         );
 
         // render
-        uiManager.update(tableObject.render());
+        uiManager.update(pivotTable.render());
 
         // events
-        tableManager.setColumnHeaderMouseHandlers(layout, tableObject);
-        tableManager.setValueMouseHandlers(layout, tableObject);
+        tableManager.setColumnHeaderMouseHandlers(layout, pivotTable);
+        tableManager.setValueMouseHandlers(layout, pivotTable);
 
         // mask
         uiManager.unmask();
@@ -175,21 +171,21 @@ function initialize() {
         // statistics
         instanceManager.postDataStatistics();
 
-        if (tableObject.dynamic) {
+        if (pivotTable.doTableClipping()) {
 
             uiManager.setScrollFn('centerRegion', (event) => {
     
                 // calculate number of rows and columns to render
-                let rowLength = Math.floor(event.target.scrollTop / tableObject.cellHeight),
-                    columnLength = Math.floor(event.target.scrollLeft / tableObject.cellWidth);
+                let rowLength = Math.floor(event.target.scrollTop / pivotTable.cellHeight),
+                    columnLength = Math.floor(event.target.scrollLeft / pivotTable.cellWidth);
 
                 let offset = rowLength === 0 ? 0 : 1;
 
                 // only update if row/column has gone off screen
-                if (tableObject.rowStart + offset !== rowLength || tableObject.columnStart !== columnLength) {
-                    uiManager.update(tableObject.update(columnLength, rowLength));
-                    tableManager.setColumnHeaderMouseHandlers(layout, tableObject);
-                    tableManager.setValueMouseHandlers(layout, tableObject);
+                if (pivotTable.rowStart + offset !== rowLength || pivotTable.columnStart !== columnLength) {
+                    uiManager.update(pivotTable.update(columnLength, rowLength));
+                    tableManager.setColumnHeaderMouseHandlers(layout, pivotTable);
+                    tableManager.setValueMouseHandlers(layout, pivotTable);
                 }
             });
 
@@ -239,15 +235,7 @@ function initialize() {
 
         return html;
     }
-
-    const getTableSize = (dimensions) => {
-        return Object.keys(dimensions).reduce((sum, key) => {
-            let size = dimensions[key].length;
-            if (size <= 0 || key === 'co' || key === 'value') size = 1;
-            return sum * size;
-        }, 1);
-    } 
-
+    
     uiManager.setIntroHtml(introHtml());
 
     uiManager.setUpdateIntroHtmlFn(function() {
