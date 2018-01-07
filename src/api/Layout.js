@@ -25,7 +25,6 @@ export var Layout = function(refs, c, applyConfig, forceApplyConfig) {
     t.hideEmptyColumns = isBoolean(c.hideEmptyColumns) ? c.hideEmptyColumns : false;
     t.stickyColumnDimension = isBoolean(c.stickyColumnDimension) ? c.stickyColumnDimension : false;
     t.stickyRowDimension = isBoolean(c.stickyRowDimension) ? c.stickyRowDimension : false;
-    t.enableTableClipping = isBoolean(c.enableTableClipping) ? c.enableTableClipping : false;
     t.skipRounding = isBoolean(c.skipRounding) ? c.skipRounding : false;
     t.aggregationType = isString(c.aggregationType) ? c.aggregationType : refs.optionConfig.getAggregationType('def').id;
     t.numberType = isString(c.numberType) ? c.numberType : refs.optionConfig.getNumberType('value').id;

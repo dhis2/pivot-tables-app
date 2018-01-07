@@ -153,6 +153,29 @@ function initialize() {
             pivotTable = buildPivotTable();
         }
 
+        if (pivotTable.doRender()) {
+            uiManager.confirmCustom(
+                `Table too large`,
+                `The table you are about to render consists of ${pivotTable.rowAxis.size} rows and ${pivotTable.colAxis.size} columns, are you sure you want to render this?`,
+                `Confirm`,
+                () => renderTable(pivotTable, layout),
+                null,
+                () => renderIntro()
+            );
+        } else {
+            renderTable(pivotTable, layout)
+        }
+    });
+
+    function renderIntro() {
+        uiManager.update()
+        uiManager.unmask();
+    }
+
+    function renderTable(pivotTable, layout) {
+
+        pivotTable.initialize();
+
         pivotTable.setViewportSize(
             uiManager.get('centerRegion').getWidth(),
             uiManager.get('centerRegion').getHeight()
@@ -171,7 +194,7 @@ function initialize() {
         // statistics
         instanceManager.postDataStatistics();
 
-        if (pivotTable.doTableClipping()) {
+        if (pivotTable.doDynamicRendering()) {
 
             uiManager.setScrollFn('centerRegion', (event) => {
     
@@ -195,14 +218,17 @@ function initialize() {
             //     currentTable.setWindowHeight(uiManager.get('centerRegion').getHeight());
             //     uiManager.update(currentTable.render())
             // });
+        } else {
+            console.log("im removed");
+            uiManager.removeScrollFn('centerRegion');
         }
 
         uiManager.scrollTo("centerRegion", 0, 0);
-    });
+    }
+    
 
     // ui manager
     uiManager.disableRightClick();
-
     uiManager.enableConfirmUnload();
 
     // intro
@@ -316,7 +342,7 @@ function initialize() {
         }
     });
 
-    //uiManager.update();e
+    //uiManager.update();
 }
 
 global.refs = refs;
