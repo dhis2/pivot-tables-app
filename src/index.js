@@ -213,14 +213,24 @@ function initialize() {
             });
 
             //TODO: Enable this to get on resize event
-            // uiManager.setOnResizeFn('centerRegion', (e) => {
-            //     currentTable.setWindowWidth(uiManager.get('centerRegion').getWidth());
-            //     currentTable.setWindowHeight(uiManager.get('centerRegion').getHeight());
-            //     uiManager.update(currentTable.render())
-            // });
+            uiManager.setOnResizeFn('centerRegion', e => {
+
+                let rowLength = Math.floor(uiManager.get('centerRegion').getHeight() / pivotTable.cellHeight),
+                    columnLength = Math.floor(uiManager.get('centerRegion').getWidth() / pivotTable.cellWidth);
+
+                let offset = rowLength === 0 ? 0 : 1;
+                
+                if (pivotTable.rowEnd - pivotTable.rowStart !== rowLength + offset|| pivotTable.columnEnd - pivotTable.columnStart !== columnLength + offset) {
+                    pivotTable.setViewportWidth(uiManager.get('centerRegion').getWidth());
+                    pivotTable.setViewportHeight(uiManager.get('centerRegion').getHeight());    
+                    uiManager.update(pivotTable.update(pivotTable.columnStart, pivotTable.rowStart));
+                    tableManager.setColumnHeaderMouseHandlers(layout, pivotTable);
+                    tableManager.setValueMouseHandlers(layout, pivotTable);
+                }
+            });
         } else {
-            console.log("im removed");
             uiManager.removeScrollFn('centerRegion');
+            uiManager.removeResizeFn('centerRegion');
         }
 
         uiManager.scrollTo("centerRegion", 0, 0);
