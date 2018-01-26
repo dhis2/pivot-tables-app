@@ -154,12 +154,10 @@ function initialize() {
         }
 
         if (pivotTable.doRender()) {
-            uiManager.confirmCustom(
-                `Table too large`,
-                `The table you are about to render consists of ${pivotTable.rowAxis.size} rows and ${pivotTable.colAxis.size} columns, are you sure you want to render this?`,
-                `Confirm`,
+            uiManager.confirmRender(
+                `Table size warning`,
+                // `The table you are about to render consists of ${pivotTable.rowAxis.size} rows and ${pivotTable.colAxis.size} columns, are you sure you want to render this?`,
                 () => renderTable(pivotTable, layout),
-                null,
                 () => renderIntro()
             );
         } else {
@@ -196,13 +194,14 @@ function initialize() {
 
         if (pivotTable.doDynamicRendering()) {
 
-            uiManager.setScrollFn('centerRegion', (event) => {
+            uiManager.setScrollFn('centerRegion', event => {
     
                 // calculate number of rows and columns to render
                 let rowLength = Math.floor(event.target.scrollTop / pivotTable.cellHeight),
                     columnLength = Math.floor(event.target.scrollLeft / pivotTable.cellWidth);
 
-                let offset = rowLength === 0 ? 0 : 1;
+                let offset = rowLength === 0 ? 
+                    0 : 1;
 
                 // only update if row/column has gone off screen
                 if (pivotTable.rowStart + offset !== rowLength || pivotTable.columnStart !== columnLength) {
@@ -212,21 +211,21 @@ function initialize() {
                 }
             });
 
-            // uiManager.setOnResizeFn('centerRegion', e => {
+            uiManager.setOnResizeFn('centerRegion', event => {
 
-            //     let rowLength = Math.floor(uiManager.get('centerRegion').getHeight() / pivotTable.cellHeight),
-            //         columnLength = Math.floor(uiManager.get('centerRegion').getWidth() / pivotTable.cellWidth);
+                let rowLength = Math.floor(uiManager.get('centerRegion').getHeight() / pivotTable.cellHeight),
+                    columnLength = Math.floor(uiManager.get('centerRegion').getWidth() / pivotTable.cellWidth);
 
-            //     let offset = rowLength === 0 ? 0 : 1;
+                let offset = rowLength === 0 ? 0 : 1;
                 
-            //     if (pivotTable.rowEnd - pivotTable.rowStart !== rowLength + offset|| pivotTable.columnEnd - pivotTable.columnStart !== columnLength + offset) {
-            //         pivotTable.setViewportWidth(uiManager.get('centerRegion').getWidth());
-            //         pivotTable.setViewportHeight(uiManager.get('centerRegion').getHeight());    
-            //         uiManager.update(pivotTable.update(pivotTable.columnStart, pivotTable.rowStart));
-            //         tableManager.setColumnHeaderMouseHandlers(layout, pivotTable);
-            //         tableManager.setValueMouseHandlers(layout, pivotTable);
-            //     }
-            // });
+                if (pivotTable.rowEnd - pivotTable.rowStart !== rowLength + offset|| pivotTable.columnEnd - pivotTable.columnStart !== columnLength + offset) {
+                    pivotTable.setViewportWidth(uiManager.get('centerRegion').getWidth());
+                    pivotTable.setViewportHeight(uiManager.get('centerRegion').getHeight());    
+                    uiManager.update(pivotTable.update(pivotTable.columnStart, pivotTable.rowStart));
+                    tableManager.setColumnHeaderMouseHandlers(layout, pivotTable);
+                    tableManager.setValueMouseHandlers(layout, pivotTable);
+                }
+            });
         } else {
             uiManager.removeScrollFn('centerRegion');
             uiManager.removeResizeFn('centerRegion');
