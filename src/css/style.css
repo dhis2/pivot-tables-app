@@ -1419,6 +1419,7 @@ table.pivot.displaydensity-COMPACT td.pivot-filter {
 }
 .mentions .mentionsTitle{
 	font-weight: bold;
+	width: 300px;
 }
 
 .mentions table{
