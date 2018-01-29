@@ -149,4 +149,4 @@ function render(plugin, layout) {
     }
 };
 
-global.reportTablePlugin = new util.Plugin({ refs, inits, renderFn: render });
+global.reportTablePlugin = new util.Plugin({ refs, inits, renderFn: render, type: 'REPORT_TABLE' });
