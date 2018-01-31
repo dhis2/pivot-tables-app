@@ -1395,11 +1395,12 @@ table.pivot.displaydensity-COMPACT td.pivot-filter {
 .mentions {
 	background-color: white;
 	padding: 2px;
-	max-height: 300px;
+	max-height: 220px;
+	box-shadow: rgb(136, 136, 136) -1px -1px 4px 0px;
 }
 
 .mentions > div {
-	max-height: 300px;
+	max-height: 220px;
 }
 .mentions, .mentions div {
 	border: none;
