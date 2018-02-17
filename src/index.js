@@ -156,7 +156,6 @@ function initialize() {
         if (pivotTable.doRender()) {
             uiManager.confirmRender(
                 `Table size warning`,
-                // `The table you are about to render consists of ${pivotTable.rowAxis.size} rows and ${pivotTable.colAxis.size} columns, are you sure you want to render this?`,
                 () => renderTable(pivotTable, layout),
                 () => renderIntro()
             );
