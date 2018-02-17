@@ -125,15 +125,17 @@ function initialize() {
     appManager.appName = i18n.pivot_tables || 'Pivot Tables';
 
     // instance manager
-    instanceManager.setFn(function(layout) {
-        var sortingId = layout.sorting ? layout.sorting.id : null,
-            tableObject;
+    instanceManager.setFn((layout) => {
+        let sortingId = layout.sorting ? layout.sorting.id : null,
+            pivotTable;
 
         // get table
-        var getTable = function() {
-            var response = layout.getResponse();
-            var colAxis = new table.PivotTableAxis(refs, layout, response, 'col');
-            var rowAxis = new table.PivotTableAxis(refs, layout, response, 'row');
+        let buildPivotTable = function() {
+            let response = layout.getResponse();
+            
+            let colAxis = new table.PivotTableAxis(refs, layout, response, 'col'),
+                rowAxis = new table.PivotTableAxis(refs, layout, response, 'row');
+                
             return new table.PivotTable(refs, layout, response, colAxis, rowAxis);
         };
 
@@ -143,31 +145,97 @@ function initialize() {
         }
 
         // table
-        tableObject = getTable();
+        pivotTable = buildPivotTable();
 
         // sort if total
         if (sortingId && sortingId === 'total') {
-            layout.sort(tableObject);
-            tableObject = getTable();
+            layout.sort(pivotTable);
+            pivotTable = buildPivotTable();
         }
 
+        if (pivotTable.doRender()) {
+            uiManager.confirmRender(
+                `Table size warning`,
+                () => renderTable(pivotTable, layout),
+                () => renderIntro()
+            );
+        } else {
+            renderTable(pivotTable, layout)
+        }
+    });
+
+    function renderIntro() {
+        uiManager.update()
+        uiManager.unmask();
+    }
+
+    function renderTable(pivotTable, layout) {
+
+        pivotTable.initialize();
+
+        pivotTable.setViewportSize(
+            uiManager.get('centerRegion').getWidth(),
+            uiManager.get('centerRegion').getHeight()
+        );
+
         // render
-        uiManager.update(tableObject.html);
+        uiManager.update(pivotTable.render());
 
         // events
-        tableManager.setColumnHeaderMouseHandlers(layout, tableObject);
-        tableManager.setValueMouseHandlers(layout, tableObject);
+        tableManager.setColumnHeaderMouseHandlers(layout, pivotTable);
+        tableManager.setValueMouseHandlers(layout, pivotTable);
 
         // mask
         uiManager.unmask();
 
         // statistics
         instanceManager.postDataStatistics();
-    });
+
+        if (pivotTable.doDynamicRendering()) {
+
+            uiManager.setScrollFn('centerRegion', event => {
+    
+                // calculate number of rows and columns to render
+                let rowLength = Math.floor(event.target.scrollTop / pivotTable.cellHeight),
+                    columnLength = Math.floor(event.target.scrollLeft / pivotTable.cellWidth);
+
+                let offset = rowLength === 0 ? 
+                    0 : 1;
+
+                // only update if row/column has gone off screen
+                if (pivotTable.rowStart + offset !== rowLength || pivotTable.columnStart !== columnLength) {
+                    uiManager.update(pivotTable.update(columnLength, rowLength));
+                    tableManager.setColumnHeaderMouseHandlers(layout, pivotTable);
+                    tableManager.setValueMouseHandlers(layout, pivotTable);
+                }
+            });
+
+            uiManager.setOnResizeFn('centerRegion', event => {
+
+                let rowLength = Math.floor(uiManager.get('centerRegion').getHeight() / pivotTable.cellHeight),
+                    columnLength = Math.floor(uiManager.get('centerRegion').getWidth() / pivotTable.cellWidth);
+
+                let offset = rowLength === 0 ? 0 : 1;
+                
+                if (pivotTable.rowEnd - pivotTable.rowStart !== rowLength + offset|| pivotTable.columnEnd - pivotTable.columnStart !== columnLength + offset) {
+                    pivotTable.setViewportWidth(uiManager.get('centerRegion').getWidth());
+                    pivotTable.setViewportHeight(uiManager.get('centerRegion').getHeight());    
+                    uiManager.update(pivotTable.update(pivotTable.columnStart, pivotTable.rowStart));
+                    tableManager.setColumnHeaderMouseHandlers(layout, pivotTable);
+                    tableManager.setValueMouseHandlers(layout, pivotTable);
+                }
+            });
+        } else {
+            uiManager.removeScrollFn('centerRegion');
+            uiManager.removeResizeFn('centerRegion');
+        }
+
+        uiManager.scrollTo("centerRegion", 0, 0);
+    }
+    
 
     // ui manager
     uiManager.disableRightClick();
-
     uiManager.enableConfirmUnload();
 
     // intro
@@ -200,7 +268,7 @@ function initialize() {
 
         return html;
     }
-
+    
     uiManager.setIntroHtml(introHtml());
 
     uiManager.setUpdateIntroHtmlFn(function() {
