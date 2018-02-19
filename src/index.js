@@ -178,6 +178,8 @@ function initialize() {
             uiManager.get('centerRegion').getHeight()
         );
 
+        pivotTable.build();
+
         // render
         uiManager.update(pivotTable.render());
 

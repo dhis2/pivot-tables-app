@@ -97,7 +97,7 @@ function render(plugin, layout) {
     instanceManager.setFn(function(_layout) {
         var sortingId = _layout.sorting ? _layout.sorting.id : null,
             html = '',
-            tableObject;
+            pivotTable;
 
         // get table
         var getTable = function() {
@@ -113,21 +113,26 @@ function render(plugin, layout) {
         }
 
         // table
-        tableObject = getTable();
+        pivotTable = getTable();
 
         // sort if total
         if (sortingId && sortingId === 'total') {
-            _layout.sort(tableObject);
-            tableObject = getTable();
+            _layout.sort(pivotTable);
+            pivotTable = getTable();
         }
 
-        html += reportTablePlugin.showTitles ? uiManager.getTitleHtml(_layout.title || _layout.name) : '';
-        html += tableObject.html;
+        pivotTable.initialize();
+        pivotTable.build();
+
+        html += reportTablePlugin.showTitles ? 
+            uiManager.getTitleHtml(_layout.title || _layout.name) : '';
+            
+        html += pivotTable.render();
 
         uiManager.update(html, _layout.el);
 
         // events
-        tableManager.setColumnHeaderMouseHandlers(_layout, tableObject);
+        tableManager.setColumnHeaderMouseHandlers(_layout, pivotTable);
 
         // mask
         uiManager.unmask();
