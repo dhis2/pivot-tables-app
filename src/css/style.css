@@ -39,15 +39,6 @@
  * General
  *--------------------------------------------------------------------------*/
 
-body {
-	-webkit-touch-callout: none;
-	-webkit-user-select: none;
-	-khtml-user-select: none;
-	-moz-user-select: none;
-	-ms-user-select: none;
-	user-select: none;
-}
-
 body,
 .x-body,
 .x-btn-default-toolbar-small .x-btn-inner,
@@ -64,6 +55,10 @@ table.pivot,
 table.pivot td {
 	font-family: 'Helvetica Neue','Helvetica','Arial','sans-serif' !important;
 }
+
+/* table.pivot td:first-child {
+	position: fixed;
+} */
 
 #init {
     display: table;
@@ -231,6 +226,59 @@ table.pivot {
 	border: 0 none;
 }
 
+table.pivot tr {
+	height: 100%;
+}
+
+table.pivot-sticky-column {
+	height: 100%;
+	overflow-x: scroll;
+	overflow-y: hidden;
+}
+
+table.pivot-sticky-column thead {
+	display: block;
+	width: 100%;
+}
+
+table.pivot-sticky-column tbody {
+    display: block;
+    overflow-y: auto;
+    overflow-x: hidden;
+}
+
+table.pivot-sticky-row {
+	position: sticky;
+	position: -webkit-sticky;
+	align-self: flex-start;
+	display:absolute;
+	left: 0;
+}
+
+table.pivot-sticky-column-2 {
+	position: sticky;
+	top: 0;
+
+}
+
+table.pivot-sticky-row tr:first-child .pivot-empty:first-child {
+	position: absolute;
+	left: 0px;
+	top: 0px; 
+	height: 100%;
+}
+
+ div.sticky-wrapper {
+    overflow-x: scroll;
+    overflow-y: visible;
+    padding-bottom: 5px;
+} 
+
+div.table-wrapper {
+	width: 100%;
+	height: 100%;
+}
+
 table.pivot.displaydensity-COMFORTABLE td {
 	padding-top: 7px !important;
 	padding-right: 7px;
@@ -315,6 +363,9 @@ table.pivot.displaydensity-COMPACT td.pivot-filter {
 	background-color: #fff;
     border-bottom-color: #fff !important;
     border-left-color: #fff !important;
+}
+.pivot-padding {
+	border: none !important;
 }
 
 .pivot-value {
@@ -406,7 +457,7 @@ table.pivot.displaydensity-COMPACT td.pivot-filter {
     border-color: #dadada;
 }
 .x-panel .x-grid-body {
-    border-style: none;
+	border-style: none;
 }
 
 
@@ -679,6 +730,14 @@ table.pivot.displaydensity-COMPACT td.pivot-filter {
 }
 .x-menu-body {
 	padding: 0;
+}
+.x-box-inner {
+	-webkit-touch-callout: none;
+	-webkit-user-select: none;
+	-khtml-user-select: none;
+	-moz-user-select: none;
+	-ms-user-select: none;
+	user-select: none;
 }
 .x-menu-body .x-box-inner {
 	background-color: #fafafa;
