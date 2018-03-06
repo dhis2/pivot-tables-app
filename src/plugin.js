@@ -104,7 +104,7 @@ function render(plugin, layout) {
             var response = _layout.getResponse();
             var colAxis = new table.PivotTableAxis(instanceRefs, _layout, response, 'col');
             var rowAxis = new table.PivotTableAxis(instanceRefs, _layout, response, 'row');
-            return new table.PivotTable(instanceRefs, _layout, response, colAxis, rowAxis, {skipTitle: true});
+            return new table.PivotTable(instanceRefs, _layout, response, colAxis, rowAxis);
         };
 
         // pre-sort if id
