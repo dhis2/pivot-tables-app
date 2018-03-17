@@ -1,3 +1,4 @@
+import FileSaver from 'file-saver';
 export var DownloadButtonItems;
 
 DownloadButtonItems = function(refs, layout) {
@@ -15,6 +16,17 @@ DownloadButtonItems = function(refs, layout) {
             iconCls: 'ns-menu-item-tablelayout',
             handler: function() {
                 uiManager.openTableLayoutTab(layout, 'xls');
+            }
+        },
+        {
+            text: 'Microsoft Excel (HTML based)',
+            iconCls: 'ns-menu-item-tablelayout',
+            handler: function() {
+                var blob = new Blob([Ext.query('.pivot')[0].outerHTML], {
+                    type: "application/vnd.openxmlformats-officedocument.\
+                        spreadsheetml.sheet;charset=utf-8"
+                });
+                FileSaver.saveAs(blob, "Report.xls");
             }
         },
         {
