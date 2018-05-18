@@ -126,6 +126,24 @@ function initialize() {
 
     // instance manager
     instanceManager.setFn((layout) => {
+        if (layout.getResponse().getSize(layout) > 100000) {
+            uiManager.confirmRender(
+                `Table size warning`,
+                () => renderTable(layout),
+                () => renderIntro()
+            );
+        } else {
+            renderTable(layout)
+        }
+    });
+
+    function renderIntro() {
+        uiManager.update()
+        uiManager.unmask();
+    }
+
+    function renderTable(layout) {
+
         let sortingId = layout.sorting ? layout.sorting.id : null,
             pivotTable;
 
@@ -152,24 +170,6 @@ function initialize() {
             layout.sort(pivotTable);
             pivotTable = buildPivotTable();
         }
-
-        if (pivotTable.doRender()) {
-            uiManager.confirmRender(
-                `Table size warning`,
-                () => renderTable(pivotTable, layout),
-                () => renderIntro()
-            );
-        } else {
-            renderTable(pivotTable, layout)
-        }
-    });
-
-    function renderIntro() {
-        uiManager.update()
-        uiManager.unmask();
-    }
-
-    function renderTable(pivotTable, layout) {
 
         pivotTable.initialize();
 
