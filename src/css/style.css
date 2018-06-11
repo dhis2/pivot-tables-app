@@ -264,7 +264,7 @@ table.pivot-sticky-column-2 {
 table.pivot-sticky-row tr:first-child .pivot-empty:first-child {
 	position: absolute;
 	left: 0px;
-	top: 0px; 
+	top: 0px;
 	height: 100%;
 }
 
@@ -272,7 +272,7 @@ table.pivot-sticky-row tr:first-child .pivot-empty:first-child {
     overflow-x: scroll;
     overflow-y: visible;
     padding-bottom: 5px;
-} 
+}
 
 div.table-wrapper {
 	width: 100%;
@@ -1527,10 +1527,14 @@ a.cke_button_off.active {
 
 .eastPanel .favorite-enabled {
     background-image: url(../images/favorite-enabled.png);
+	background-repeat: no-repeat;
+	background-position: 2px 2px;
 }
 
 .eastPanel .favorite-disabled {
-    background-image: url(../images/favorite-disabled.png);
+	background-image: url(../images/favorite-disabled.png);
+	background-repeat: no-repeat;
+	background-position: 2px 2px;
 }
 
 /* Subscriptions */
@@ -1554,10 +1558,14 @@ a.cke_button_off.active {
 
 .eastPanel .subscriber-enabled {
     background-image: url(../images/subscriber-enabled.png);
+	background-repeat: no-repeat;
+	background-position: 2px 2px;
 }
 
 .eastPanel .subscriber-disabled {
     background-image: url(../images/subscriber-disabled.png);
+	background-repeat: no-repeat;
+	background-position: 2px 2px;
 }
 
 /* Mentions */
