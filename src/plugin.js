@@ -68,16 +68,9 @@ appManager.applyTo([].concat(arrayTo(api), arrayTo(table)));
 dimensionConfig.applyTo(arrayTo(table));
 optionConfig.applyTo([].concat(arrayTo(api), arrayTo(table)));
 
-const isTargetDiv = elId => !!document.getElementById(elId);
-
-const logNoTargetDiv = (id, name) => {
-    console.log(`Pivot table suspended (${id}, ${name})`);
-};
-
 // plugin
 function render(plugin, layout) {
-    if (!isTargetDiv(layout.el)) {
-        logNoTargetDiv(layout.id, layout.name || layout.displayName);
+    if (!util.dom.validateTargetDiv(layout.el)) {
         return;
     }
 
@@ -106,8 +99,7 @@ function render(plugin, layout) {
     uiManager.setInstanceManager(instanceManager);
 
     instanceManager.setFn(function(_layout) {
-        if (!isTargetDiv(_layout.el)) {
-            logNoTargetDiv(_layout.id, _layout.name || _layout.displayName);
+        if (!util.dom.validateTargetDiv(_layout.el)) {
             return;
         }
 
@@ -161,6 +153,10 @@ function render(plugin, layout) {
     if (layout.id) {
         instanceManager.getById(layout.id, function(_layout) {
             _layout = new api.Layout(instanceRefs, objectApplyIf(layout, _layout));
+
+            if (!util.dom.validateTargetDiv(_layout.el)) {
+                return;
+            }
 
             instanceManager.getReport(_layout);
         });
