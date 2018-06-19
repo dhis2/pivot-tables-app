@@ -70,6 +70,10 @@ optionConfig.applyTo([].concat(arrayTo(api), arrayTo(table)));
 
 // plugin
 function render(plugin, layout) {
+    if (!util.dom.validateTargetDiv(layout.el)) {
+        return;
+    }
+
     var instanceRefs = Object.assign({}, refs);
 
     // ui manager
@@ -95,6 +99,10 @@ function render(plugin, layout) {
     uiManager.setInstanceManager(instanceManager);
 
     instanceManager.setFn(function(_layout) {
+        if (!util.dom.validateTargetDiv(_layout.el)) {
+            return;
+        }
+
         var sortingId = _layout.sorting ? _layout.sorting.id : null,
             html = '',
             pivotTable;
@@ -124,9 +132,9 @@ function render(plugin, layout) {
         pivotTable.initialize();
         pivotTable.build();
 
-        html += reportTablePlugin.showTitles ? 
+        html += reportTablePlugin.showTitles ?
             uiManager.getTitleHtml(_layout.title || _layout.name) : '';
-            
+
         html += pivotTable.render();
 
         uiManager.update(html, _layout.el);
@@ -145,6 +153,10 @@ function render(plugin, layout) {
     if (layout.id) {
         instanceManager.getById(layout.id, function(_layout) {
             _layout = new api.Layout(instanceRefs, objectApplyIf(layout, _layout));
+
+            if (!util.dom.validateTargetDiv(_layout.el)) {
+                return;
+            }
 
             instanceManager.getReport(_layout);
         });
