@@ -21,25 +21,25 @@ OptionsWindow = function(c) {
     var showColTotals = Ext.create('Ext.form.field.Checkbox', {
         boxLabel: i18n.show_col_totals,
         style: 'margin-bottom:' + checkboxBottomMargin + 'px',
-        checked: true
+        checked: false
     });
 
     var showRowTotals = Ext.create('Ext.form.field.Checkbox', {
         boxLabel: i18n.show_row_totals,
         style: 'margin-bottom:' + checkboxBottomMargin + 'px',
-        checked: true
+        checked: false
     });
 
     var showColSubTotals = Ext.create('Ext.form.field.Checkbox', {
         boxLabel: i18n.show_col_subtotals,
         style: 'margin-top:' + separatorTopMargin + 'px; margin-bottom:' + checkboxBottomMargin + 'px',
-        checked: true
+        checked: false
     });
 
     var showRowSubTotals = Ext.create('Ext.form.field.Checkbox', {
         boxLabel: i18n.show_row_subtotals,
         style: 'margin-bottom:' + checkboxBottomMargin + 'px',
-        checked: true
+        checked: false
     });
 
     var showDimensionLabels = Ext.create('Ext.form.field.Checkbox', {
@@ -471,10 +471,10 @@ OptionsWindow = function(c) {
         setOptions: function(layout) {
             layout = layout || {};
 
-            showRowTotals.setValue(isBoolean(layout.showRowTotals) ? layout.showRowTotals : true);
-            showColTotals.setValue(isBoolean(layout.showColTotals) ? layout.showColTotals : true);
-            showColSubTotals.setValue(isBoolean(layout.showColSubTotals) ? layout.showColSubTotals : true);
-            showRowSubTotals.setValue(isBoolean(layout.showRowSubTotals) ? layout.showRowSubTotals : true);
+            showRowTotals.setValue(isBoolean(layout.showRowTotals) ? layout.showRowTotals : false);
+            showColTotals.setValue(isBoolean(layout.showColTotals) ? layout.showColTotals : false);
+            showColSubTotals.setValue(isBoolean(layout.showColSubTotals) ? layout.showColSubTotals : false);
+            showRowSubTotals.setValue(isBoolean(layout.showRowSubTotals) ? layout.showRowSubTotals : false);
             showDimensionLabels.setValue(isBoolean(layout.showDimensionLabels) ? layout.showDimensionLabels : true);
             hideEmptyRows.setValue(isBoolean(layout.hideEmptyRows) ? layout.hideEmptyRows : false);
             hideEmptyColumns.setValue(isBoolean(layout.hideEmptyColumns) ? layout.hideEmptyColumns : false);
