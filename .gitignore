@@ -4,6 +4,7 @@ lib/
 npm-debug.log
 yarn-error.log
 .idea
+.vscode
 *.gzip
 build/
 target/
