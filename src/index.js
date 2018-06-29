@@ -7,7 +7,6 @@ import arrayFrom from 'd2-utilizr/lib/arrayFrom';
 import arrayTo from 'd2-utilizr/lib/arrayTo';
 
 import { api, table, manager, config, ui, init, override } from 'd2-analysis';
-import { CKEditor } from 'd2-analysis/lib/ux/CKEditor';
 
 import { Layout } from './api/Layout';
 
@@ -48,9 +47,6 @@ var appManager = new manager.AppManager(refs);
 appManager.sessionName = 'table';
 appManager.apiVersion = 29;
 refs.appManager = appManager;
-
-    // CKEditor
-CKEditor(refs);
 
     // calendar manager
 var calendarManager = new manager.CalendarManager(refs);
