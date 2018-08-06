@@ -193,13 +193,13 @@ function initialize() {
         // statistics
         instanceManager.postDataStatistics();
 
-        if (pivotTable.doDynamicRendering()) {
+        if (pivotTable.doClipping()) {
 
             uiManager.setScrollFn('centerRegion', event => {
     
                 // calculate number of rows and columns to render
-                let rowLength = Math.floor(event.target.scrollTop / pivotTable.cellHeight),
-                    columnLength = Math.floor(event.target.scrollLeft / pivotTable.cellWidth);
+                let rowLength = Math.floor(event.target.scrollTop / pivotTable.options.cellHeight),
+                    columnLength = Math.floor(event.target.scrollLeft / pivotTable.options.cellWidth);
 
                 let offset = rowLength === 0 ? 
                     0 : 1;
@@ -214,8 +214,8 @@ function initialize() {
 
             uiManager.setOnResizeFn('centerRegion', event => {
 
-                let rowLength = Math.floor(uiManager.get('centerRegion').getHeight() / pivotTable.cellHeight),
-                    columnLength = Math.floor(uiManager.get('centerRegion').getWidth() / pivotTable.cellWidth);
+                let rowLength = Math.floor(uiManager.get('centerRegion').getHeight() / pivotTableoptions.cellHeight),
+                    columnLength = Math.floor(uiManager.get('centerRegion').getWidth() / pivotTable.options.cellWidth);
 
                 let offset = rowLength === 0 ? 0 : 1;
                 
