@@ -3,7 +3,6 @@ import './css/style.css';
 import './css/meringue.css';
 import 'd2-analysis/css/ui/GridHeaders.css';
 
-import arrayFrom from 'd2-utilizr/lib/arrayFrom';
 import arrayTo from 'd2-utilizr/lib/arrayTo';
 
 import { api, table, manager, config, ui, init, override, constants } from 'd2-analysis';
@@ -150,11 +149,7 @@ function initialize() {
         // get table
         let buildPivotTable = function() {
             let response = layout.getResponse();
-            
-            let colAxis = new table.PivotTableAxis(refs, layout, response, constants.PivotTableConstants.COLUMN_AXIS),
-                rowAxis = new table.PivotTableAxis(refs, layout, response, constants.PivotTableConstants.ROW_AXIS);
-                
-            return new table.PivotTable(refs, layout, response, colAxis, rowAxis);
+            return new table.PivotTable(refs, layout, response);
         };
 
         // pre-sort if id
