@@ -110,9 +110,7 @@ function render(plugin, layout) {
         // get table
         var getTable = function() {
             var response = _layout.getResponse();
-            var colAxis = new table.PivotTableAxis(instanceRefs, _layout, response, 'col');
-            var rowAxis = new table.PivotTableAxis(instanceRefs, _layout, response, 'row');
-            return new table.PivotTable(instanceRefs, _layout, response, colAxis, rowAxis);
+            return new table.PivotTable(instanceRefs, _layout, response);
         };
 
         // pre-sort if id
