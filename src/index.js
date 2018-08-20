@@ -143,13 +143,20 @@ function initialize() {
 
     function renderTable(layout) {
 
-        let sortingId = layout.sorting ? layout.sorting.id : null,
-            pivotTable;
+        let sortingId = layout.sorting ? layout.sorting.id : null;
+        let pivotTable;
 
         // get table
-        let buildPivotTable = function() {
+        let getPivotTable = function() {
             let response = layout.getResponse();
-            return new table.PivotTable(refs, layout, response);
+            let _table = new table.PivotTable(refs, layout, response);
+
+            _table.setViewportSize(
+                uiManager.get('centerRegion').getWidth(),
+                uiManager.get('centerRegion').getHeight()
+            );
+
+            return _table;
         };
 
         // pre-sort if id
@@ -158,22 +165,16 @@ function initialize() {
         }
 
         // table
-        pivotTable = buildPivotTable();
+        pivotTable = getPivotTable();
+        pivotTable.build();
 
         // sort if total
         if (sortingId && sortingId === 'total') {
             layout.sort(pivotTable);
-            pivotTable = buildPivotTable();
+            pivotTable = getPivotTable();
+            pivotTable.build();
         }
-
-        pivotTable.initialize();
-
-        pivotTable.setViewportSize(
-            uiManager.get('centerRegion').getWidth(),
-            uiManager.get('centerRegion').getHeight()
-        );
-
-        pivotTable.build();
+        
 
         // render
         uiManager.update(pivotTable.render());
