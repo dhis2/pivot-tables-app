@@ -122,15 +122,16 @@ function render(plugin, layout) {
 
         // table
         pivotTable = getTable();
+        pivotTable.initialize();
+        pivotTable.build();
 
         // sort if total
         if (sortingId && sortingId === 'total') {
             _layout.sort(pivotTable);
             pivotTable = getTable();
+            pivotTable.initialize();
+            pivotTable.build();
         }
-
-        pivotTable.initialize();
-        pivotTable.build();
 
         html += reportTablePlugin.showTitles ?
             uiManager.getTitleHtml(_layout.title || _layout.name) : '';

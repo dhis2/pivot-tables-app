@@ -151,10 +151,17 @@ function initialize() {
         let buildPivotTable = function() {
             let response = layout.getResponse();
             
-            let colAxis = new table.PivotTableAxis(refs, layout, response, 'col'),
-                rowAxis = new table.PivotTableAxis(refs, layout, response, 'row');
-                
-            return new table.PivotTable(refs, layout, response, colAxis, rowAxis);
+            let colAxis = new table.PivotTableAxis(refs, layout, response, 'col');
+            let rowAxis = new table.PivotTableAxis(refs, layout, response, 'row');
+
+            let _pivotTable = new table.PivotTable(refs, layout, response, colAxis, rowAxis);
+
+            _pivotTable.setViewportSize(
+                uiManager.get('centerRegion').getWidth(),
+                uiManager.get('centerRegion').getHeight()
+            );
+            
+            return _pivotTable;            
         };
 
         // pre-sort if id
@@ -164,21 +171,16 @@ function initialize() {
 
         // table
         pivotTable = buildPivotTable();
+        pivotTable.initialize();
+        pivotTable.build();
 
         // sort if total
         if (sortingId && sortingId === 'total') {
             layout.sort(pivotTable);
             pivotTable = buildPivotTable();
+            pivotTable.initialize();
+            pivotTable.build();
         }
-
-        pivotTable.initialize();
-
-        pivotTable.setViewportSize(
-            uiManager.get('centerRegion').getWidth(),
-            uiManager.get('centerRegion').getHeight()
-        );
-
-        pivotTable.build();
 
         // render
         uiManager.update(pivotTable.render());
