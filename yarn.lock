@@ -2,6 +2,10 @@
 # yarn lockfile v1
 
 
+"@dhis2/deploy-build@^1.0.4":
+  version "1.0.4"
+  resolved "https://registry.yarnpkg.com/@dhis2/deploy-build/-/deploy-build-1.0.4.tgz#4cdfe26b4ab10e94019783243734da60eb3eda18"
+
 Base64@~0.2.0:
   version "0.2.1"
   resolved "https://registry.yarnpkg.com/Base64/-/Base64-0.2.1.tgz#ba3a4230708e186705065e66babdd4c35cf60028"

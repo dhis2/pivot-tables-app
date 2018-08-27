@@ -8,8 +8,9 @@
     "validate": "npm ls --depth 0",
     "prestart": "d2-manifest package.json manifest.webapp",
     "start": "webpack-dev-server",
-    "build": "rm -rf build && webpack --config webpack.config.prod.js && cp ./index.html build && cp ./jquery*.min.js build && cp -r i18n build && cp -r dhis2 build && cp -r extjs build && npm run manifest",
-    "manifest": "d2-manifest package.json build/manifest.webapp"
+    "build": "rm -rf build && webpack --config webpack.config.prod.js && cp ./index.html build && cp ./jquery*.min.js build && cp -r i18n build && cp -r dhis2 build && cp -r extjs build && npm run manifest && cp ./package.json ./build/package.json",
+    "manifest": "d2-manifest package.json build/manifest.webapp",
+    "deploy": "deploy-build"
   },
   "repository": {
     "type": "git",
@@ -31,6 +32,7 @@
     "d2-utilizr": "0.2.13"
   },
   "devDependencies": {
+    "@dhis2/deploy-build": "^1.0.4",
     "babel-core": "^6.3.13",
     "babel-eslint": "5.0.0-beta6",
     "babel-loader": "^6.2.0",
