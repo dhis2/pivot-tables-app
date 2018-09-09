@@ -5,7 +5,7 @@ import 'd2-analysis/css/ui/GridHeaders.css';
 
 import arrayTo from 'd2-utilizr/lib/arrayTo';
 
-import { api, table, manager, config, ui, init, override, constants } from 'd2-analysis';
+import { api, table, manager, config, ui, init, override } from 'd2-analysis';
 
 import { Layout } from './api/Layout';
 
@@ -124,64 +124,69 @@ function initialize() {
     appManager.appName = i18n.pivot_tables || 'Pivot Tables';
 
     // instance manager
-    instanceManager.setFn((layout) => {
-        if (layout.getResponse().getSize(layout) > 100000) {
-            uiManager.confirmRender(
-                `Table size warning`,
-                () => renderTable(layout),
-                () => renderIntro()
-            );
-        } else {
-            renderTable(layout)
-        }
-    });
+    instanceManager.setFn(layout => {
 
-    function renderIntro() {
-        uiManager.update()
-        uiManager.unmask();
-    }
-
-    function renderTable(layout) {
-
+        let tableOptions = { renderLimit: 100000, trueTotals: true }
         let sortingId = layout.sorting ? layout.sorting.id : null;
-        let pivotTable;
-
-        // get table
-        let getPivotTable = function() {
-            let response = layout.getResponse();
-            let _table = new table.PivotTable(refs, layout, response);
-
-            _table.setViewportSize(
-                uiManager.get('centerRegion').getWidth(),
-                uiManager.get('centerRegion').getHeight()
-            );
-
-            return _table;
-        };
-
+        let response = layout.getResponse();
+        
         // pre-sort if id
         if (sortingId && sortingId !== 'total') {
             layout.sort();
         }
 
-        // table
-        pivotTable = getPivotTable();
-        pivotTable.build();
+        let pivotTable = new table.PivotTable(refs, layout, response, tableOptions);
+
+        if (pivotTable.doClipping()) {
+            uiManager.confirmRender(
+                `Table size warning`,
+                () => renderTable(pivotTable, layout, sortingId),
+                () =>  {
+                    uiManager.update();
+                    uiManager.unmask();
+                }
+            );
+        }
+        else {
+            renderTable(pivotTable, layout, sortingId);
+        }
+    });
+
+    function renderTable(pivotTable, layout, sortingId) {
+
+        // initialize pivot table values
+        pivotTable.initialize();
+        
+        // bind mouse events
+        let bindMouseHandlers = function() {
+            tableManager.setColumnHeaderMouseHandlers(layout, pivotTable);
+            tableManager.setValueMouseHandlers(layout, pivotTable);
+        }
 
         // sort if total
         if (sortingId && sortingId === 'total') {
-            layout.sort(pivotTable);
-            pivotTable = getPivotTable();
-            pivotTable.build();
-        }
-        
 
+            // sort pivot table based on totals
+            layout.sort(pivotTable);
+
+            // reinitialize pivot table values due to sorting
+            pivotTable.initialize();
+        }
+
+        // set viewport dimensions (used for clipping)
+        pivotTable.setViewportSize(
+            uiManager.get('centerRegion').getWidth(),
+            uiManager.get('centerRegion').getHeight()
+        );
+
+        // build table
+        pivotTable.build();
+        
         // render
         uiManager.update(pivotTable.render());
 
         // events
-        tableManager.setColumnHeaderMouseHandlers(layout, pivotTable);
-        tableManager.setValueMouseHandlers(layout, pivotTable);
+        bindMouseHandlers();
 
         // mask
         uiManager.unmask();
@@ -189,40 +194,21 @@ function initialize() {
         // statistics
         instanceManager.postDataStatistics();
 
+        // bind clipping events
         if (pivotTable.doClipping()) {
 
-            uiManager.setScrollFn('centerRegion', event => {
-    
-                // calculate number of rows and columns to render
-                let rowLength = Math.floor(event.target.scrollTop / pivotTable.options.cellHeight);
-                let columnLength = Math.floor(event.target.scrollLeft / pivotTable.options.cellWidth);
-
-                let offset = rowLength === 0 ? 
-                    0 : 1;
-
-                // only update if row/column has gone off screen
-                if (pivotTable.rowStart + offset !== rowLength || pivotTable.columnStart !== columnLength) {
-                    uiManager.update(pivotTable.update(columnLength, rowLength));
-                    tableManager.setColumnHeaderMouseHandlers(layout, pivotTable);
-                    tableManager.setValueMouseHandlers(layout, pivotTable);
-                }
+            uiManager.setScrollFn('centerRegion', ({ target: { scrollTop, scrollLeft } }) => { 
+                pivotTable.scrollHandler(uiManager.update, scrollTop, scrollLeft, () => {
+                    bindMouseHandlers();
+                });
             });
 
-            uiManager.setOnResizeFn('centerRegion', event => {
-
-                let rowLength = Math.floor(uiManager.get('centerRegion').getHeight() / pivotTable.options.cellHeight);
-                let columnLength = Math.floor(uiManager.get('centerRegion').getWidth() / pivotTable.options.cellWidth);
-
-                let offset = rowLength === 0 ? 0 : 1;
-                
-                if (pivotTable.rowEnd - pivotTable.rowStart !== rowLength + offset|| pivotTable.columnEnd - pivotTable.columnStart !== columnLength + offset) {
-                    pivotTable.setViewportWidth(uiManager.get('centerRegion').getWidth());
-                    pivotTable.setViewportHeight(uiManager.get('centerRegion').getHeight());    
-                    uiManager.update(pivotTable.update(pivotTable.columnStart, pivotTable.rowStart));
-                    tableManager.setColumnHeaderMouseHandlers(layout, pivotTable);
-                    tableManager.setValueMouseHandlers(layout, pivotTable);
-                }
+            uiManager.setResizeFn('centerRegion', (newWidth, newHeight) => {
+                pivotTable.resizeHandler(uiManager.update, newWidth, newHeight, () => {
+                    bindMouseHandlers();
+                });
             });
+
         } else {
             uiManager.removeScrollFn('centerRegion');
             uiManager.removeResizeFn('centerRegion');
@@ -230,7 +216,6 @@ function initialize() {
 
         uiManager.scrollTo("centerRegion", 0, 0);
     }
-    
 
     // ui manager
     uiManager.disableRightClick();
@@ -286,9 +271,7 @@ function initialize() {
 
     const eastRegion = uiManager.reg(ui.EastRegion(refs), 'eastRegion');
 
-    var westRegionItems = uiManager.reg(ui.WestRegionAggregateItems(refs), 'accordion');
-
-    var westRegionItems = uiManager.reg(ui.WestRegionAggregateItems(refs), 'accordion');
+    const westRegionItems = uiManager.reg(ui.WestRegionAggregateItems(refs), 'accordion');
 
     var defaultIntegrationButton = uiManager.reg(ui.IntegrationButton(refs, {
         isDefaultButton: true,
@@ -346,8 +329,6 @@ function initialize() {
             });
         }
     });
-
-    //uiManager.update();
 }
 
 global.refs = refs;

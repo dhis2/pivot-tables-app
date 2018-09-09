@@ -99,39 +99,35 @@ function render(plugin, layout) {
     uiManager.setInstanceManager(instanceManager);
 
     instanceManager.setFn(function(_layout) {
+
         if (!util.dom.validateTargetDiv(_layout.el)) {
             return;
         }
 
-        var sortingId = _layout.sorting ? _layout.sorting.id : null,
-            html = '',
-            pivotTable;
-
-        // get table
-        var getTable = function() {
-            var response = _layout.getResponse();
-            return new table.PivotTable(instanceRefs, _layout, response);
-        };
+        let tableOptions = { renderLimit: 100000, trueTotals: true }
+        let sortingId = layout.sorting ? layout.sorting.id : null;
+        let response = layout.getResponse();
 
         // pre-sort if id
         if (sortingId && sortingId !== 'total') {
-            _layout.sort();
+            layout.sort();
         }
 
-        // table
-        pivotTable = getTable();
-        pivotTable.build();
+        let pivotTable = new table.PivotTable(refs, layout, response, tableOptions);
 
         // sort if total
         if (sortingId && sortingId === 'total') {
             _layout.sort(pivotTable);
-            pivotTable = getTable();
-            pivotTable.build();
+            pivotTable.initialize();
         }
+
+        // build table
+        pivotTable.build();
+
+        let html = '';
 
         html += reportTablePlugin.showTitles ?
             uiManager.getTitleHtml(_layout.title || _layout.name) : '';
-
         html += pivotTable.render();
 
         uiManager.update(html, _layout.el);
