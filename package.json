@@ -1,6 +1,6 @@
 {
   "name": "pivot-tables-app",
-  "version": "29.0.28",
+  "version": "29.0.29",
   "description": "Pivot tables app",
   "main": "index.html",
   "scripts": {
