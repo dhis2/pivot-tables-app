@@ -105,16 +105,19 @@ function render(plugin, layout) {
         }
 
         let tableOptions = { renderLimit: 100000, trueTotals: true }
-        let sortingId = layout.sorting ? layout.sorting.id : null;
-        let response = layout.getResponse();
+        let sortingId = _layout.sorting ? _layout.sorting.id : null;
+        let response = _layout.getResponse();
 
         // pre-sort if id
         if (sortingId && sortingId !== 'total') {
-            layout.sort();
+            _layout.sort();
         }
 
-        let pivotTable = new table.PivotTable(refs, layout, response, tableOptions);
+        let pivotTable = new table.PivotTable(refs, _layout, response, tableOptions);
 
+        // initialzie table
+        pivotTable.initialize();
+        
         // sort if total
         if (sortingId && sortingId === 'total') {
             _layout.sort(pivotTable);
