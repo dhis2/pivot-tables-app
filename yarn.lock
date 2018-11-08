@@ -1506,10 +1506,10 @@ currently-unhandled@^0.4.1:
   dependencies:
     array-find-index "^1.0.1"
 
-d2-analysis@29.0.39:
-  version "29.0.39"
-  resolved "https://registry.yarnpkg.com/d2-analysis/-/d2-analysis-29.0.39.tgz#96ffc2dc0570c8f28de87a852aa384712d9becef"
-  integrity sha512-xPh8fn3jvlrcc9wmdjXOgaJBQQWeplzOSdI/x6m2/RJivJcZZEHW0IwqYiEr5yzmbicLEGhVqCUsN4rY41YBLQ==
+d2-analysis@29.0.41:
+  version "29.0.41"
+  resolved "https://registry.yarnpkg.com/d2-analysis/-/d2-analysis-29.0.41.tgz#762784890050e3d7310d779c98f0c773721bb55f"
+  integrity sha512-9PEEpPjtquFf3VRwhUSG1jcuyiUxoZ56cJH3YXhsTxPkgRd2yVLoqIK8AwiLb6nFC1hj31Dd6JMA/SOAzdrV0g==
   dependencies:
     d2-utilizr "^0.2.16"
     jquery "2.1.4"
