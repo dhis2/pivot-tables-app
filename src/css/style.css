@@ -392,15 +392,24 @@ table.pivot.displaydensity-COMPACT td.pivot-filter {
 	white-space: nowrap;
 	text-align: right;
 }
+.pivot-value-total.aggtype-na {
+	color: #555;
+}
 .pivot-value-total-subgrandtotal {
 	background-color: #d8d8d8;
 	white-space: nowrap;
 	text-align: right;
 }
+.pivot-value-total-subgrandtotal.aggtype-na {
+	color: #555;
+}
 .pivot-value-grandtotal {
 	background-color: #c8c8c8;
 	white-space: nowrap;
 	text-align: right;
+}
+.pivot-value-grandtotal.aggtype-na {
+	color: #555;
 }
 
 	/* Legend */
