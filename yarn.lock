@@ -1341,10 +1341,10 @@ currently-unhandled@^0.4.1:
   dependencies:
     array-find-index "^1.0.1"
 
-d2-analysis@30.0.30:
-  version "30.0.30"
-  resolved "https://registry.yarnpkg.com/d2-analysis/-/d2-analysis-30.0.30.tgz#6c05e2213b3ace7ed1a0750d27804ed8ff686ee1"
-  integrity sha512-7Uz841mXZ3KJ+FOSaTCOz7xpRHnGRVsMBNaCfgEFrjWwCI2/dAvdSfrPEWcB4KW4c/7cgHDzPMOOmh8dTJKBww==
+d2-analysis@30.0.32:
+  version "30.0.32"
+  resolved "https://registry.yarnpkg.com/d2-analysis/-/d2-analysis-30.0.32.tgz#5c14852fb99ddbfcf00bf5f8dd63c2813903f84f"
+  integrity sha512-pPu4r+8pg8mJU5WwY2I2IqE/X9kestNWZKS/A+3ev26BdZz/n2hQ4FvezzsTDpgrxAQqFJ6wTBZcFmK62rP5oQ==
   dependencies:
     "@dhis2/d2-ui-rich-text" "^5.1.0"
     d2-utilizr "^0.2.16"
