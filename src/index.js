@@ -129,7 +129,7 @@ function initialize() {
         let tableOptions = { renderLimit: 100000, trueTotals: true }
         let sortingId = layout.sorting ? layout.sorting.id : null;
         let response = layout.getResponse();
-        
+
         // pre-sort if id
         if (sortingId && sortingId !== 'total') {
             layout.sort();
@@ -156,7 +156,7 @@ function initialize() {
 
         // initialize pivot table values
         pivotTable.initialize();
-        
+
         // bind mouse events
         let bindMouseHandlers = function() {
             tableManager.setColumnHeaderMouseHandlers(layout, pivotTable);
@@ -181,7 +181,7 @@ function initialize() {
 
         // build table
         pivotTable.build();
-        
+
         // render
         uiManager.update(pivotTable.render());
 
@@ -197,7 +197,7 @@ function initialize() {
         // bind clipping events
         if (pivotTable.doClipping()) {
 
-            uiManager.setScrollFn('centerRegion', ({ target: { scrollTop, scrollLeft } }) => { 
+            uiManager.setScrollFn('centerRegion', ({ target: { scrollTop, scrollLeft } }) => {
                 pivotTable.scrollHandler(uiManager.update, scrollTop, scrollLeft, () => {
                     bindMouseHandlers();
                 });
@@ -251,7 +251,7 @@ function initialize() {
 
         return html;
     }
-    
+
     uiManager.setIntroHtml(introHtml());
 
     uiManager.setUpdateIntroHtmlFn(function() {
@@ -289,16 +289,6 @@ function initialize() {
         menuItem3Text: i18n.open_last_chart
     });
 
-    const mapIntegrationButton = ui.IntegrationButton(refs, {
-        objectName: 'map',
-        moduleName: 'dhis-web-mapping',
-        btnIconCls: 'ns-button-icon-map',
-        btnText: i18n.map,
-        menuItem1Text: i18n.go_to_maps,
-        menuItem2Text: i18n.open_this_table_as_map,
-        menuItem3Text: i18n.open_last_map
-    });
-
     // viewport
     uiManager.reg(ui.Viewport(refs, {
         northRegion: northRegion,
@@ -307,7 +297,6 @@ function initialize() {
         integrationButtons: [
             defaultIntegrationButton,
             chartIntegrationButton,
-            mapIntegrationButton
         ],
         DownloadButtonItems: DownloadButtonItems
     }, {
