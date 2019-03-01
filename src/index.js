@@ -150,7 +150,7 @@ function initialize() {
         // get table
         let buildPivotTable = function() {
             let response = layout.getResponse();
-            
+
             let colAxis = new table.PivotTableAxis(refs, layout, response, 'col');
             let rowAxis = new table.PivotTableAxis(refs, layout, response, 'row');
 
@@ -160,8 +160,8 @@ function initialize() {
                 uiManager.get('centerRegion').getWidth(),
                 uiManager.get('centerRegion').getHeight()
             );
-            
-            return _pivotTable;            
+
+            return _pivotTable;
         };
 
         // pre-sort if id
@@ -198,12 +198,12 @@ function initialize() {
         if (pivotTable.doDynamicRendering()) {
 
             uiManager.setScrollFn('centerRegion', event => {
-    
+
                 // calculate number of rows and columns to render
                 let rowLength = Math.floor(event.target.scrollTop / pivotTable.cellHeight),
                     columnLength = Math.floor(event.target.scrollLeft / pivotTable.cellWidth);
 
-                let offset = rowLength === 0 ? 
+                let offset = rowLength === 0 ?
                     0 : 1;
 
                 // only update if row/column has gone off screen
@@ -220,10 +220,10 @@ function initialize() {
                     columnLength = Math.floor(uiManager.get('centerRegion').getWidth() / pivotTable.cellWidth);
 
                 let offset = rowLength === 0 ? 0 : 1;
-                
+
                 if (pivotTable.rowEnd - pivotTable.rowStart !== rowLength + offset|| pivotTable.columnEnd - pivotTable.columnStart !== columnLength + offset) {
                     pivotTable.setViewportWidth(uiManager.get('centerRegion').getWidth());
-                    pivotTable.setViewportHeight(uiManager.get('centerRegion').getHeight());    
+                    pivotTable.setViewportHeight(uiManager.get('centerRegion').getHeight());
                     uiManager.update(pivotTable.update(pivotTable.columnStart, pivotTable.rowStart));
                     tableManager.setColumnHeaderMouseHandlers(layout, pivotTable);
                     tableManager.setValueMouseHandlers(layout, pivotTable);
@@ -236,7 +236,7 @@ function initialize() {
 
         uiManager.scrollTo("centerRegion", 0, 0);
     }
-    
+
 
     // ui manager
     uiManager.disableRightClick();
@@ -272,7 +272,7 @@ function initialize() {
 
         return html;
     }
-    
+
     uiManager.setIntroHtml(introHtml());
 
     uiManager.setUpdateIntroHtmlFn(function() {
@@ -312,16 +312,6 @@ function initialize() {
         menuItem3Text: i18n.open_last_chart
     });
 
-    const mapIntegrationButton = ui.IntegrationButton(refs, {
-        objectName: 'map',
-        moduleName: 'dhis-web-mapping',
-        btnIconCls: 'ns-button-icon-map',
-        btnText: i18n.map,
-        menuItem1Text: i18n.go_to_maps,
-        menuItem2Text: i18n.open_this_table_as_map,
-        menuItem3Text: i18n.open_last_map
-    });
-
     // viewport
     uiManager.reg(ui.Viewport(refs, {
         northRegion: northRegion,
@@ -330,7 +320,6 @@ function initialize() {
         integrationButtons: [
             defaultIntegrationButton,
             chartIntegrationButton,
-            mapIntegrationButton
         ],
         DownloadButtonItems: DownloadButtonItems
     }, {
