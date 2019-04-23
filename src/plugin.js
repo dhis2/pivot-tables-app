@@ -1,4 +1,7 @@
+import '../extjs/resources/css/ext-all-gray.css';
 import './css/style.css';
+import './css/meringue.css';
+import 'd2-analysis/css/ui/GridHeaders.css';
 
 import objectApplyIf from 'd2-utilizr/lib/objectApplyIf';
 import arrayTo from 'd2-utilizr/lib/arrayTo';
@@ -7,53 +10,56 @@ import { api, table, manager, config, init, util } from 'd2-analysis';
 
 import { Layout } from './api/Layout';
 
+const CELL_WIDTH = 131
+const CELL_HEIGHT = 36
+
 // extend
 api.Layout = Layout;
 
 // references
-var refs = {
+let refs = {
     api,
     init,
     table
 };
 
 // inits
-var inits = [
+let inits = [
     init.legendSetsInit,
     init.dimensionsInit
 ];
 
 // dimension config
-var dimensionConfig = new config.DimensionConfig();
+let dimensionConfig = new config.DimensionConfig();
 refs.dimensionConfig = dimensionConfig;
 
 // option config
-var optionConfig = new config.OptionConfig();
+let optionConfig = new config.OptionConfig();
 refs.optionConfig = optionConfig;
 
 // period config
-var periodConfig = new config.PeriodConfig();
+let periodConfig = new config.PeriodConfig();
 refs.periodConfig = periodConfig;
 
 // app manager
-var appManager = new manager.AppManager(refs);
+let appManager = new manager.AppManager(refs);
 appManager.apiVersion = 29;
 refs.appManager = appManager;
 
 // calendar manager
-var calendarManager = new manager.CalendarManager(refs);
+let calendarManager = new manager.CalendarManager(refs);
 refs.calendarManager = calendarManager;
 
 // request manager
-var requestManager = new manager.RequestManager(refs);
+let requestManager = new manager.RequestManager(refs);
 refs.requestManager = requestManager;
 
 // i18n manager
-var i18nManager = new manager.I18nManager(refs);
+let i18nManager = new manager.I18nManager(refs);
 refs.i18nManager = i18nManager;
 
 // session storage manager
-var sessionStorageManager = new manager.SessionStorageManager(refs);
+let sessionStorageManager = new manager.SessionStorageManager(refs);
 refs.sessionStorageManager = sessionStorageManager;
 
 // dependencies
@@ -74,15 +80,15 @@ function render(plugin, layout) {
         return;
     }
 
-    var instanceRefs = Object.assign({}, refs);
+    let instanceRefs = Object.assign({}, refs);
 
     // ui manager
-    var uiManager = new manager.UiManager(instanceRefs);
+    let uiManager = new manager.UiManager(instanceRefs);
     instanceRefs.uiManager = uiManager;
     uiManager.applyTo([].concat(arrayTo(api), arrayTo(table)));
 
     // instance manager
-    var instanceManager = new manager.InstanceManager(instanceRefs);
+    let instanceManager = new manager.InstanceManager(instanceRefs);
     instanceRefs.instanceManager = instanceManager;
     instanceManager.apiResource = 'reportTable';
     instanceManager.apiEndpoint = 'reportTables';
@@ -92,7 +98,7 @@ function render(plugin, layout) {
     instanceManager.applyTo(arrayTo(api));
 
     // table manager
-    var tableManager = new manager.TableManager(instanceRefs);
+    let tableManager = new manager.TableManager(instanceRefs);
     instanceRefs.tableManager = tableManager;
 
     // initialize
@@ -103,16 +109,28 @@ function render(plugin, layout) {
             return;
         }
 
-        var sortingId = _layout.sorting ? _layout.sorting.id : null,
-            html = '',
-            pivotTable;
+        let sortingId = _layout.sorting ? _layout.sorting.id : null;
+        let html = '';
+        let pivotTable;
 
         // get table
-        var getTable = function() {
-            var response = _layout.getResponse();
-            var colAxis = new table.PivotTableAxis(instanceRefs, _layout, response, 'col');
-            var rowAxis = new table.PivotTableAxis(instanceRefs, _layout, response, 'row');
-            return new table.PivotTable(instanceRefs, _layout, response, colAxis, rowAxis);
+        let buildPivotTable = function() {
+            let response = _layout.getResponse();
+
+            let colAxis = new table.PivotTableAxis(instanceRefs, _layout, response, 'col');
+            let rowAxis = new table.PivotTableAxis(instanceRefs, _layout, response, 'row');
+            let tableOptions = { cellHeight: CELL_HEIGHT, cellWidth: CELL_WIDTH }
+
+            let _pivotTable = new table.PivotTable(instanceRefs, _layout, response, colAxis, rowAxis, tableOptions);
+
+            let el = document.getElementById(_layout.el)
+
+            _pivotTable.setViewportSize(
+                el.offsetWidth,
+                el.offsetHeight
+            );
+        
+            return _pivotTable;
         };
 
         // pre-sort if id
@@ -121,14 +139,14 @@ function render(plugin, layout) {
         }
 
         // table
-        pivotTable = getTable();
+        pivotTable = buildPivotTable();
         pivotTable.initialize();
         pivotTable.build();
 
         // sort if total
         if (sortingId && sortingId === 'total') {
             _layout.sort(pivotTable);
-            pivotTable = getTable();
+            pivotTable = buildPivotTable();
             pivotTable.initialize();
             pivotTable.build();
         }
@@ -142,9 +160,61 @@ function render(plugin, layout) {
 
         // events
         tableManager.setColumnHeaderMouseHandlers(_layout, pivotTable);
-
+        
         // mask
         uiManager.unmask();
+
+
+        if (pivotTable.doDynamicRendering()) {
+
+            document.getElementById(_layout.el).style.paddingTop = "0px";
+            document.getElementById(_layout.el).style.paddingBottom = "0px";
+            document.getElementById(_layout.el).style.paddingLeft = "0px";
+            document.getElementById(_layout.el).style.paddingRight = "0px";
+
+            document.getElementById(_layout.el).addEventListener('scroll', event => {
+    
+                // calculate number of rows and columns to render
+
+                let rowLength = Math.floor(event.target.scrollTop / CELL_HEIGHT);
+                let columnLength = Math.floor(Math.max(0, event.target.scrollLeft - 11) / CELL_WIDTH);
+
+                let offset = rowLength === 0 ? 0 : 1;
+
+                // only update if row/column has gone off screen
+                if (pivotTable.rowStart + offset !== rowLength || pivotTable.columnStart !== columnLength) {
+                    uiManager.update(pivotTable.update(columnLength, rowLength), _layout.el);
+                    tableManager.setColumnHeaderMouseHandlers(layout, pivotTable);
+                    // tableManager.setValueMouseHandlers(layout, pivotTable);
+                }
+            });
+
+            document.getElementById(_layout.el).addEventListener('scroll', event => {
+
+                let regionHeight = document.getElementById(_layout.el).offsetHeight;
+                let regionWidth = document.getElementById(_layout.el).offsetWidth ;
+
+                let rowLength = Math.floor(regionHeight / CELL_HEIGHT);
+                let columnLength = Math.floor(regionWidth / CELL_WIDTH);
+
+                let offset = rowLength === 0 ? 0 : 1;
+                
+                if (pivotTable.rowEnd - pivotTable.rowStart !== rowLength + offset || pivotTable.columnEnd - pivotTable.columnStart !== columnLength + offset) {
+                    pivotTable.setViewportWidth(regionWidth);
+                    pivotTable.setViewportHeight(regionHeight);
+
+                    uiManager.update(pivotTable.update(pivotTable.columnStart, pivotTable.rowStart), _layout.el);
+                    
+                    tableManager.setColumnHeaderMouseHandlers(layout, pivotTable);
+                    // tableManager.setValueMouseHandlers(layout, pivotTable);
+                }
+            });
+            
+        } else {
+            // document.getElementById(_layout.el).removeEventListener('scroll');
+            // document.getElementById(_layout.el).removeEventListener('scroll');
+        }
+
     });
 
     if (plugin.loadingIndicator) {
