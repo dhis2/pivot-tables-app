@@ -1,6 +1,6 @@
 {
     "name": "pivot-app",
-    "version": "32.0.4",
+    "version": "33.0.0",
     "description": "Pivot tables app",
     "main": "index.html",
     "scripts": {
@@ -15,7 +15,11 @@
         "type": "git",
         "url": "git+https://github.com/dhis2/pivot-tables-app.git"
     },
-    "keywords": ["DHIS 2", "HISP", "Pivot"],
+    "keywords": [
+        "DHIS 2",
+        "HISP",
+        "Pivot"
+    ],
     "author": "Jan Henrik Øverland",
     "license": "BSD-3-Clause",
     "bugs": {
