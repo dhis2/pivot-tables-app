@@ -16,7 +16,31 @@ OptionsWindow = function(c) {
         checkboxBottomMargin = 2,
         separatorTopMargin = 6,
         cmpWidth = 360,
-        labelWidth = 125;
+        labelWidth = 125,
+        optionsWindowDefaultHeight = 950,
+        optionsWindowVerticalMargins = 100;
+
+    var debounce = function(func, wait, immediate) {
+        var timeout;
+
+        return function() {
+            var context = this, args = arguments;
+            var later = function() {
+                timeout = null;
+                if (!immediate) {
+                    func.apply(context, args);
+                }
+            };
+
+            var callNow = immediate && !timeout;
+            clearTimeout(timeout);
+            timeout = setTimeout(later, wait);
+
+            if (callNow) {
+                func.apply(context, args);
+            }
+        };
+    };
 
     var showColTotals = Ext.create('Ext.form.field.Checkbox', {
         boxLabel: i18n.show_col_totals,
@@ -521,15 +545,22 @@ OptionsWindow = function(c) {
             cumulative,
             sortOrder,
             topLimit
-        ],
-        hidden: true
+        ]
     });
 
-    var window = Ext.create('Ext.window.Window', {
+    var _window = Ext.create('Ext.window.Window', {
         title: i18n.table_options,
         bodyStyle: 'background-color:#fff; padding:2px',
         closeAction: 'hide',
+        autoScroll: true,
         autoShow: true,
+        height: function() {
+            var documentHeight = document.documentElement.clientHeight;
+
+            if (documentHeight < optionsWindowDefaultHeight) {
+                return documentHeight - optionsWindowVerticalMargins;
+            }
+        }(),
         modal: true,
         resizable: false,
         hideOnBlur: true,
@@ -677,16 +708,6 @@ OptionsWindow = function(c) {
                                 bodyStyle: 'border:0 none; padding:2px 5px 6px 2px; background-color:transparent; color:#222; font-size:12px',
                                 html: '<b>' + i18n.parameters + '</b> <span style="font-size:11px"> (' + i18n.for_standard_reports_only + ')</span>',
                                 columnWidth: 1
-                            },
-                            {
-                                xtype: 'button',
-                                text: i18n.show,
-                                height: 19,
-                                handler: function() {
-                                    parameters.setVisible(!parameters.isVisible());
-
-                                    this.setText(parameters.isVisible() ? i18n.hide : i18n.show);
-                                }
                             }
                         ]
                     },
@@ -699,7 +720,7 @@ OptionsWindow = function(c) {
             {
                 text: i18n.hide,
                 handler: function() {
-                    window.hide();
+                    _window.hide();
                 }
             },
             {
@@ -707,7 +728,7 @@ OptionsWindow = function(c) {
                 handler: function() {
                     instanceManager.getReport();
 
-                    window.hide();
+                    _window.hide();
                 }
             }
         ],
@@ -810,5 +831,15 @@ OptionsWindow = function(c) {
         }
     };
 
-    return window;
+    window.onresize = debounce(function() {
+        var documentHeight = document.documentElement.clientHeight;
+
+        if (documentHeight < optionsWindowDefaultHeight) {
+            _window.setHeight(documentHeight - optionsWindowVerticalMargins);
+        } else {
+            _window.setHeight(null);
+        }
+    }, 500);
+
+    return _window;
 };
