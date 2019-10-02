@@ -281,12 +281,10 @@ function initialize() {
 
     const chartIntegrationButton = ui.IntegrationButton(refs, {
         objectName: 'chart',
-        moduleName: 'dhis-web-visualizer',
+        moduleName: 'dhis-web-data-visualizer',
         btnIconCls: 'ns-button-icon-chart',
         btnText: i18n.chart,
         menuItem1Text: i18n.go_to_charts,
-        menuItem2Text: i18n.open_this_table_as_chart,
-        menuItem3Text: i18n.open_last_chart
     });
 
     // viewport
