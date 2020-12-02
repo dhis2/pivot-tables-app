@@ -81,6 +81,7 @@ jobs:
               with:
                   build-dir: build
                   github-token: ${{ env.GH_TOKEN }}
+                  repo-name: pivot-tables-app
 
     release:
         runs-on: ubuntu-latest
