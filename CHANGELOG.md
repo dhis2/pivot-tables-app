@@ -1,3 +1,10 @@
+## [33.0.5](https://github.com/dhis2/pivot-tables-app/compare/v33.0.4...v33.0.5) (2020-12-24)
+
+
+### Bug Fixes
+
+* **translations:** sync translations from transifex (master) ([9970554](https://github.com/dhis2/pivot-tables-app/commit/9970554e91e16d9791be60c9668eed07704da9a2))
+
 ## [33.0.4](https://github.com/dhis2/pivot-tables-app/compare/v33.0.3...v33.0.4) (2020-12-19)
 
 
