@@ -27,7 +27,7 @@
     },
     "homepage": "https://github.com/dhis2/pivot-tables-app#readme",
     "dependencies": {
-        "d2-analysis": "^33.2.9",
+        "d2-analysis": "^33.2.21",
         "d2-utilizr": "0.2.13"
     },
     "devDependencies": {
@@ -66,7 +66,7 @@
             "dhis": {
                 "href": "..",
                 "auth": "admin:district",
-                "devHref": "http://localhost:8080"
+                "devHref": "https://debug.dhis2.org/dev"
             }
         }
     }
