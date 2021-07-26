@@ -1,3 +1,10 @@
+## [33.0.13](https://github.com/dhis2/pivot-tables-app/compare/v33.0.12...v33.0.13) (2021-07-26)
+
+
+### Bug Fixes
+
+* d2-analysis@33.2.24 ([de74d08](https://github.com/dhis2/pivot-tables-app/commit/de74d088124b5312b48ab9c4e89f80ee1d00a057))
+
 ## [33.0.12](https://github.com/dhis2/pivot-tables-app/compare/v33.0.11...v33.0.12) (2021-06-25)
 
 
