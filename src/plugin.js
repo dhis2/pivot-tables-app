@@ -84,9 +84,9 @@ function render(plugin, layout) {
     // instance manager
     var instanceManager = new manager.InstanceManager(instanceRefs);
     instanceRefs.instanceManager = instanceManager;
-    instanceManager.apiResource = 'reportTable';
-    instanceManager.apiEndpoint = 'reportTables';
-    instanceManager.apiModule = 'dhis-web-pivot';
+    instanceManager.apiResource = 'visualization';
+    instanceManager.apiEndpoint = 'visualizations';
+    instanceManager.apiModule = 'dhis-web-data-visualizer';
     instanceManager.plugin = true;
     instanceManager.dashboard = reportTablePlugin.dashboard;
     instanceManager.applyTo(arrayTo(api));
@@ -162,4 +162,4 @@ function render(plugin, layout) {
     }
 };
 
-global.reportTablePlugin = new util.Plugin({ refs, inits, renderFn: render, type: 'REPORT_TABLE' });
+global.reportTablePlugin = new util.Plugin({ refs, inits, renderFn: render, type: 'VISUALIZATION' });
