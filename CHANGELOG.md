@@ -1,3 +1,10 @@
+## [33.0.16](https://github.com/dhis2/pivot-tables-app/compare/v33.0.15...v33.0.16) (2021-11-25)
+
+
+### Bug Fixes
+
+* **translations:** sync translations from transifex (master) ([7ae0b8d](https://github.com/dhis2/pivot-tables-app/commit/7ae0b8d4597e8ab09d9decb3e3ad50c571da631b))
+
 ## [33.0.15](https://github.com/dhis2/pivot-tables-app/compare/v33.0.14...v33.0.15) (2021-10-07)
 
 
