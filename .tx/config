@@ -1,10 +1,11 @@
 [main]
-host = https://www.transifex.com
-lang_map = fa_AF: prs, uz@Cyrl: uz, uz@Latn: uz_Latn
+host     = https://www.transifex.com
+lang_map = uz@Cyrl: uz, uz@Latn: uz_Latn, fa_AF: prs
 
-[app-pivot-tables.i18n-app-properties]
-file_filter = i18n/i18n_app_<lang>.properties
+[o:hisp-uio:p:app-pivot-tables:r:i18n-app-properties]
+file_filter  = i18n/i18n_app_<lang>.properties
+source_file  = i18n/i18n_app.properties
+source_lang  = en
+type         = PROPERTIES
 minimum_perc = 0
-source_file = i18n/i18n_app.properties
-source_lang = en
-type = PROPERTIES
+
